@@ -4,21 +4,27 @@ import { createSwitchNavigator, createStackNavigator, createAppContainer } from 
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 import { firebaseConfig, settings } from './config';
+import AuthLoading from './components/AuthLoading';
 
 firebase.initializeApp(firebaseConfig);
 const firestore = firebase.firestore();
 firestore.settings(settings);
 
-const loginFlow = createSwitchNavigator({});
+const loginFlow = createSwitchNavigator({
+  // add login components here - remember to include screen property
+});
 
-const mainFlow = createStackNavigator({});
+const mainFlow = createStackNavigator({
+  // Add main app components here - remember to include screen property
+});
 
-const appNavigation = createStackNavigator(
+const appNavigation = createSwitchNavigator(
   {
+    AuthLoading,
     loginFlow,
     mainFlow,
   },
-  { initialRouteName: 'loginFlow' },
+  { initialRouteName: 'AuthLoading' },
 );
 
 const App = createAppContainer(appNavigation);
