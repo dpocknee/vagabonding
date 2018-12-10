@@ -1,16 +1,16 @@
 import {
   createSwitchNavigator,
   createStackNavigator,
-  createAppContainer,
-} from 'react-navigation';
-import * as firebase from 'firebase';
-import 'firebase/firestore';
-import { firebaseConfig, settings } from './config';
-import AuthLoading from './components/AuthLoading';
-import Loading from './components/Loading';
-import SignUp from './components/SignUp';
-import Login from './components/LogIn';
-import HomePage from './components/HomePage';
+  createAppContainer
+} from "react-navigation";
+import * as firebase from "firebase";
+import "firebase/firestore";
+import { firebaseConfig, settings } from "./config";
+import AuthLoading from "./components/AuthLoading";
+import Loading from "./components/Loading";
+import SignUp from "./components/SignUp";
+import Login from "./components/LogIn";
+import HomePage from "./components/HomePage";
 
 firebase.initializeApp(firebaseConfig);
 const firestore = firebase.firestore();
@@ -19,34 +19,31 @@ firestore.settings(settings);
 const loginFlow = createSwitchNavigator(
   {
     Loading: {
-      screen: Loading,
+      screen: Loading
     },
     LogIn: {
-      screen: Login,
+      screen: Login
     },
     SignUp: {
-      screen: SignUp,
-    },
+      screen: SignUp
+    }
   },
   {
-    initialRouteName: 'Loading',
-  },
+    initialRouteName: "Loading"
+  }
 );
 
 const mainFlow = createStackNavigator({
   // Add main app components here - remember to include screen property
-  HomePage: {
-    screen: HomePage,
-  },
 });
 
 const appNavigation = createSwitchNavigator(
   {
     AuthLoading,
     loginFlow,
-    mainFlow,
+    mainFlow
   },
-  { initialRouteName: 'loginFlow' },
+  { initialRouteName: "AuthLoading" }
 );
 
 const App = createAppContainer(appNavigation);
