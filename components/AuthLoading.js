@@ -1,20 +1,20 @@
-import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import React from "react";
+import { View, Image, StyleSheet } from "react-native";
 
-const logo = require('../assets/Connections.png');
+const logo = require("../assets/Connections.png");
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: '#9CB660',
+    backgroundColor: "#9CB660"
   },
   logo: {
-    resizeMode: 'contain',
-  },
+    resizeMode: "contain"
+  }
 });
 
 class AuthLoading extends React.Component {
   componentDidMount() {
-    this.props.navigation.navigate('loginFlow');
+    this.props.navigation.navigate("loginFlow");
   }
 
   render() {

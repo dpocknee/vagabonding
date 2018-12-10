@@ -1,16 +1,16 @@
-import { Text, Button } from 'react-native';
-import React, { Component } from 'react';
-import * as firebase from 'firebase';
+import { Text, Button } from "react-native";
+import React, { Component } from "react";
+import * as firebase from "firebase";
 
 class HomePage extends Component {
   state = {
-    currentUser: null,
+    currentUser: null
   };
 
   componentDidMount() {
     const { currentUser } = firebase.auth();
     this.setState({
-      currentUser,
+      currentUser
     });
   }
 
@@ -22,13 +22,13 @@ class HomePage extends Component {
       .then(() => {
         firebase
           .firestore()
-          .collection('users')
+          .collection("users")
           .doc(currentUser.uid)
           .update({ loggedIn: false });
         this.setState({
-          currentUser: null,
+          currentUser: null
         });
-        this.props.navigation.navigate('LoggedOut');
+        this.props.navigation.navigate("AuthLoading");
       });
   };
 
