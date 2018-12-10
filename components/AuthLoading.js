@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 
+const logo = require('../assets/Connections.png');
+
 const styles = StyleSheet.create({
   background: {
     backgroundColor: '#9CB660',
@@ -18,7 +20,7 @@ class AuthLoading extends React.Component {
   render() {
     return (
       <View style={styles.background}>
-        <Image style={styles.logo} source={require('../assets/Connections.png')} />
+        <Image style={styles.logo} source={logo} />
       </View>
     );
   }
