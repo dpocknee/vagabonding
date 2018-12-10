@@ -1,9 +1,4 @@
-import React from 'react';
-import {
-  createSwitchNavigator,
-  createStackNavigator,
-  createAppContainer,
-} from 'react-navigation';
+import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 import { firebaseConfig, settings } from './config';
