@@ -1,30 +1,32 @@
-import React, { Component } from "react";
-import { StyleSheet, Text, TextInput, View, Button } from "react-native";
-import * as firebase from "firebase";
-import { CheckBox } from "react-native-elements";
-import "firebase/firestore";
+import React, { Component } from 'react';
+import {
+  StyleSheet, Text, TextInput, View, Button,
+} from 'react-native';
+import * as firebase from 'firebase';
+import { CheckBox } from 'react-native-elements';
+import 'firebase/firestore';
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center" },
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   textInput: {
     height: 40,
-    width: "90%",
-    borderColor: "gray",
+    width: '90%',
+    borderColor: 'gray',
     borderWidth: 1,
-    marginTop: 8
-  }
+    marginTop: 8,
+  },
 });
 
 class SignUp extends Component {
   state = {
-    name: "",
-    username: "",
-    email: "",
-    password: "",
+    name: '',
+    username: '',
+    email: '',
+    password: '',
     errorMessage: null,
     museumsChecked: false,
     barsChecked: false,
-    restaurantsChecked: false
+    restaurantsChecked: false,
   };
 
   handleSignUp = () => {
@@ -35,7 +37,7 @@ class SignUp extends Component {
       password,
       museumsChecked,
       barsChecked,
-      restaurantsChecked
+      restaurantsChecked,
     } = this.state;
 
     firebase
@@ -45,22 +47,22 @@ class SignUp extends Component {
         const { currentUser } = firebase.auth();
         firebase
           .firestore()
-          .collection("users")
+          .collection('users')
           .doc(currentUser.uid)
           .set({
-            location: { latitude: 0, longitude: 0 },
+            location: { latitude: null, longitude: null },
             loggedIn: true,
             museumsChecked,
             barsChecked,
             restaurantsChecked,
             name,
-            username
+            username,
           });
-        this.props.navigation.navigate("mainFlow");
+        this.props.navigation.navigate('mainFlow');
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({
-          errorMessage: err.message
+          errorMessage: err.message,
         });
       });
   };
@@ -74,13 +76,13 @@ class SignUp extends Component {
       password,
       museumsChecked,
       barsChecked,
-      restaurantsChecked
+      restaurantsChecked,
     } = this.state;
 
     return (
       <View style={styles.container}>
         <Text>Sign Up</Text>
-        {errorMessage && <Text style={{ color: "red" }}>{errorMessage}</Text>}
+        {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
         <TextInput
           placeholder="name"
           autoCapitalize="words"
@@ -124,15 +126,13 @@ class SignUp extends Component {
         <CheckBox
           title="Local restaurants"
           checked={restaurantsChecked}
-          onPress={() =>
-            this.setState({ restaurantsChecked: !restaurantsChecked })
-          }
+          onPress={() => this.setState({ restaurantsChecked: !restaurantsChecked })}
         />
         <Button title="Sign Up" onPress={this.handleSignUp} />
         <Button
           title="Already have an account? Login"
           onPress={() => {
-            this.props.navigation.navigate("LogIn");
+            this.props.navigation.navigate('LogIn');
           }}
         />
       </View>
