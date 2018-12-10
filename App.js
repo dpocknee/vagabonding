@@ -10,9 +10,13 @@ firebase.initializeApp(firebaseConfig);
 const firestore = firebase.firestore();
 firestore.settings(settings);
 
-const loginFlow = createSwitchNavigator({});
+const loginFlow = createSwitchNavigator({
+  // add login components here - remember to include screen property
+});
 
-const mainFlow = createStackNavigator({});
+const mainFlow = createStackNavigator({
+  // Add main app components here - remember to include screen property
+});
 
 const appNavigation = createSwitchNavigator(
   {
