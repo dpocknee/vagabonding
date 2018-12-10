@@ -1,12 +1,14 @@
-import React, { Component } from "react";
-import { StyleSheet, Text, TextInput, View, Button } from "react-native";
-import * as firebase from "firebase";
+import React, { Component } from 'react';
+import {
+  StyleSheet, Text, TextInput, View, Button,
+} from 'react-native';
+import * as firebase from 'firebase';
 
 class SignUp extends Component {
   state = {
-    email: "",
-    password: "",
-    errorMessage: null
+    email: '',
+    password: '',
+    errorMessage: null,
   };
 
   handleSignUp = () => {
@@ -18,14 +20,14 @@ class SignUp extends Component {
       .then(() => {
         firebase
           .firestore()
-          .collection("users")
+          .collection('users')
           .doc(currentUser.uid)
           .set({ location: { latitude: 0, longitude: 0 }, loggedIn: true });
-        this.props.navigation.navigate("mainFlow");
+        this.props.navigation.navigate('mainFlow');
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({
-          errorMessage: err.message
+          errorMessage: err.message,
         });
       });
   };
@@ -35,7 +37,7 @@ class SignUp extends Component {
       <View style={styles.container}>
         <Text>Sign Up</Text>
         {this.state.errorMessage && (
-          <Text style={{ color: "red" }}>{this.state.errorMessage}</Text>
+          <Text style={{ color: 'red' }}>{this.state.errorMessage}</Text>
         )}
         <TextInput
           placeholder="email"
@@ -56,7 +58,7 @@ class SignUp extends Component {
         <Button
           title="Already have an account? Login"
           onPress={() => {
-            this.props.navigation.navigate("LogIn");
+            this.props.navigation.navigate('LogIn');
           }}
         />
       </View>
@@ -65,14 +67,14 @@ class SignUp extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center" },
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   textInput: {
     height: 40,
-    width: "90%",
-    borderColor: "gray",
+    width: '90%',
+    borderColor: 'gray',
     borderWidth: 1,
-    marginTop: 8
-  }
+    marginTop: 8,
+  },
 });
 
 export default SignUp;
