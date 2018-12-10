@@ -2,6 +2,8 @@ import { Button } from 'react-native';
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
 
+const { getUserLocation } = require('../Functionality/utilityFunctions');
+
 class HomePage extends Component {
   state = {
     currentUser: null,
@@ -9,8 +11,12 @@ class HomePage extends Component {
 
   componentDidMount() {
     const { currentUser } = firebase.auth();
-    this.setState({
-      currentUser,
+    getUserLocation(currentUser, (err, locationAndError) => {
+      console.log(locationAndError);
+      this.setState({
+        currentUser,
+        ...locationAndError,
+      });
     });
   }
 
