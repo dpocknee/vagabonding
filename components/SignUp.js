@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, Text, TextInput, View, Button } from "react-native";
 import * as firebase from "firebase";
 import { CheckBox } from "react-native-elements";
+import "firebase/firestore";
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "center", alignItems: "center" },
@@ -25,17 +26,30 @@ class SignUp extends Component {
   };
 
   handleSignUp = () => {
-    const { email, password } = this.state;
-    const { currentUser } = firebase.auth();
+    const {
+      email,
+      password,
+      museumsChecked,
+      barsChecked,
+      restaurantsChecked
+    } = this.state;
+
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
+        const { currentUser } = firebase.auth();
         firebase
           .firestore()
           .collection("users")
           .doc(currentUser.uid)
-          .set({ location: { latitude: 0, longitude: 0 }, loggedIn: true });
+          .set({
+            location: { latitude: 0, longitude: 0 },
+            loggedIn: true,
+            museumsChecked,
+            barsChecked,
+            restaurantsChecked
+          });
         this.props.navigation.navigate("mainFlow");
       })
       .catch(err => {
