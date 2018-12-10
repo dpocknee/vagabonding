@@ -1,25 +1,27 @@
-import React, { Component } from 'react';
-import {
-  StyleSheet, Text, TextInput, View, Button,
-} from 'react-native';
-import * as firebase from 'firebase';
+import React, { Component } from "react";
+import { StyleSheet, Text, TextInput, View, Button } from "react-native";
+import * as firebase from "firebase";
+import { CheckBox } from "react-native-elements";
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  container: { flex: 1, justifyContent: "center", alignItems: "center" },
   textInput: {
     height: 40,
-    width: '90%',
-    borderColor: 'gray',
+    width: "90%",
+    borderColor: "gray",
     borderWidth: 1,
-    marginTop: 8,
-  },
+    marginTop: 8
+  }
 });
 
 class SignUp extends Component {
   state = {
-    email: '',
-    password: '',
+    email: "",
+    password: "",
     errorMessage: null,
+    museumsChecked: false,
+    barsChecked: false,
+    restaurantsChecked: false
   };
 
   handleSignUp = () => {
@@ -31,31 +33,37 @@ class SignUp extends Component {
       .then(() => {
         firebase
           .firestore()
-          .collection('users')
+          .collection("users")
           .doc(currentUser.uid)
           .set({ location: { latitude: 0, longitude: 0 }, loggedIn: true });
-        this.props.navigation.navigate('mainFlow');
+        this.props.navigation.navigate("mainFlow");
       })
-      .catch((err) => {
+      .catch(err => {
         this.setState({
-          errorMessage: err.message,
+          errorMessage: err.message
         });
       });
   };
 
   render() {
+    const {
+      errorMessage,
+      email,
+      password,
+      museumsChecked,
+      barsChecked,
+      restaurantsChecked
+    } = this.state;
     return (
       <View style={styles.container}>
         <Text>Sign Up</Text>
-        {this.state.errorMessage && (
-          <Text style={{ color: 'red' }}>{this.state.errorMessage}</Text>
-        )}
+        {errorMessage && <Text style={{ color: "red" }}>{errorMessage}</Text>}
         <TextInput
           placeholder="email"
           autoCapitalize="none"
           style={styles.textInput}
           onChangeText={email => this.setState({ email })}
-          value={this.state.email}
+          value={email}
         />
         <TextInput
           placeholder="password"
@@ -63,13 +71,31 @@ class SignUp extends Component {
           secureTextEntry
           style={styles.textInput}
           onChangeText={password => this.setState({ password })}
-          value={this.state.password}
+          value={password}
+        />
+        <Text>Tick the things that interest you</Text>
+        <CheckBox
+          title="Museums and galleries"
+          checked={museumsChecked}
+          onPress={() => this.setState({ museumsChecked: !museumsChecked })}
+        />
+        <CheckBox
+          title="Bars and clubs"
+          checked={barsChecked}
+          onPress={() => this.setState({ barsChecked: !barsChecked })}
+        />
+        <CheckBox
+          title="Local restaurants"
+          checked={restaurantsChecked}
+          onPress={() =>
+            this.setState({ restaurantsChecked: !restaurantsChecked })
+          }
         />
         <Button title="Sign Up" onPress={this.handleSignUp} />
         <Button
           title="Already have an account? Login"
           onPress={() => {
-            this.props.navigation.navigate('LogIn');
+            this.props.navigation.navigate("LogIn");
           }}
         />
       </View>
