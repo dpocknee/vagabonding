@@ -3,7 +3,7 @@ import { createSwitchNavigator, createStackNavigator, createAppContainer } from 
 // import * as firebase from 'firebase';
 // import 'firebase/firestore';
 // import { firebaseConfig, settings } from './config';
-import AuthLoading from './components/AuthLoading';
+// import AuthLoading from './components/AuthLoading';
 import MapScreen from './components/MapScreen';
 // import LogoutScreen from './components/LogoutScreen';
 // import InboxScreen from './components/InboxScreen';
@@ -46,8 +46,6 @@ const appNavigation = createSwitchNavigator(
 
 const AppContainer = createAppContainer(appNavigation);
 
-export default class App extends React.Component {
-  render() {
-    return <AppContainer />;
-  }
-}
+const App = () => <AppContainer />;
+
+export default App;
