@@ -30,9 +30,9 @@ const loginFlow = createSwitchNavigator(
 );
 
 const mainFlow = createStackNavigator({
-  // HomePage: {
-  //   screen: HomePage,
-  // },
+  HomePage: {
+    screen: HomePage,
+  },
 });
 
 const appNavigation = createSwitchNavigator(

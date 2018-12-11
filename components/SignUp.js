@@ -57,6 +57,7 @@ class SignUp extends Component {
             restaurantsChecked,
             name,
             username,
+            radius: 1000,
           });
         this.props.navigation.navigate('mainFlow');
       })
