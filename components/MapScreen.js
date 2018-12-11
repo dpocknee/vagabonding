@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import * as Expo from 'expo';
-import { Drawer, Button, Icon } from 'native-base';
-import Sidebar from './Sidebar';
+import propTypes from 'prop-types';
+import Hamburger from './Hamburger';
 
-/* eslint no-underscore-dangle: 0 */
+/* eslint react/forbid-prop-types: 0 */
 
-export default class App extends Component {
+export default class MapScreen extends Component {
   static navigationOptions = () => ({
     // { navigation }
     headerTransparent: true,
-    headerLeft: <Button title="burger navbar" onPress={() => alert('burger pop out')} />,
+    // headerLeft: (
+    //   <Button
+    //     title="burger navbar"
+    //     onPress={() => {
+    //       console.log('sidebar');
+    //     }}
+    //   >
+    //     <Text>Hiya!!!</Text>
+    //   </Button>
+    // ),
   });
-  // headerLeft: <Button title="burger navbar" onPress={() => {navigation.navigate('sidebar')}} />,
 
   state = {
     location: null,
@@ -25,67 +33,54 @@ export default class App extends Component {
 
   getlocation = async () => {
     const { status } = await Expo.Permissions.askAsync(Expo.Permissions.LOCATION);
-    if (status !== 'granted') {
-      const oldTrafford = (await Expo.Location.geocodeAsync('Sir Matt Busby Way'))[0];
-      this.setState({
-        location: oldTrafford,
-      });
-    } else {
-      const location = await Expo.Location.getCurrentPositionAsync({});
-      const where = (await Expo.Location.reverseGeocodeAsync(location.coords))[0];
-      this.setState({
-        location,
-        where,
-      });
-    }
+    // if (status !== 'granted') {
+    console.log('STATUS', status);
+    const oldTrafford = (await Expo.Location.geocodeAsync('Sir Matt Busby Way'))[0];
+    // console.log('OLD TRAFFORD', oldTrafford);
+    this.setState({
+      location: { coords: oldTrafford },
+      where: { coords: oldTrafford },
+    });
+    //   console.log('OLD TRAFFORD', oldTrafford);
+    // } else {
+    //   console.log('granted', status);
+    //   const location = await Expo.Location.getCurrentPositionAsync({});
+    //   const where = (await Expo.Location.reverseGeocodeAsync(location.coords))[0];
+    //   this.setState({
+    //     location,
+    //     where,
+    //   });
+    // }
   };
 
-  closeDrawer = () => {
-    this.drawer._root.close();
-  };
-
-  openDrawer = () => {
-    this.drawer._root.open();
-  };
-
-  toggleDrawer = () => {
-    this.drawer._root.toggle();
+  allNav = (screen) => {
+    const { navigation } = this.props;
+    navigation.navigate(screen);
   };
 
   render() {
     const { location, where } = this.state;
     if (!location) {
-      return <View />;
+      return (
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'red',
+          }}
+        >
+          <Text>Home Screen</Text>
+        </View>
+      );
     }
-    const drawerStyles = {
-      drawer: {
-        backgroundColor: 'transparent',
-        height: 100,
-      },
-      main: {
-        paddingLeft: 3,
-        backgroundColor: 'transparent',
-      },
-      drawerOverlay: {
-        opacity: 0,
-      },
-      mainOverlay: {
-        opacity: 0,
-        backgroundColor: 'black',
-        shadowColor: '#000000',
-        shadowOpacity: 0.8,
-      },
-      // Check here for native-base drawer styles: https://github.com/root-two/react-native-drawer
-      // The native-base drawer component uses the same props as react-native-drawer.
-    };
+
     return (
       <View
         style={{
           flex: 1,
-          backgroundColor: 'red',
+          backgroundColor: 'green',
         }}
       >
-        <Drawer
+        {/* <Drawer
           type="overlay"
           styles={drawerStyles}
           side="top"
@@ -104,7 +99,8 @@ export default class App extends Component {
         >
           <Button iconLeft transparent onPress={() => this.toggleDrawer()} width={50}>
             <Icon type="FontAwesome" name="bars" />
-          </Button>
+          </Button> */}
+        <Hamburger allNav={this.allNav}>
           <Expo.MapView
             style={{ flex: 1 }}
             provider={Expo.MapView.PROVIDER_GOOGLE}
@@ -122,8 +118,13 @@ export default class App extends Component {
               pinColor="blue"
             />
           </Expo.MapView>
-        </Drawer>
+        </Hamburger>
+        {/* </Drawer> */}
       </View>
     );
   }
 }
+
+MapScreen.propTypes = {
+  navigation: propTypes.object.isRequired,
+};
