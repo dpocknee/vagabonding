@@ -2,7 +2,7 @@ import { Button } from 'react-native';
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
 
-const { getUserLocation } = require('../Functionality/utilityFunctions');
+const { getUserLocation, getLoggedInUsers } = require('../Functionality/utilityFunctions');
 
 class HomePage extends Component {
   state = {
@@ -10,13 +10,22 @@ class HomePage extends Component {
   };
 
   componentDidMount() {
-    const { currentUser } = firebase.auth();
-    getUserLocation(currentUser, (err, locationAndError) => {
-      console.log(locationAndError);
-      this.setState({
-        currentUser,
-        ...locationAndError,
-      });
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        console.log(user.uid, 'uid');
+        getUserLocation(user, (err, locationAndError) => {
+          this.setState(
+            {
+              user,
+              ...locationAndError,
+            },
+            () => {
+              getLoggedInUsers();
+            },
+          );
+        });
+        // console.log('got to getLoggedInUsers fucntion');
+      }
     });
   }
 

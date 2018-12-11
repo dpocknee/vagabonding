@@ -3,6 +3,7 @@ import * as firebase from 'firebase';
 import 'firebase/firestore';
 
 const getUserLocation = async (user, cb) => {
+  // console.log(user, 'inside utils');
   const { status } = await Permissions.askAsync(Permissions.LOCATION);
   const errorMessage = 'Permission to access location was denied.';
   if (status !== 'granted') {
@@ -41,4 +42,30 @@ const getUserLocation = async (user, cb) => {
     .catch(console.log);
 };
 
-module.exports = { getUserLocation };
+const getLoggedInUsers = () => {
+  firebase
+    .firestore()
+    .collection('users')
+    .where('loggedIn', '==', true)
+    .get()
+    .then((snapshot) => {
+      if (snapshot.empty) {
+        console.log('No Matching documents');
+        return [];
+      }
+      const userDocs = [];
+      snapshot.forEach(doc => userDocs.push(doc.data()));
+      return userDocs;
+    })
+    .catch((err) => {
+      console.log(err, 'Error!!!');
+    });
+};
+
+const filterUsersByDistance = () => {
+  // get current user's radius
+  // get current user's location
+  // filter using pointInCircle from geolib
+};
+
+module.exports = { getUserLocation, getLoggedInUsers };
