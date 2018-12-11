@@ -10,11 +10,15 @@ class Chat extends Component {
   };
 
   componentWillMount() {
-    getPreviousMessages(userID, clickedUserID).then((previousMessages) => {
-      this.setState({
-        messages: previousMessages,
+    getPreviousMessages(userID, clickedUserID)
+      .then((previousMessages) => {
+        this.setState({
+          messages: previousMessages,
+        });
+      })
+      .catch((err) => {
+        console.log(err, '<<<Chat Mount');
       });
-    });
   }
 
   onSend(messages = []) {

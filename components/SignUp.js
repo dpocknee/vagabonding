@@ -63,6 +63,7 @@ class SignUp extends Component {
         this.props.navigation.navigate('mainFlow');
       })
       .catch((err) => {
+        console.log(err, '<<<<Create User');
         this.setState({
           errorMessage: err.message,
         });

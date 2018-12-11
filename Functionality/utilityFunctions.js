@@ -39,6 +39,9 @@ const getUserLocation = async (user, cb) => {
             errorMessage: null,
           };
           cb(null, newObj);
+        })
+        .catch((err) => {
+          console.log(err, '<<<<Update Users Location');
         });
     })
     .catch(console.log);
@@ -59,7 +62,7 @@ const getLoggedInUsers = () => firestore
     return userDocs;
   })
   .catch((err) => {
-    console.log(err, 'Error!!!');
+    console.log(err, '<<<<Get Logged In Users');
   });
 
 const filterUsersByDistance = async (user, cb) => {
