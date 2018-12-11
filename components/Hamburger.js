@@ -42,6 +42,9 @@ export default class Hamburger extends Component {
     if (isDrawerOpen) {
       this.openDrawer();
     }
+    // if (isDrawerOpen === false) {
+    //   this.closeDrawer();
+    // }
     return (
       <Drawer
         type="overlay"
@@ -50,28 +53,16 @@ export default class Hamburger extends Component {
         ref={(ref) => {
           this.drawer = ref;
         }}
+        acceptTap
+        // onPress={() => console.log(this.drawer)}
         content={(
           <Sidebar
             // navigator={this.props.navigator}
             allNav={allNav}
-            onPress={() => this.closeDrawer()}
-            closer={this.closeDrawer}
+            closeDrawer={this.closeDrawer}
           />
 )}
-        onClose={() => this.closeDrawer()}
-        // onPress={() => this.closeDrawer()}
       >
-        {/* <Button
-          iconLeft
-          transparent
-          onPress={() => {
-            console.log('WORKING BUTTON');
-            this.openDrawer();
-          }}
-          width={50}
-        >
-          <Icon type="FontAwesome" name="bars" />
-        </Button> */}
         {children}
       </Drawer>
     );

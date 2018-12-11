@@ -6,7 +6,7 @@ import {
 import propTypes from 'prop-types';
 
 const Sidebar = (props) => {
-  const { closer, allNav } = props;
+  const { closeDrawer, allNav } = props;
   const menuTextStyle = { left: 5, color: 'darkblue' };
   return (
     <Container
@@ -18,21 +18,7 @@ const Sidebar = (props) => {
         paddingTop: 20,
       }}
     >
-      <Content>
-        <Button
-          iconLeft
-          transparent
-          primary
-          style={{
-            height: 50,
-            width: 50,
-            left: 0,
-          }}
-          onPress={() => closer()}
-        >
-          <Icon type="FontAwesome" name="bars" />
-        </Button>
-
+      <Content style={{ paddingTop: 50 }}>
         <Button iconLeft transparent primary title="Map" onPress={() => allNav('Map')}>
           <Icon type="FontAwesome" name="map" />
           <Text style={menuTextStyle}>Map</Text>
@@ -45,13 +31,17 @@ const Sidebar = (props) => {
           <Icon type="FontAwesome" name="times" />
           <Text style={menuTextStyle}>Logout</Text>
         </Button>
+        <Button iconLeft transparent primary title="Close" onPress={() => closeDrawer()}>
+          <Icon type="FontAwesome" name="times" />
+          <Text style={menuTextStyle}>Close</Text>
+        </Button>
       </Content>
     </Container>
   );
 };
 
 Sidebar.propTypes = {
-  closer: propTypes.func.isRequired,
+  closeDrawer: propTypes.func.isRequired,
   allNav: propTypes.func.isRequired,
 };
 
