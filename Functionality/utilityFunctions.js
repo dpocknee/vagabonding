@@ -1,6 +1,7 @@
 import { Location, Permissions } from 'expo';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
+import { isPointInCircle } from 'geolib';
 
 const getUserLocation = async (user, cb) => {
   // console.log(user, 'inside utils');
@@ -42,30 +43,40 @@ const getUserLocation = async (user, cb) => {
     .catch(console.log);
 };
 
-const getLoggedInUsers = () => {
-  firebase
-    .firestore()
-    .collection('users')
-    .where('loggedIn', '==', true)
-    .get()
-    .then((snapshot) => {
-      if (snapshot.empty) {
-        console.log('No Matching documents');
-        return [];
-      }
-      const userDocs = [];
-      snapshot.forEach(doc => userDocs.push(doc.data()));
-      return userDocs;
-    })
-    .catch((err) => {
-      console.log(err, 'Error!!!');
-    });
-};
+const getLoggedInUsers = () => firebase
+  .firestore()
+  .collection('users')
+  .where('loggedIn', '==', true)
+  .get()
+  .then((snapshot) => {
+    if (snapshot.empty) {
+      return [];
+    }
+    const userDocs = [];
+    snapshot.forEach(doc => userDocs.push(doc.data()));
+    return userDocs;
+  })
+  .catch((err) => {
+    console.log(err, 'Error!!!');
+  });
 
-const filterUsersByDistance = () => {
+const filterUsersByDistance = async (user, cb) => {
+  const userDocs = await getLoggedInUsers();
+  if (!userDocs.length) {
+    console.log('No users nearby');
+  } else {
+    const radius = user.radius;
+    const currentUserLocation = user.location;
+    const nearbyUsers = userDocs.map((userDoc) => {
+      if (isPointInCircle(userDoc.location, currentUserLocation, radius)) return userDoc;
+    });
+    console.log(nearbyUsers);
+    cb(null, nearbyUsers);
+  }
+  // check if users array is empty
   // get current user's radius
   // get current user's location
   // filter using pointInCircle from geolib
 };
 
-module.exports = { getUserLocation, getLoggedInUsers };
+module.exports = { getUserLocation, getLoggedInUsers, filterUsersByDistance };
