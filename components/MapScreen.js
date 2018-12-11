@@ -7,8 +7,16 @@ import Sidebar from './Sidebar';
 /* eslint no-underscore-dangle: 0 */
 
 export default class App extends Component {
+  static navigationOptions = () => ({
+    // { navigation }
+    headerTransparent: true,
+    headerLeft: <Button title="burger navbar" onPress={() => alert('burger pop out')} />,
+  });
+  // headerLeft: <Button title="burger navbar" onPress={() => {navigation.navigate('sidebar')}} />,
+
   state = {
     location: null,
+    where: null,
   };
 
   componentDidMount() {
@@ -24,8 +32,10 @@ export default class App extends Component {
       });
     } else {
       const location = await Expo.Location.getCurrentPositionAsync({});
+      const where = (await Expo.Location.reverseGeocodeAsync(location.coords))[0];
       this.setState({
         location,
+        where,
       });
     }
   };
@@ -43,7 +53,7 @@ export default class App extends Component {
   };
 
   render() {
-    const { location } = this.state;
+    const { location, where } = this.state;
     if (!location) {
       return <View />;
     }
@@ -104,7 +114,14 @@ export default class App extends Component {
               latitudeDelta: 0.01,
               longitudeDelta: 0.01,
             }}
-          />
+          >
+            <Expo.MapView.Marker
+              coordinate={location.coords}
+              title="you are here: "
+              description={where.name}
+              pinColor="blue"
+            />
+          </Expo.MapView>
         </Drawer>
       </View>
     );
