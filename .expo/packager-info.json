@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerNgrokUrl": "https://bz-4pr.anonymous.nc-project.exp.direct",
+  "packagerNgrokUrl": "https://packager.bz-4pr.anonymous.nc-project.exp.direct",
+  "ngrokPid": 23979
 }
