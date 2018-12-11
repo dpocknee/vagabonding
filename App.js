@@ -30,8 +30,11 @@ const loginFlow = createSwitchNavigator(
 const mainFlow = createStackNavigator({
   Chat: {
     screen: Chat,
+  HomePage: {
+    screen: HomePage,
   },
-});
+},
+  {initialRouteName: 'HomePage'});
 
 const appNavigation = createSwitchNavigator(
   {
