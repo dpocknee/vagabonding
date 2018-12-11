@@ -4,6 +4,8 @@ import {
 } from 'react-native';
 import * as firebase from 'firebase';
 
+const { firestore } = require('../config');
+
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   textInput: {
@@ -24,19 +26,19 @@ class Login extends Component {
 
   handleLogin = () => {
     const { email, password } = this.state;
-    const { currentUser } = firebase.auth();
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        firebase
-          .firestore()
+        const { currentUser } = firebase.auth();
+        firestore
           .collection('users')
           .doc(currentUser.uid)
           .update({ loggedIn: true });
-        this.props.navigation.navigate('mainFlow');
       })
+      .then(this.props.navigation.navigate('mainFlow'))
       .catch((err) => {
+        console.log(err, '<<<<<Login Func')
         this.setState({
           errorMessage: err.message,
         });
@@ -47,9 +49,7 @@ class Login extends Component {
     return (
       <View style={styles.container}>
         <Text>Login</Text>
-        {this.state.errorMessage && (
-          <Text style={{ color: 'red' }}>{this.state.errorMessage}</Text>
-        )}
+        {this.state.errorMessage && <Text style={{ color: 'red' }}>{this.state.errorMessage}</Text>}
         <TextInput
           placeholder="email"
           autoCapitalize="none"

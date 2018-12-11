@@ -6,6 +6,8 @@ import * as firebase from 'firebase';
 import { CheckBox } from 'react-native-elements';
 import 'firebase/firestore';
 
+const { firestore } = require('../config');
+
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   textInput: {
@@ -45,8 +47,7 @@ class SignUp extends Component {
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
         const { currentUser } = firebase.auth();
-        firebase
-          .firestore()
+        firestore
           .collection('users')
           .doc(currentUser.uid)
           .set({
@@ -57,10 +58,12 @@ class SignUp extends Component {
             restaurantsChecked,
             name,
             username,
+            radius: 1000,
           });
         this.props.navigation.navigate('mainFlow');
       })
       .catch((err) => {
+        console.log(err, '<<<<Create User');
         this.setState({
           errorMessage: err.message,
         });
