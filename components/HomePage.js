@@ -2,6 +2,8 @@ import { Button } from 'react-native';
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
 
+const { firestore } = require('../config');
+
 const {
   getUserLocation,
   getLoggedInUsers,
@@ -40,8 +42,7 @@ class HomePage extends Component {
       .auth()
       .signOut()
       .then(() => {
-        firebase
-          .firestore()
+        firestore
           .collection('users')
           .doc(currentUser.uid)
           .update({ loggedIn: false });

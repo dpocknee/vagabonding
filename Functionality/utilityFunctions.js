@@ -3,6 +3,8 @@ import * as firebase from 'firebase';
 import 'firebase/firestore';
 import { isPointInCircle } from 'geolib';
 
+const { firestore } = require('../config');
+
 const getUserLocation = async (user, cb) => {
   // console.log(user, 'inside utils');
   const { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -19,8 +21,7 @@ const getUserLocation = async (user, cb) => {
   await Location.getCurrentPositionAsync({})
     .then((location) => {
       const { latitude, longitude } = location.coords;
-      firebase
-        .firestore()
+      firestore
         .collection('users')
         .doc(user.uid)
         .update({
@@ -43,8 +44,7 @@ const getUserLocation = async (user, cb) => {
     .catch(console.log);
 };
 
-const getLoggedInUsers = () => firebase
-  .firestore()
+const getLoggedInUsers = () => firestore
   .collection('users')
   .where('loggedIn', '==', true)
   .get()

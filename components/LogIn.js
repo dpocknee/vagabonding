@@ -4,6 +4,8 @@ import {
 } from 'react-native';
 import * as firebase from 'firebase';
 
+const { firestore } = require('../config');
+
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   textInput: {
@@ -29,8 +31,7 @@ class Login extends Component {
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         const { currentUser } = firebase.auth();
-        firebase
-          .firestore()
+        firestore
           .collection('users')
           .doc(currentUser.uid)
           .update({ loggedIn: true });
