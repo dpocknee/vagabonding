@@ -15,6 +15,7 @@ const Sidebar = (props) => {
         opacity: 0.8,
         width: 150,
         flex: 0.5,
+        paddingTop: 20,
       }}
     >
       <Content>
@@ -22,7 +23,11 @@ const Sidebar = (props) => {
           iconLeft
           transparent
           primary
-          style={{ height: 50, width: 50, left: 3 }}
+          style={{
+            height: 50,
+            width: 50,
+            left: 0,
+          }}
           onPress={() => closer()}
         >
           <Icon type="FontAwesome" name="bars" />

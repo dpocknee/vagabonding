@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
+import { Button, Icon } from 'native-base';
 import * as Expo from 'expo';
 import propTypes from 'prop-types';
 import Hamburger from './Hamburger';
@@ -7,9 +8,30 @@ import Hamburger from './Hamburger';
 /* eslint react/forbid-prop-types: 0 */
 
 export default class MapScreen extends Component {
-  static navigationOptions = () => ({
+  static navigationOptions = ({ navigation }) => ({
     // { navigation }
     headerTransparent: true,
+    headerLeft: (
+      <Button
+        iconLeft
+        transparent
+        onPress={() => {
+          navigation.getParam('drawerStatus')();
+          // console.log(navigation.state.params);
+        }}
+        width={50}
+      >
+        <Icon type="FontAwesome" name="bars" />
+      </Button>
+    ),
+    //   <Hamburger
+    //     allNav={(screen) => {
+    //       const { navigation } = this.props;
+    //       navigation.navigate(screen);
+    //     }}
+    //   />
+    // ),
+    // onPress: console.log('PRESSED!'),
     // headerLeft: (
     //   <Button
     //     title="burger navbar"
@@ -25,18 +47,28 @@ export default class MapScreen extends Component {
   state = {
     location: null,
     where: null,
+    isDrawerOpen: false,
   };
 
   componentDidMount() {
+    const { navigation } = this.props;
+    navigation.setParams({ drawerStatus: this.drawerSatus });
     this.getlocation();
   }
+
+  drawerSatus = () => {
+    // console.log('WOOHAH!');
+    this.setState((state) => {
+      const inverseDrawer = !state.isDrawerOpen;
+      return { isDrawerOpen: inverseDrawer };
+    });
+  };
 
   getlocation = async () => {
     const { status } = await Expo.Permissions.askAsync(Expo.Permissions.LOCATION);
     // if (status !== 'granted') {
     console.log('STATUS', status);
     const oldTrafford = (await Expo.Location.geocodeAsync('Sir Matt Busby Way'))[0];
-    // console.log('OLD TRAFFORD', oldTrafford);
     this.setState({
       location: { coords: oldTrafford },
       where: { coords: oldTrafford },
@@ -72,7 +104,7 @@ export default class MapScreen extends Component {
         </View>
       );
     }
-
+    const { isDrawerOpen } = this.state;
     return (
       <View
         style={{
@@ -80,27 +112,7 @@ export default class MapScreen extends Component {
           backgroundColor: 'green',
         }}
       >
-        {/* <Drawer
-          type="overlay"
-          styles={drawerStyles}
-          side="top"
-          ref={(ref) => {
-            this.drawer = ref;
-          }}
-          content={(
-            <Sidebar
-              navigator={this.navigator}
-              allNav={this.allNav}
-              onPress={this.closeDrawer}
-              closer={this.closeDrawer}
-            />
-)}
-          onClose={() => this.closeDrawer()}
-        >
-          <Button iconLeft transparent onPress={() => this.toggleDrawer()} width={50}>
-            <Icon type="FontAwesome" name="bars" />
-          </Button> */}
-        <Hamburger allNav={this.allNav}>
+        <Hamburger allNav={this.allNav} isDrawerOpen={isDrawerOpen}>
           <Expo.MapView
             style={{ flex: 1 }}
             provider={Expo.MapView.PROVIDER_GOOGLE}
@@ -119,7 +131,6 @@ export default class MapScreen extends Component {
             />
           </Expo.MapView>
         </Hamburger>
-        {/* </Drawer> */}
       </View>
     );
   }

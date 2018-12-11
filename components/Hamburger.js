@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Button, Icon } from 'native-base';
+import { Drawer } from 'native-base';
 import propTypes from 'prop-types';
 import Sidebar from './Sidebar';
 
@@ -14,10 +14,6 @@ export default class Hamburger extends Component {
     this.drawer._root.open();
   };
 
-  toggleDrawer = () => {
-    this.drawer._root.toggle();
-  };
-
   render() {
     const drawerStyles = {
       drawer: {
@@ -25,7 +21,8 @@ export default class Hamburger extends Component {
         height: 100,
       },
       main: {
-        paddingLeft: 3,
+        paddingLeft: 0,
+        paddingTop: 20,
         backgroundColor: 'transparent',
       },
       drawerOverlay: {
@@ -40,7 +37,11 @@ export default class Hamburger extends Component {
       // Check here for native-base drawer styles: https://github.com/root-two/react-native-drawer
       // The native-base drawer component uses the same props as react-native-drawer.
     };
-    const { allNav, children } = this.props;
+    const { allNav, children, isDrawerOpen } = this.props;
+    console.log('PROPS', isDrawerOpen);
+    if (isDrawerOpen) {
+      this.openDrawer();
+    }
     return (
       <Drawer
         type="overlay"
@@ -53,13 +54,14 @@ export default class Hamburger extends Component {
           <Sidebar
             // navigator={this.props.navigator}
             allNav={allNav}
-            onPress={this.closeDrawer}
+            onPress={() => this.closeDrawer()}
             closer={this.closeDrawer}
           />
 )}
         onClose={() => this.closeDrawer()}
+        // onPress={() => this.closeDrawer()}
       >
-        <Button
+        {/* <Button
           iconLeft
           transparent
           onPress={() => {
@@ -69,7 +71,7 @@ export default class Hamburger extends Component {
           width={50}
         >
           <Icon type="FontAwesome" name="bars" />
-        </Button>
+        </Button> */}
         {children}
       </Drawer>
     );
@@ -79,4 +81,5 @@ export default class Hamburger extends Component {
 Hamburger.propTypes = {
   allNav: propTypes.func.isRequired,
   children: propTypes.element.isRequired,
+  isDrawerOpen: propTypes.bool.isRequired,
 };
