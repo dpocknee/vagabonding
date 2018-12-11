@@ -50,6 +50,9 @@ class HomePage extends Component {
           currentUser: null,
         });
         this.props.navigation.navigate('AuthLoading');
+      })
+      .catch((err) => {
+        console.log(err, '<<<<Logout Func');
       });
   };
 
