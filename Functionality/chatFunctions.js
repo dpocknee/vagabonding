@@ -1,11 +1,26 @@
-import * as firebase from 'firebase';
-import 'firebase/firestore';
-
 const { firestore } = require('../config');
 
 const userID = '1234';
 const clickedUserID = '5678';
 const chatsRef = firestore.collection('chats');
+
+console.log(new Date());
+
+chatsRef.doc(`${userID}${clickedUserID}`).set({
+  users: [`${userID}${clickedUserID}`, `${clickedUserID}${userID}`],
+  messages: [
+    {
+      _id: '1',
+      text: 'My message',
+      createdAt: `${new Date()}`,
+      user: {
+        _id: userID,
+        name: 'React Native',
+      },
+      // Any additional custom parameters are passed through
+    },
+  ],
+});
 
 const getPreviousMessages = async (currentUser, clickedUser) => {
   // query the database looking for previous messages between the users.
@@ -14,10 +29,15 @@ const getPreviousMessages = async (currentUser, clickedUser) => {
     'array-contains',
     `${currentUser}${clickedUser}`,
   );
-  queryPreviousChatHistory.get().then((querySnapshot) => {
+  return queryPreviousChatHistory.get().then((querySnapshot) => {
+    if (querySnapshot.empty) {
+      return [];
+    }
+    const previousMessages = [];
     querySnapshot.forEach((doc) => {
-      console.log(doc.data());
+      previousMessages.push(doc.data().messages);
     });
+    return previousMessages[0].splice(-20);
   });
   // return this if it exists, otherwise return empty array
 };

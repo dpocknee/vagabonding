@@ -5,15 +5,10 @@ import Loading from './components/Loading';
 import SignUp from './components/SignUp';
 import Login from './components/LogIn';
 import HomePage from './components/HomePage';
+import Chat from './components/Chat';
 
 const { firestore } = require('./config');
 const { query } = require('./Functionality/chatFunctions');
-
-query.get().then((querySnapshot) => {
-  querySnapshot.forEach((doc) => {
-    console.log(`${doc.id} => ${doc.data()}`);
-  });
-});
 
 const loginFlow = createSwitchNavigator(
   {
@@ -33,8 +28,8 @@ const loginFlow = createSwitchNavigator(
 );
 
 const mainFlow = createStackNavigator({
-  HomePage: {
-    screen: HomePage,
+  Chat: {
+    screen: Chat,
   },
 });
 

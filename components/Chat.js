@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { GiftedChat } from 'react-native-gifted-chat';
-import { userID, clickedUserID } from '../Functionality/chatFunctions';
+
+const { userID, clickedUserID, getPreviousMessages } = require('../Functionality/chatFunctions');
 
 class Chat extends Component {
   // Chat will need userID and clickedUserID as props
@@ -9,9 +10,11 @@ class Chat extends Component {
   };
 
   componentWillMount() {
-    // query the database looking for previous messages between the users.
-    // if there are. Set the last 20 of these in state
-    // if there arent, set to empty array
+    getPreviousMessages(userID, clickedUserID).then((previousMessages) => {
+      this.setState({
+        messages: previousMessages,
+      });
+    });
   }
 
   onSend(messages = []) {
