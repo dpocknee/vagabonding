@@ -26,7 +26,7 @@ class HomePage extends Component {
             },
             () => {
               filterUsersByDistance(this.state.currentUser, (err, nearbyUsers) => {
-                console.log(nearbyUsers, 'nearbyUsers');
+                // console.log(nearbyUsers, 'nearbyUsers');
               });
             },
           );
