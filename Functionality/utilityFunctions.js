@@ -53,7 +53,9 @@ const getLoggedInUsers = () => firebase
       return [];
     }
     const userDocs = [];
-    snapshot.forEach(doc => userDocs.push(doc.data()));
+    snapshot.forEach((doc) => {
+      userDocs.push([doc.data(), doc.id]);
+    });
     return userDocs;
   })
   .catch((err) => {
@@ -65,12 +67,17 @@ const filterUsersByDistance = async (user, cb) => {
   if (!userDocs.length) {
     console.log('No users nearby');
   } else {
-    const radius = user.radius;
-    const currentUserLocation = user.location;
-    const nearbyUsers = userDocs.map((userDoc) => {
-      if (isPointInCircle(userDoc.location, currentUserLocation, radius)) return userDoc;
+    let radius;
+    let currentUserLocation;
+    userDocs.forEach((doc) => {
+      if (doc.includes(user.uid)) {
+        radius = doc[0].radius;
+        currentUserLocation = doc[0].location;
+      }
     });
-    console.log(nearbyUsers);
+    const nearbyUsers = userDocs.map((userDoc) => {
+      if (isPointInCircle(userDoc[0].location, currentUserLocation, radius)) return userDoc;
+    });
     cb(null, nearbyUsers);
   }
   // check if users array is empty

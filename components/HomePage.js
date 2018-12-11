@@ -23,7 +23,7 @@ class HomePage extends Component {
               ...locationAndError,
             },
             () => {
-              filterUsersByDistance(currentUser, (err, nearbyUsers) => {
+              filterUsersByDistance(this.state.currentUser, (err, nearbyUsers) => {
                 console.log(nearbyUsers, 'nearbyUsers');
               });
             },
