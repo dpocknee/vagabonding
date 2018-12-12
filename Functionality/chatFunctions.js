@@ -1,31 +1,12 @@
+import * as firebase from 'firebase';
+import 'firebase/firestore';
+
 const { firestore } = require('../config');
 
 const userID = '1234';
+const userName = 'Aaron';
 const clickedUserID = '5678';
 const chatsRef = firestore.collection('chats');
-
-console.log(new Date());
-
-chatsRef
-  .doc(`${userID}${clickedUserID}`)
-  .set({
-    users: [`${userID}${clickedUserID}`, `${clickedUserID}${userID}`],
-    messages: [
-      {
-        _id: '1',
-        text: 'My message',
-        createdAt: `${new Date()}`,
-        user: {
-          _id: userID,
-          name: 'React Native',
-        },
-        // Any additional custom parameters are passed through
-      },
-    ],
-  })
-  .catch((err) => {
-    console.log(err, '<<<< Setting Test Message');
-  });
 
 const getPreviousMessages = async (currentUser, clickedUser) => {
   // query the database looking for previous messages between the users.
@@ -38,22 +19,44 @@ const getPreviousMessages = async (currentUser, clickedUser) => {
     .get()
     .then((querySnapshot) => {
       if (querySnapshot.empty) {
-        return [];
+        chatsRef.doc(`${currentUser}${clickedUser}`).set({
+          users: [`${currentUser}${clickedUser}`, `${clickedUser}${currentUser}`],
+          messages: [],
+        });
+        return { doc: `${currentUser}${clickedUser}`, messages: [] };
       }
       const previousMessages = [];
+      let docID;
       querySnapshot.forEach((doc) => {
+        docID = doc.id;
         previousMessages.push(doc.data().messages);
       });
-      return previousMessages[0].splice(-20);
+      return { doc: docID, messages: previousMessages[0].splice(-20).reverse() };
     })
     .catch((err) => {
       console.log(err, '<<<<<Get Previous Messages');
     });
-  // return this if it exists, otherwise return empty array
+};
+
+const sendMessage = async (message, doc) => {
+  const chatRefDoc = chatsRef.doc(doc);
+  const newMessage = { ...message };
+  newMessage.createdAt = `${newMessage.createdAt}`;
+
+  return chatRefDoc
+    .update({
+      messages: firebase.firestore.FieldValue.arrayUnion(newMessage),
+    })
+    .then(() => newMessage)
+    .catch((err) => {
+      console.log(err, '<<<<<updateMessagesErr');
+    });
 };
 
 module.exports = {
   userID,
   clickedUserID,
   getPreviousMessages,
+  userName,
+  sendMessage,
 };
