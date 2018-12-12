@@ -121,7 +121,6 @@ export default class MapScreen extends Component {
             style={{ flex: 1 }}
             users={screenProps.users}
             onSelectUser={(user) => {
-              debugger;
               this.props.navigation.navigate('ProfileScreen');
             }}
           />
