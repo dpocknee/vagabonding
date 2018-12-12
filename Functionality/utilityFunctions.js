@@ -1,7 +1,7 @@
 import { Location, Permissions } from 'expo';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
-import { isPointInCircle } from 'geolib';
+import { isPointInCircle, getDistance } from 'geolib';
 
 const { firestore } = require('../config');
 
@@ -78,15 +78,16 @@ const filterUsersByDistance = async (user, cb) => {
         currentUserLocation = doc[0].location;
       }
     });
-    const nearbyUsers = userDocs.map((userDoc) => {
-      if (isPointInCircle(userDoc[0].location, currentUserLocation, radius)) return userDoc;
-    });
-    cb(null, nearbyUsers);
+    const nearbyUsersObj = userDocs.reduce((nearbyUsers, cur) => {
+      if (isPointInCircle(cur[0].location, currentUserLocation, radius)) {
+        const distance = getDistance(currentUserLocation, cur[0].location, 100);
+        const userObj = cur[0];
+        nearbyUsers[cur[1]] = { ...userObj, distance };
+        return nearbyUsers;
+      }
+    }, {});
+    cb(null, nearbyUsersObj);
   }
-  // check if users array is empty
-  // get current user's radius
-  // get current user's location
-  // filter using pointInCircle from geolib
 };
 
 module.exports = { getUserLocation, getLoggedInUsers, filterUsersByDistance };
