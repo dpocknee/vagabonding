@@ -11,6 +11,7 @@
     "dev-tools": "^0.1.6",
     "expo": "^31.0.2",
     "firebase": "^5.7.0",
+    "prop-types": "^15.6.2",
     "react": "^16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
     "react-native-material-kit": "^0.5.1",
