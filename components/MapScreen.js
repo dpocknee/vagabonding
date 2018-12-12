@@ -117,7 +117,14 @@ export default class MapScreen extends Component {
           </Expo.MapView>
 
           {/* users component */}
-          <Users style={{ flex: 1 }} props={this.props} users={screenProps.users} />
+          <Users
+            style={{ flex: 1 }}
+            users={screenProps.users}
+            onSelectUser={(user) => {
+              debugger;
+              this.props.navigation.navigate('ProfileScreen');
+            }}
+          />
         </Hamburger>
       </View>
     );
