@@ -4,6 +4,8 @@
   "extends": "airbnb",
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "import/no-named-as-default": 0
+    "import/no-named-as-default": 0,
+    "react/prop-types": ["<enabled>", "never"],
+    "react/destructuring-assignment": ["<enabled>", "never"]
   }
 }
