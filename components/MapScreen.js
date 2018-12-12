@@ -3,9 +3,12 @@ import { View, Text } from 'react-native';
 import { Button, Icon } from 'native-base';
 import * as Expo from 'expo';
 import PropTypes from 'prop-types';
+import * as firebase from 'firebase';
 
 import Users from './Users';
 import Hamburger from './Hamburger';
+
+const { getUserLocation } = require('../Functionality/utilityFunctions');
 
 /* eslint react/require-default-props: 0 */
 /* eslint react/forbid-prop-types: 0 */
@@ -36,7 +39,13 @@ export default class MapScreen extends Component {
   componentDidMount() {
     const { navigation } = this.props;
     navigation.setParams({ drawerStatus: this.drawerSatus });
-    this.getlocation();
+
+    // get current logged in user
+    firebase.auth().onAuthStateChanged((currentUser) => {
+      if (currentUser) { 
+       const location =  await getUserLocation(currentUser)
+       console.log(location)
+    });
   }
 
   drawerSatus = () => {
@@ -47,26 +56,26 @@ export default class MapScreen extends Component {
     });
   };
 
-  getlocation = async () => {
-    const { status } = await Expo.Permissions.askAsync(Expo.Permissions.LOCATION);
-    // if (status !== 'granted') {
-    console.log('STATUS', status);
-    const oldTrafford = (await Expo.Location.geocodeAsync('Sir Matt Busby Way'))[0];
-    this.setState({
-      location: { coords: oldTrafford },
-      where: { coords: oldTrafford },
-    });
-    //   console.log('OLD TRAFFORD', oldTrafford);
-    // } else {
-    //   console.log('granted', status);
-    //   const location = await Expo.Location.getCurrentPositionAsync({});
-    //   const where = (await Expo.Location.reverseGeocodeAsync(location.coords))[0];
-    //   this.setState({
-    //     location,
-    //     where,
-    //   });
-    // }
-  };
+  // getlocation = async () => {
+  //   const { status } = await Expo.Permissions.askAsync(Expo.Permissions.LOCATION);
+  //   // if (status !== 'granted') {
+  //   console.log('STATUS', status);
+  //   const oldTrafford = (await Expo.Location.geocodeAsync('Sir Matt Busby Way'))[0];
+  //   this.setState({
+  //     location: { coords: oldTrafford },
+  //     where: { coords: oldTrafford },
+  //   });
+  //   console.log('OLD TRAFFORD', oldTrafford);
+  // } else {
+  //   console.log('granted', status);
+  //   const location = await Expo.Location.getCurrentPositionAsync({});
+  //   const where = (await Expo.Location.reverseGeocodeAsync(location.coords))[0];
+  //   this.setState({
+  //     location,
+  //     where,
+  //   });
+  // }
+  // };
 
   allNav = (screen) => {
     const { navigation } = this.props;
@@ -76,6 +85,7 @@ export default class MapScreen extends Component {
   render() {
     const { location, where } = this.state;
     const { screenProps } = this.props;
+    console.log(location, 'render console');
     if (!location) {
       return (
         <View
@@ -96,8 +106,8 @@ export default class MapScreen extends Component {
             style={{ height: 500 }}
             provider={Expo.MapView.PROVIDER_GOOGLE}
             initialRegion={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
+              latitude: location.latitude,
+              longitude: location.longitude,
               latitudeDelta: 0.05,
               longitudeDelta: 0.05,
             }}

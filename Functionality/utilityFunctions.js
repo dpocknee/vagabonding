@@ -38,7 +38,8 @@ const getUserLocation = async (user, cb) => {
             },
             errorMessage: null,
           };
-          cb(null, newObj);
+          // cb(null, newObj);
+          return newObj;
         })
         .catch((err) => {
           console.log(err, '<<<<Update Users Location');
