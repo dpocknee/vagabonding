@@ -36,7 +36,6 @@ const loginFlow = createSwitchNavigator(
   },
 );
 
-
 const mainFlow = createStackNavigator(
   // Add main app components here - remember to include screen property
   {
@@ -59,14 +58,14 @@ const mainFlow = createStackNavigator(
 );
 // *****FOR TEST PURPOSES ONLY*****
 // {
-//   Chat: {
-//     screen: Chat,
-//   },
-//   HomePage: {
-//     screen: HomePage,
-//   },
+//   // Chat: {
+//   //   screen: Chat,
+//   // },
+//   //   HomePage: {
+//   //     screen: HomePage,
+//   //   },
 // },
-// { initialRouteName: 'HomePage' },
+// { initialRouteName: 'Chat' },
 // *****FOR TEST PURPOSES ONLY*****
 
 const appNavigation = createSwitchNavigator(
