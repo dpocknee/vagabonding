@@ -4,7 +4,11 @@ import * as firebase from 'firebase';
 
 const { firestore } = require('../config');
 
-const { getUserLocation, filterUsersByDistance } = require('../Functionality/utilityFunctions');
+const {
+  getUserLocation,
+  filterUsersByDistance,
+  logOut,
+} = require('../Functionality/utilityFunctions');
 
 class HomePage extends Component {
   state = {
@@ -32,23 +36,11 @@ class HomePage extends Component {
   }
 
   handleLogout = () => {
-    const { currentUser } = firebase.auth();
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        firestore
-          .collection('users')
-          .doc(currentUser.uid)
-          .update({ loggedIn: false });
-        this.setState({
-          currentUser: null,
-        });
-        this.props.navigation.navigate('AuthLoading');
-      })
-      .catch((err) => {
-        console.log(err, '<<<<Logout Func');
-      });
+    logOut();
+    this.setState({
+      currentUser: null,
+    });
+    this.props.navigation.navigate('AuthLoading');
   };
 
   render() {
