@@ -3,7 +3,6 @@ import { Drawer } from 'native-base';
 import propTypes from 'prop-types';
 import Sidebar from './Sidebar';
 import drawerStyles from '../styles/Hamburger.styles';
-/* eslint no-underscore-dangle: 0 */
 
 export default class Hamburger extends Component {
   closeDrawer = () => {

@@ -4,6 +4,7 @@ import {
   Container, Content, Button, Icon,
 } from 'native-base';
 import propTypes from 'prop-types';
+import { logOut } from '../Functionality/utilityFunctions';
 
 const Sidebar = (props) => {
   const { closeDrawer, allNav, drawerStatus } = props;
@@ -54,7 +55,8 @@ const Sidebar = (props) => {
           onPress={() => {
             closeDrawer();
             drawerStatus();
-            allNav('Logout');
+            logOut();
+            allNav('loginFlow');
           }}
         >
           <Icon type="FontAwesome" name="times" />
