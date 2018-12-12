@@ -94,4 +94,25 @@ const filterUsersByDistance = async (user, cb) => {
   }
 };
 
-module.exports = { getUserLocation, getLoggedInUsers, filterUsersByDistance };
+const logOut = () => {
+  const { currentUser } = firebase.auth();
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      firestore
+        .collection('users')
+        .doc(currentUser.uid)
+        .update({ loggedIn: false });
+    })
+    .catch((err) => {
+      console.log(err, '<<<<Logout Func');
+    });
+};
+
+module.exports = {
+  getUserLocation,
+  getLoggedInUsers,
+  filterUsersByDistance,
+  logOut,
+};
