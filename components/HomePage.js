@@ -2,7 +2,7 @@ import { Button } from 'react-native';
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
 
-const { firestore } = require('../config');
+// const { firestore } = require('../config');
 
 const {
   getUserLocation,
