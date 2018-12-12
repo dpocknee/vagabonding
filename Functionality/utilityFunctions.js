@@ -1,7 +1,7 @@
 import { Location, Permissions } from 'expo';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
-import { isPointInCircle } from 'geolib';
+import { isPointInCircle, getDistance } from 'geolib';
 
 const { firestore } = require('../config');
 
@@ -78,15 +78,41 @@ const filterUsersByDistance = async (user, cb) => {
         currentUserLocation = doc[0].location;
       }
     });
-    const nearbyUsers = userDocs.map((userDoc) => {
-      if (isPointInCircle(userDoc[0].location, currentUserLocation, radius)) return userDoc;
-    });
-    cb(null, nearbyUsers);
+    const nearbyUsersObj = userDocs.reduce((nearbyUsers, cur) => {
+      const distance = getDistance(currentUserLocation, cur[0].location, 100);
+      const userObj = cur[0];
+      if (
+        isPointInCircle(cur[0].location, currentUserLocation, radius)
+        // This line checks to see if the current user sits within the other users radius as well
+        // && isPointInCircle(currentUserLocation, cur[0].location, cur[0].radius)
+      ) {
+        nearbyUsers[cur[1]] = { ...userObj, distance };
+        return nearbyUsers;
+      }
+    }, {});
+    cb(null, nearbyUsersObj);
   }
-  // check if users array is empty
-  // get current user's radius
-  // get current user's location
-  // filter using pointInCircle from geolib
 };
 
-module.exports = { getUserLocation, getLoggedInUsers, filterUsersByDistance };
+const logOut = () => {
+  const { currentUser } = firebase.auth();
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      firestore
+        .collection('users')
+        .doc(currentUser.uid)
+        .update({ loggedIn: false });
+    })
+    .catch((err) => {
+      console.log(err, '<<<<Logout Func');
+    });
+};
+
+module.exports = {
+  getUserLocation,
+  getLoggedInUsers,
+  filterUsersByDistance,
+  logOut,
+};
