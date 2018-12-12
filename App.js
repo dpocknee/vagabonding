@@ -8,7 +8,7 @@ import SignUp from './components/SignUp';
 import Login from './components/LogIn';
 //  *****FOR TEST PURPOSES ONLY*****
 // import HomePage from './components/HomePage';
-// import Chat from './components/Chat';
+import Chat from './components/Chat';
 //  *****FOR TEST PURPOSES ONLY*****
 import MapScreen from './components/MapScreen';
 import ChatScreen from './components/ChatScreen';
@@ -39,21 +39,21 @@ const loginFlow = createSwitchNavigator(
 const mainFlow = createStackNavigator(
   // Add main app components here - remember to include screen property
   {
-    Map: {
-      screen: MapScreen,
-    },
+    // Map: {
+    //   screen: MapScreen,
+    // },
     Chat: {
-      screen: ChatScreen,
+      screen: Chat,
     },
-    Inbox: {
-      screen: InboxScreen,
-    },
-    Logout: {
-      screen: LogoutScreen,
-    },
+    // Inbox: {
+    //   screen: InboxScreen,
+    // },
+    // Logout: {
+    //   screen: LogoutScreen,
+    // },
   },
   {
-    initialRouteName: 'Map',
+    initialRouteName: 'Chat',
   },
 );
 // *****FOR TEST PURPOSES ONLY*****
@@ -75,7 +75,7 @@ const appNavigation = createSwitchNavigator(
     mainFlow,
   },
   { initialRouteName: 'AuthLoading' },
-//   { initialRouteName: 'mainFlow' },
+  //   { initialRouteName: 'mainFlow' },
 );
 
 const AppContainer = createAppContainer(appNavigation);
