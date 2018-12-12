@@ -53,8 +53,8 @@ const mainFlow = createStackNavigator(
     },
   },
   {
-    initialRouteName: "Map"
-  }
+    initialRouteName: 'Map',
+  },
 );
 // *****FOR TEST PURPOSES ONLY*****
 // {
