@@ -78,19 +78,16 @@ const filterUsersByDistance = async (user, cb) => {
         currentUserLocation = doc[0].location;
       }
     });
-    const nearbyUsers = userDocs.map((userDoc) => {
-      if (isPointInCircle(userDoc[0].location, currentUserLocation, radius)) {
-        const distance = getDistance(currentUserLocation, userDoc[0].location, 100);
-        return [userDoc, distance];
+    const nearbyUsersObj = userDocs.reduce((nearbyUsers, cur) => {
+      if (isPointInCircle(cur[0].location, currentUserLocation, radius)) {
+        const distance = getDistance(currentUserLocation, cur[0].location, 100);
+        const userObj = cur[0];
+        nearbyUsers[cur[1]] = { ...userObj, distance };
+        return nearbyUsers;
       }
-    });
-    console.log(nearbyUsers);
-    cb(null, nearbyUsers);
+    }, {});
+    cb(null, nearbyUsersObj);
   }
-  // check if users array is empty
-  // get current user's radius
-  // get current user's location
-  // filter using pointInCircle from geolib
 };
 
 module.exports = { getUserLocation, getLoggedInUsers, filterUsersByDistance };

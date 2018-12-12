@@ -38,7 +38,7 @@ class Login extends Component {
       })
       .then(this.props.navigation.navigate('mainFlow'))
       .catch((err) => {
-        console.log(err, '<<<<<Login Func')
+        console.log(err, '<<<<<Login Func');
         this.setState({
           errorMessage: err.message,
         });
