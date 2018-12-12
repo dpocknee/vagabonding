@@ -75,7 +75,7 @@ const appNavigation = createSwitchNavigator(
     mainFlow,
   },
   { initialRouteName: 'AuthLoading' },
-//   { initialRouteName: 'mainFlow' },
+  //   { initialRouteName: 'mainFlow' },
 );
 
 const AppContainer = createAppContainer(appNavigation);

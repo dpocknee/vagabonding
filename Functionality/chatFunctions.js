@@ -59,4 +59,5 @@ module.exports = {
   getPreviousMessages,
   userName,
   sendMessage,
+  chatsRef,
 };

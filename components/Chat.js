@@ -7,6 +7,7 @@ const {
   getPreviousMessages,
   userName,
   sendMessage,
+  chatsRef,
 } = require('../Functionality/chatFunctions');
 
 class Chat extends Component {
@@ -19,9 +20,12 @@ class Chat extends Component {
   componentWillMount() {
     getPreviousMessages(userID, clickedUserID)
       .then((messageObj) => {
-        this.setState({
-          messages: messageObj.messages,
-          doc: messageObj.doc,
+        chatsRef.doc(messageObj.doc).onSnapshot((doc) => {
+          const messages = doc.data().messages.reverse();
+          this.setState(previousState => ({
+            doc: messageObj.doc,
+            messages,
+          }));
         });
       })
       .catch((err) => {
@@ -30,16 +34,22 @@ class Chat extends Component {
   }
 
   onSend(messages = []) {
-    sendMessage(messages[0], this.state.doc).then((newMessage) => {
-      this.setState(previousState => ({
-        messages: GiftedChat.append(previousState.messages, [newMessage]),
-      }));
-    });
+    sendMessage(messages[0], this.state.doc)
+      .then((newMessage) => {
+        //* **** OFFLINE MODE????? ********
+        // this.setState(previousState => ({
+        //   messages: GiftedChat.append(previousState.messages, [newMessage]),
+        // }));
+        //* **** OFFLINE MODE????? ********
+      })
+      .catch((err) => {
+        console.log(err, '<<<<sendMessage Error');
+      });
   }
 
-  onReceive(text) {
-    // (in setState) - messages: GiftedChat.append(previousState.messages, text)
-  }
+  // onReceive(text) {
+  //   // (in setState) - messages: GiftedChat.append(previousState.messages, text)
+  // }
 
   render() {
     return (
