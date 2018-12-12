@@ -4,11 +4,7 @@ import * as firebase from 'firebase';
 
 const { firestore } = require('../config');
 
-const {
-  getUserLocation,
-  getLoggedInUsers,
-  filterUsersByDistance,
-} = require('../Functionality/utilityFunctions');
+const { getUserLocation, filterUsersByDistance } = require('../Functionality/utilityFunctions');
 
 class HomePage extends Component {
   state = {
@@ -31,7 +27,6 @@ class HomePage extends Component {
             },
           );
         });
-        // console.log('got to getLoggedInUsers fucntion');
       }
     });
   }
