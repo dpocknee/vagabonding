@@ -6,9 +6,10 @@ import { createSwitchNavigator, createStackNavigator, createAppContainer } from 
 // import { firebaseConfig, settings } from './config';
 // import AuthLoading from './components/AuthLoading';
 import MapScreen from './components/MapScreen';
+
 import ChatScreen from './components/ChatScreen';
-// import LogoutScreen from './components/LogoutScreen';
-// import InboxScreen from './components/InboxScreen';
+import LogoutScreen from './components/LogoutScreen';
+import InboxScreen from './components/InboxScreen';
 
 // firebase.initializeApp(firebaseConfig);
 // const firestore = firebase.firestore();
@@ -31,12 +32,12 @@ const mainFlow = createStackNavigator(
     Chat: {
       screen: ChatScreen,
     },
-    // Inbox: {
-    //   screen: InboxScreen
-    // },
-    // Logout: {
-    //   screen: LogoutScreen
-    // }
+    Inbox: {
+      screen: InboxScreen,
+    },
+    Logout: {
+      screen: LogoutScreen,
+    },
   },
   {
     initialRouteName: 'Map',
