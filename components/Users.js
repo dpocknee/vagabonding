@@ -35,7 +35,7 @@ const Users = (props) => {
 
 Users.propTypes = {
   navigation: { navigate: PropTypes.func.isRequired },
-  users: PropTypes.object.isRequired,
+  users: PropTypes.array.isRequired,
 };
 
 export default Users;

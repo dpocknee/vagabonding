@@ -108,7 +108,12 @@ export default class MapScreen extends Component {
               description={where.name}
               pinColor="blue"
             />
-            <Expo.MapView.Circle center={location.coords} radius={1500} fillColor="#dde1d5" />
+            <Expo.MapView.Circle
+              center={location.coords}
+              radius={1500}
+              fillColor="rgba(204, 210, 192, 0.5)"
+              style={{ opacity: 0.5 }}
+            />
           </Expo.MapView>
 
           {/* users component */}

@@ -22,7 +22,7 @@ export default class Hamburger extends Component {
       },
       main: {
         paddingLeft: 0,
-        paddingTop: 20,
+        paddingTop: 0,
         backgroundColor: 'transparent',
       },
       drawerOverlay: {
