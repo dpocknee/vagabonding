@@ -9,10 +9,10 @@ import Login from './components/LogIn';
 //  *****FOR TEST PURPOSES ONLY*****
 // import HomePage from './components/HomePage';
 // import Chat from './components/Chat';
+// import Inbox from './components/Inbox';
 //  *****FOR TEST PURPOSES ONLY*****
 import MapScreen from './components/MapScreen';
 import ChatScreen from './components/ChatScreen';
-import LogoutScreen from './components/LogoutScreen';
 import InboxScreen from './components/InboxScreen';
 
 import mockUsers from './mockUsers';
@@ -48,12 +48,9 @@ const mainFlow = createStackNavigator(
     Inbox: {
       screen: InboxScreen,
     },
-    Logout: {
-      screen: LogoutScreen,
-    },
   },
   {
-    initialRouteName: 'Map',
+    initialRouteName: 'MapScreen',
   },
 );
 // *****FOR TEST PURPOSES ONLY*****
