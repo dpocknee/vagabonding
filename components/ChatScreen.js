@@ -3,7 +3,6 @@ import { View, Text } from 'react-native';
 import { Button, Icon } from 'native-base';
 import PropTypes from 'prop-types';
 import Hamburger from './Hamburger';
-import profileStyles from '../styles/Profile.styles';
 import Chat from './Chat';
 
 export default class ChatScreen extends Component {
@@ -42,6 +41,11 @@ export default class ChatScreen extends Component {
   };
 
   render() {
+    const { isDrawerOpen } = this.state;
+    const { navigation } = this.props;
+    const currentUserID = navigation.getParam('currentUserID');
+    const currentUsername = navigation.getParam('currentUsername');
+    const selectedUserID = navigation.getParam('selectedUserID');
     // Chat will need userID, userName and clickedUserID as props
     return (
       <View style={{ flex: 1 }}>
@@ -49,7 +53,16 @@ export default class ChatScreen extends Component {
           allNav={this.allNav}
           isDrawerOpen={isDrawerOpen}
           drawerStatus={this.drawerStatus}
-        />
+        >
+          <>
+            <Text>The Chat page has loaded!</Text>
+            <Chat
+              currentUserID={currentUserID}
+              currentUsername={currentUsername}
+              selectedUserID={selectedUserID}
+            />
+          </>
+        </Hamburger>
       </View>
     );
   }

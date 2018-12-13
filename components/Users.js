@@ -5,28 +5,34 @@ import {
 import { getTheme } from 'react-native-material-kit';
 import PropTypes from 'prop-types';
 
+/* eslint react/require-default-props: 0 */
+/* eslint react/forbid-prop-types: 0 */
+
 const theme = getTheme();
 
 const Users = (props) => {
-  const { users, onSelectUser } = props;
+  const { users, onSelectUser, currentUser } = props;
   return (
     <ScrollView>
-      {users.map(user => (
+      {users.map(
+        user => user[0] !== currentUser.uid && (
         <TouchableOpacity
           onPress={() => onSelectUser(user)}
           style={theme.cardStyle}
-          key={user.name}
+          key={user[1].name}
         >
           <Text style={theme.cardActionStyle}>
-            {user.name}
+            {user[1].name}
             {' '}
           </Text>
           <Text style={theme.cardContentStyle}>
-            Interests: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis
-            pellentesque lacus eleifend lacinia...
+                Distance:
+            {user[1].distance}
+m away
           </Text>
         </TouchableOpacity>
-      ))}
+        ),
+      )}
     </ScrollView>
   );
 };
@@ -34,6 +40,8 @@ const Users = (props) => {
 Users.propTypes = {
   navigation: { navigate: PropTypes.object.isRequired },
   users: PropTypes.array.isRequired,
+  onSelectUser: PropTypes.func.isRequired,
+  currentUser: PropTypes.object.isRequired,
 };
 
 export default Users;

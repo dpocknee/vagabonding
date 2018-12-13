@@ -69,6 +69,9 @@ export default class MapScreen extends Component {
   render() {
     const { location, where, isDrawerOpen } = this.state;
     const { navigation, screenProps } = this.props;
+    // JUST FOR TESTING:
+    const currentUser = { uid: 'user9' };
+    // ----------
     if (!location) {
       return (
         <View
@@ -121,8 +124,9 @@ export default class MapScreen extends Component {
             <Users
               style={{ flex: 1 }}
               users={screenProps.users}
+              currentUser={currentUser}
               onSelectUser={(user) => {
-                this.props.navigation.navigate('Profile', { selectedUser: user });
+                navigation.navigate('Profile', { selectedUser: user, currentUser });
               }}
             />
           </>
@@ -133,6 +137,6 @@ export default class MapScreen extends Component {
 }
 
 MapScreen.propTypes = {
-  screenProps: PropTypes.object.isRequired,
-  navigation: PropTypes.object.isRequired,
+  // screenProps: PropTypes.object.isRequired,
+  // navigation: PropTypes.func.isRequired,
 };

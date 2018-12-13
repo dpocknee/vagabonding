@@ -42,7 +42,9 @@ export default class Profile extends Component {
 
   render() {
     const { isDrawerOpen } = this.state;
-    const userInfo = this.props.navigation.getParam('selectedUser');
+    const userId = this.props.navigation.getParam('selectedUser')[0];
+    const userInfo = this.props.navigation.getParam('selectedUser')[1];
+    const currentUser = this.props.navigation.getParam('currentUser');
     const interests = Object.keys(userInfo.interests).reduce((outputArray, interest) => {
       if (userInfo.interests[interest]) outputArray.push(interest);
       return outputArray;
@@ -55,32 +57,36 @@ export default class Profile extends Component {
           isDrawerOpen={isDrawerOpen}
           drawerStatus={this.drawerStatus}
         >
-          <View style={profileStyles.profileText}>
-            <Icon type="FontAwesome" name="fas fa-user-circle fa-6x" />
-            <Text style={profileStyles.username}>{userInfo.username}</Text>
-            <Text>
-              Real name:
-              {userInfo.name}
-            </Text>
-            <Text>
-              Interests:
-              {validInterests}
-            </Text>
-          </View>
+          <>
+            <View style={profileStyles.profileText}>
+              <Icon type="FontAwesome" name="user-circle" style={{ fontSize: 40 }} />
+              <Text style={profileStyles.username}>{userInfo.username}</Text>
+              <Text>
+                Real name:
+                {userInfo.name}
+              </Text>
+              <Text>
+                Interests:
+                {validInterests}
+              </Text>
+            </View>
 
-          <Button
-            onPress={() => {
-              this.props.navigation.navigate('Chat', {
-                selectedUser: user,
-              });
-            }}
-          >
-            <Text>
-              Chat with
-              {userInfo.name}
+            <Button
+              onPress={() => {
+                this.props.navigation.navigate('Chat', {
+                  currentUserID: currentUser.uid,
+                  currentUsername: 'Aaron',
+                  selectedUserID: userId,
+                });
+              }}
+            >
+              <Text>
+                Chat with
+                {userInfo.name}
 !
-            </Text>
-          </Button>
+              </Text>
+            </Button>
+          </>
         </Hamburger>
       </View>
     );
