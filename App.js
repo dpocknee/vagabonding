@@ -77,7 +77,9 @@ const appNavigation = createSwitchNavigator(
 
 const AppContainer = createAppContainer(appNavigation);
 
-// Note: Entire navigation is in this component, if navigation breaks may be to do with this component
+// Note: Entire navigation is in this component
+// if navigation breaks may be to do with this component
+
 export default class App extends React.Component {
   state = {
     location: null,

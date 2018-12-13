@@ -4,9 +4,10 @@ import {
   Container, Content, Button, Icon,
 } from 'native-base';
 import propTypes from 'prop-types';
+import { logOut } from '../Functionality/utilityFunctions';
 
 const Sidebar = (props) => {
-  const { closeDrawer, allNav } = props;
+  const { closeDrawer, allNav, drawerStatus } = props;
   const menuTextStyle = { left: 5, color: 'darkblue' };
   return (
     <Container
@@ -19,19 +20,58 @@ const Sidebar = (props) => {
       }}
     >
       <Content style={{ paddingTop: 50 }}>
-        <Button iconLeft transparent primary title="Map" onPress={() => allNav('Map')}>
+        <Button
+          iconLeft
+          transparent
+          primary
+          title="Map"
+          onPress={() => {
+            closeDrawer();
+            allNav('Map');
+          }}
+        >
           <Icon type="FontAwesome" name="map" />
           <Text style={menuTextStyle}>Map</Text>
         </Button>
-        <Button iconLeft transparent primary title="Inbox" onPress={() => allNav('Inbox')}>
+        <Button
+          iconLeft
+          transparent
+          primary
+          title="Inbox"
+          onPress={() => {
+            closeDrawer();
+            drawerStatus();
+            allNav('Inbox');
+          }}
+        >
           <Icon type="FontAwesome" name="envelope" />
           <Text style={menuTextStyle}>Inbox</Text>
         </Button>
-        <Button iconLeft transparent primary title="Logout" onPress={() => allNav('Logout')}>
+        <Button
+          iconLeft
+          transparent
+          primary
+          title="Logout"
+          onPress={() => {
+            closeDrawer();
+            drawerStatus();
+            logOut();
+            allNav('loginFlow');
+          }}
+        >
           <Icon type="FontAwesome" name="times" />
           <Text style={menuTextStyle}>Logout</Text>
         </Button>
-        <Button iconLeft transparent primary title="Close" onPress={() => closeDrawer()}>
+        <Button
+          iconLeft
+          transparent
+          primary
+          title="Close"
+          onPress={() => {
+            drawerStatus();
+            closeDrawer();
+          }}
+        >
           <Icon type="FontAwesome" name="times" />
           <Text style={menuTextStyle}>Close</Text>
         </Button>
@@ -43,6 +83,7 @@ const Sidebar = (props) => {
 Sidebar.propTypes = {
   closeDrawer: propTypes.func.isRequired,
   allNav: propTypes.func.isRequired,
+  drawerStatus: propTypes.func.isRequired,
 };
 
 export default Sidebar;
