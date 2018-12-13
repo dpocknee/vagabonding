@@ -55,6 +55,6 @@ export default class ChatScreen extends Component {
   }
 }
 
-Profile.propTypes = {
+ChatScreen.propTypes = {
   navigation: PropTypes.object.isRequired,
 };

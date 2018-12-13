@@ -43,13 +43,10 @@ export default class Profile extends Component {
   render() {
     const { isDrawerOpen } = this.state;
     const userInfo = this.props.navigation.getParam('selectedUser');
-    const interests = Object.keys(userInfo.interests).reduce(
-      (outputArray, interest) => {
-        if (userInfo.interests[interest]) outputArray.push(interest);
-        return outputArray;
-      },
-      [],
-    );
+    const interests = Object.keys(userInfo.interests).reduce((outputArray, interest) => {
+      if (userInfo.interests[interest]) outputArray.push(interest);
+      return outputArray;
+    }, []);
     const validInterests = interests.length > 0 ? interests.join(' / ') : 'No interests given!';
     return (
       <View style={{ flex: 1 }}>
@@ -59,16 +56,18 @@ export default class Profile extends Component {
           drawerStatus={this.drawerStatus}
         >
           <View style={profileStyles.profileText}>
+            <Icon type="FontAwesome" name="fas fa-user-circle fa-6x" />
             <Text style={profileStyles.username}>{userInfo.username}</Text>
             <Text>
-Real name:
+              Real name:
               {userInfo.name}
             </Text>
             <Text>
-Interests:
+              Interests:
               {validInterests}
             </Text>
           </View>
+
           <Button
             onPress={() => {
               this.props.navigation.navigate('Chat', {
@@ -77,7 +76,7 @@ Interests:
             }}
           >
             <Text>
-Chat with
+              Chat with
               {userInfo.name}
 !
             </Text>
