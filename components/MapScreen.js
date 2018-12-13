@@ -31,7 +31,7 @@ export default class MapScreen extends Component {
 
   state = {
     locationAndError: null,
-    dev: true, // special dev variable for computer emulators
+    dev: false, // special dev variable for computer emulators
     // which can't use GPS.
   };
 
