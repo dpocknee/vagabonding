@@ -41,6 +41,7 @@ export default class Profile extends Component {
 
   render() {
     const { isDrawerOpen } = this.state;
+    const userInfo = this.props.navigation.getParam('selectedUser');
     return (
       <View style={{ flex: 1 }}>
         <Hamburger
@@ -48,7 +49,7 @@ export default class Profile extends Component {
           isDrawerOpen={isDrawerOpen}
           drawerStatus={this.drawerStatus}
         >
-          <Text>Profile Screen</Text>
+          <Text style={{ paddingTop: 300 }}>{userInfo.username}</Text>
         </Hamburger>
       </View>
     );
