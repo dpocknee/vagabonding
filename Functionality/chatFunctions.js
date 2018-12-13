@@ -17,10 +17,7 @@ const getPreviousMessages = async (currentUser, clickedUser) => {
     .then((querySnapshot) => {
       if (querySnapshot.empty) {
         chatsRef.doc(`${currentUser}${clickedUser}`).set({
-          users: [
-            `${currentUser}${clickedUser}`,
-            `${clickedUser}${currentUser}`,
-          ],
+          users: [`${currentUser}${clickedUser}`, `${clickedUser}${currentUser}`],
           messages: [],
           usersArr: [`${currentUser}`, `${clickedUser}`],
         });
@@ -75,7 +72,7 @@ const getChats = async (user) => {
     const chats = [];
     querySnapshot.forEach((conversationDoc) => {
       const chatObj = {};
-      conversationDoc.data().usersArr[0] === userID
+      conversationDoc.data().usersArr[0] === user
         ? (chatObj.otherUser = conversationDoc.data().usersArr[1])
         : (chatObj.otherUser = conversationDoc.data().usersArr[0]);
       chatObj.messages = conversationDoc.data().messages;

@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import { Button, Icon } from 'native-base';
 import PropTypes from 'prop-types';
 import Hamburger from './Hamburger';
+import Inbox from './Inbox';
 
 export default class InboxScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -48,7 +49,7 @@ export default class InboxScreen extends Component {
           isDrawerOpen={isDrawerOpen}
           drawerStatus={this.drawerStatus}
         >
-          <Text>Content Here!</Text>
+          <Inbox />
         </Hamburger>
       </View>
     );

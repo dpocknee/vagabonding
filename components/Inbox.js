@@ -3,11 +3,11 @@ import {
   View, ScrollView, Text, Button,
 } from 'react-native';
 import { getTheme } from 'react-native-material-kit';
+import firebase from 'firebase';
 
 const { getChats, getChatPartnerNames } = require('../Functionality/chatFunctions');
 
-const currentUserID = '1234';
-
+// console.log('currentUserSTUFF: ', currentUser, currentUserID);
 const theme = getTheme();
 
 class Inbox extends Component {
@@ -35,22 +35,26 @@ class Inbox extends Component {
   };
 
   componentDidMount() {
-    getChats(currentUserID).then((chats) => {
-      const completedChatObjs = chats.map(chatObj => getChatPartnerNames(chatObj.otherUser).then((chatPartnerObj) => {
-        const compObj = {
-          ...chatObj,
-          otherUserUsername: chatPartnerObj.username,
-          otherUserName: chatPartnerObj.name,
-        };
-        return compObj;
-      }));
-      Promise.all(completedChatObjs).then(result => this.setState({
-        chats: result,
-      }));
+    let currentUserID;
+    firebase.auth().onAuthStateChanged((user) => {
+      currentUserID = user.uid;
+      return getChats(currentUserID).then((chats) => {
+        const completedChatObjs = chats.map(chatObj => getChatPartnerNames(chatObj.otherUser).then((chatPartnerObj) => {
+          const compObj = {
+            ...chatObj,
+            otherUserUsername: chatPartnerObj.username,
+            otherUserName: chatPartnerObj.name,
+          };
+          return compObj;
+        }));
+        Promise.all(completedChatObjs).then(result => this.setState({
+          chats: result,
+        }));
 
-      // this.setState({
-      //   chats: completedChatObjs,
-      // });
+        // this.setState({
+        //   chats: completedChatObjs,
+        // });
+      });
     });
   }
 
