@@ -13,7 +13,6 @@ import Login from './components/LogIn';
 //  *****FOR TEST PURPOSES ONLY*****
 import MapScreen from './components/MapScreen';
 import ChatScreen from './components/ChatScreen';
-import LogoutScreen from './components/LogoutScreen';
 import InboxScreen from './components/InboxScreen';
 
 import mockUsers from './mockUsers';
@@ -48,9 +47,6 @@ const mainFlow = createStackNavigator(
     },
     Inbox: {
       screen: InboxScreen,
-    },
-    Logout: {
-      screen: LogoutScreen,
     },
   },
   {

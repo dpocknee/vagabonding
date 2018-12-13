@@ -1,47 +1,47 @@
-import * as firebase from "firebase";
-import "firebase/firestore";
+import * as firebase from 'firebase';
+import 'firebase/firestore';
 
-const { firestore } = require("../config");
+const { firestore } = require('../config');
 
-const userID = "1234";
-const userName = "Aaron";
-const clickedUserID = "5678";
-const chatsRef = firestore.collection("chats");
-const usersRef = firestore.collection("users");
+const userID = '1234';
+const userName = 'Aaron';
+const clickedUserID = '5678';
+const chatsRef = firestore.collection('chats');
+const usersRef = firestore.collection('users');
 
 const getPreviousMessages = async (currentUser, clickedUser) => {
   const queryPreviousChatHistory = chatsRef.where(
-    "users",
-    "array-contains",
-    `${currentUser}${clickedUser}`
+    'users',
+    'array-contains',
+    `${currentUser}${clickedUser}`,
   );
   return queryPreviousChatHistory
     .get()
-    .then(querySnapshot => {
+    .then((querySnapshot) => {
       if (querySnapshot.empty) {
         chatsRef.doc(`${currentUser}${clickedUser}`).set({
           users: [
             `${currentUser}${clickedUser}`,
-            `${clickedUser}${currentUser}`
+            `${clickedUser}${currentUser}`,
           ],
           messages: [],
-          usersArr: [`${currentUser}`, `${clickedUser}`]
+          usersArr: [`${currentUser}`, `${clickedUser}`],
         });
         return { doc: `${currentUser}${clickedUser}`, messages: [] };
       }
       const previousMessages = [];
       let docID;
-      querySnapshot.forEach(doc => {
+      querySnapshot.forEach((doc) => {
         docID = doc.id;
         previousMessages.push(doc.data().messages);
       });
       return {
         doc: docID,
-        messages: previousMessages[0].splice(-20).reverse()
+        messages: previousMessages[0].splice(-20).reverse(),
       };
     })
-    .catch(err => {
-      console.log(err, "<<<<<Get Previous Messages");
+    .catch((err) => {
+      console.log(err, '<<<<<Get Previous Messages');
     });
 };
 
@@ -52,11 +52,11 @@ const sendMessage = async (message, doc) => {
 
   return chatRefDoc
     .update({
-      messages: firebase.firestore.FieldValue.arrayUnion(newMessage)
+      messages: firebase.firestore.FieldValue.arrayUnion(newMessage),
     })
     .then(() => newMessage)
-    .catch(err => {
-      console.log(err, "<<<<<updateMessagesErr");
+    .catch((err) => {
+      console.log(err, '<<<<<updateMessagesErr');
     });
 };
 
@@ -68,15 +68,15 @@ const sendMessage = async (message, doc) => {
 //     }
 //   });
 // });
-/******************/
-const getChats = async user => {
-  const allUserChats = chatsRef.where("usersArr", "array-contains", `${user}`);
-  return allUserChats.get().then(querySnapshot => {
+/** *************** */
+const getChats = async (user) => {
+  const allUserChats = chatsRef.where('usersArr', 'array-contains', `${user}`);
+  return allUserChats.get().then((querySnapshot) => {
     if (querySnapshot.empty) {
       return [];
     }
     const chats = [];
-    querySnapshot.forEach(conversationDoc => {
+    querySnapshot.forEach((conversationDoc) => {
       const chatObj = {};
       conversationDoc.data().usersArr[0] === userID
         ? (chatObj.otherUser = conversationDoc.data().usersArr[1])
@@ -88,16 +88,15 @@ const getChats = async user => {
   });
 };
 
-const getChatPartnerNames = async otherUserID =>
-  usersRef
-    .doc(otherUserID)
-    .get()
-    .then(querySnapshot => {
-      const chatPartnerInfo = {};
-      chatPartnerInfo.username = querySnapshot.data().username;
-      chatPartnerInfo.name = querySnapshot.data().name;
-      return chatPartnerInfo;
-    });
+const getChatPartnerNames = async otherUserID => usersRef
+  .doc(otherUserID)
+  .get()
+  .then((querySnapshot) => {
+    const chatPartnerInfo = {};
+    chatPartnerInfo.username = querySnapshot.data().username;
+    chatPartnerInfo.name = querySnapshot.data().name;
+    return chatPartnerInfo;
+  });
 
 module.exports = {
   userID,
@@ -107,5 +106,5 @@ module.exports = {
   sendMessage,
   chatsRef,
   getChats,
-  getChatPartnerNames
+  getChatPartnerNames,
 };
