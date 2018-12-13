@@ -4,9 +4,15 @@ import {
 } from 'react-native';
 import { getTheme } from 'react-native-material-kit';
 
+const { getChats, getChatPartnerNames } = require('../Functionality/chatFunctions');
+
+const currentUserID = '1234';
+
 const theme = getTheme();
 
 class Inbox extends Component {
+  //* *********NEEDS CURRENT USERID AS PROP*************** */
+
   // static navigationOptions = ({ navigation }) => ({
   //   headerTransparent: true,
   //   headerLeft: (
@@ -25,21 +31,41 @@ class Inbox extends Component {
 
   state = {
     chats: [],
+    loading: true,
   };
 
+  componentDidMount() {
+    getChats(currentUserID).then((chats) => {
+      const completedChatObjs = chats.map(chatObj => getChatPartnerNames(chatObj.otherUser).then((chatPartnerObj) => {
+        const compObj = {
+          ...chatObj,
+          otherUserUsername: chatPartnerObj.username,
+          otherUserName: chatPartnerObj.name,
+        };
+        return compObj;
+      }));
+      Promise.all(completedChatObjs).then(result => this.setState({
+        chats: result,
+      }));
+
+      // this.setState({
+      //   chats: completedChatObjs,
+      // });
+    });
+  }
+
   render() {
-    const { chats } = this.state.chats;
-    const otherUser = '';
+    const { chats } = this.state;
     return (
       <ScrollView>
-        {chats.map(chat => (
-          <View style={theme.cardStyle} key={chat.id}>
+        {chats.map((chat, index) => (
+          <View style={theme.cardStyle} key={index}>
             <Text style={theme.cardActionStyle}>
-              {`Conversation with: ${otherUser}`}
+              {`Conversation with: ${chat.otherUserName} (${chat.otherUserUsername})`}
               {' '}
             </Text>
-            <Text style={theme.cardContentStyle}>SOMETHING ABOUT UNREAD OR NO UNREAD MESSAGES</Text>
-            <Button title="chat" onPress={() => navigation.navigate('Chat')} />
+            <Text style={theme.cardContentStyle}>{`${chat.messages.length} messages`}</Text>
+            {/* <Button title="chat" onPress={() => navigation.navigate('Chat')} /> ******NEEDS CURRENT USERNAME, ID and OTHERUSERID AS PROPS */}
           </View>
         ))}
       </ScrollView>

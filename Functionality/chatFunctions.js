@@ -7,9 +7,9 @@ const userID = '1234';
 const userName = 'Aaron';
 const clickedUserID = '5678';
 const chatsRef = firestore.collection('chats');
+const usersRef = firestore.collection('users');
 
 const getPreviousMessages = async (currentUser, clickedUser) => {
-  // query the database looking for previous messages between the users.
   const queryPreviousChatHistory = chatsRef.where(
     'users',
     'array-contains',
@@ -54,11 +54,34 @@ const sendMessage = async (message, doc) => {
     });
 };
 
-// Query database, return all user conversations
+const getChats = async (user) => {
+  const allUserChats = chatsRef.where('usersArr', 'array-contains', `${user}`);
+  return allUserChats.get().then((querySnapshot) => {
+    if (querySnapshot.empty) {
+      return [];
+    }
+    const chats = [];
+    querySnapshot.forEach((conversationDoc) => {
+      const chatObj = {};
+      conversationDoc.data().usersArr[0] === userID
+        ? (chatObj.otherUser = conversationDoc.data().usersArr[1])
+        : (chatObj.otherUser = conversationDoc.data().usersArr[0]);
+      chatObj.messages = conversationDoc.data().messages;
+      chats.push(chatObj);
+    });
+    return chats;
+  });
+};
 
-// Add listener incase new conversations are added
-
-// In map, take off 'otheruser' property
+const getChatPartnerNames = async otherUserID => usersRef
+  .doc(otherUserID)
+  .get()
+  .then((querySnapshot) => {
+    const chatPartnerInfo = {};
+    chatPartnerInfo.username = querySnapshot.data().username;
+    chatPartnerInfo.name = querySnapshot.data().name;
+    return chatPartnerInfo;
+  });
 
 module.exports = {
   userID,
@@ -67,4 +90,6 @@ module.exports = {
   userName,
   sendMessage,
   chatsRef,
+  getChats,
+  getChatPartnerNames,
 };
