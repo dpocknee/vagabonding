@@ -55,7 +55,6 @@ export default class ChatScreen extends Component {
           drawerStatus={this.drawerStatus}
         >
           <>
-            <Text>The Chat page has loaded!</Text>
             <Chat
               currentUserID={currentUserID}
               currentUsername={currentUsername}

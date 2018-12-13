@@ -45,6 +45,11 @@ export default class Profile extends Component {
     const userId = this.props.navigation.getParam('selectedUser')[0];
     const userInfo = this.props.navigation.getParam('selectedUser')[1];
     const currentUser = this.props.navigation.getParam('currentUser');
+    const nearbyUsers = this.props.navigation.getParam('nearbyUsers');
+    const currentUserInfo = nearbyUsers.filter(user => user[0] === currentUser.uid);
+
+    console.log('CURRENT USER INFO: ', currentUserInfo);
+    const currentUsername = currentUserInfo[0][1].username;
     const interests = Object.keys(userInfo.interests).reduce((outputArray, interest) => {
       if (userInfo.interests[interest]) outputArray.push(interest);
       return outputArray;
@@ -75,7 +80,7 @@ export default class Profile extends Component {
               onPress={() => {
                 this.props.navigation.navigate('Chat', {
                   currentUserID: currentUser.uid,
-                  currentUsername: 'Aaron',
+                  currentUsername,
                   selectedUserID: userId,
                 });
               }}

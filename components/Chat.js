@@ -12,7 +12,7 @@ class Chat extends Component {
 
   componentWillMount() {
     const { currentUserID, currentUsername, selectedUserID } = this.props;
-    console.log(currentUserID, currentUsername, selectedUserID);
+    console.log('CURRENT STUFF: ', currentUserID, currentUsername, selectedUserID);
     getPreviousMessages(currentUserID, selectedUserID)
       .then((messageObj) => {
         chatsRef.doc(messageObj.doc).onSnapshot((doc) => {
@@ -29,6 +29,7 @@ class Chat extends Component {
   }
 
   onSend(messages = []) {
+    console.log('OnSend: ', messages[0], this.state.doc);
     sendMessage(messages[0], this.state.doc)
       .then((newMessage) => {
         //* **** OFFLINE MODE????? ********
@@ -47,12 +48,12 @@ class Chat extends Component {
   // }
 
   render() {
-    const { currentUserID, currentUserName } = this.props;
+    const { currentUserID, currentUsername } = this.props;
     return (
       <GiftedChat
         messages={this.state.messages}
         onSend={messages => this.onSend(messages)}
-        user={{ _id: currentUserID, name: currentUserName }}
+        user={{ _id: currentUserID, name: currentUsername }}
       />
     );
   }
