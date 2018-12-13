@@ -111,9 +111,6 @@ const logOut = () => {
     });
 };
 
-module.exports = {
-  getUserLocation,
-  getLoggedInUsers,
-  filterUsersByDistance,
-  logOut,
+export {
+  getUserLocation, getLoggedInUsers, filterUsersByDistance, logOut,
 };

@@ -9,10 +9,11 @@ import Login from './components/LogIn';
 //  *****FOR TEST PURPOSES ONLY*****
 // import HomePage from './components/HomePage';
 // import Chat from './components/Chat';
+// import Inbox from './components/Inbox';
 //  *****FOR TEST PURPOSES ONLY*****
 import MapScreen from './components/MapScreen';
 import ProfileScreen from './components/ProfileScreen';
-import LogoutScreen from './components/LogoutScreen';
+import ChatScreen from './components/ChatScreen';
 import InboxScreen from './components/InboxScreen';
 
 import mockUsers from './mockUsers';
@@ -48,12 +49,9 @@ const mainFlow = createStackNavigator(
     Inbox: {
       screen: InboxScreen,
     },
-    Logout: {
-      screen: LogoutScreen,
-    },
   },
   {
-    initialRouteName: 'Map',
+    initialRouteName: 'MapScreen',
   },
 );
 // *****FOR TEST PURPOSES ONLY*****
@@ -80,7 +78,9 @@ const appNavigation = createSwitchNavigator(
 
 const AppContainer = createAppContainer(appNavigation);
 
-// Note: Entire navigation is in this component, if navigation breaks may be to do with this component
+// Note: Entire navigation is in this component
+// if navigation breaks may be to do with this component
+
 export default class App extends React.Component {
   render() {
     return <AppContainer />;

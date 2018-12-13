@@ -91,7 +91,6 @@ export default class MapScreen extends Component {
         </View>
       );
     }
-    const { isDrawerOpen } = this.state;
     return (
       <View style={{ flex: 1 }}>
         <Hamburger allNav={this.allNav} isDrawerOpen={isDrawerOpen}>
@@ -133,6 +132,6 @@ export default class MapScreen extends Component {
 }
 
 MapScreen.propTypes = {
-  screenProps: { users: PropTypes.object.isRequired },
+  screenProps: PropTypes.object.isRequired,
   navigation: PropTypes.object.isRequired,
 };
