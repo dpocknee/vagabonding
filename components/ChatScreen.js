@@ -4,8 +4,9 @@ import { Button, Icon } from "native-base";
 import PropTypes from "prop-types";
 import Hamburger from "./Hamburger";
 import profileStyles from "../styles/Profile.styles";
+import Chat from "./Chat";
 
-export default class Profile extends Component {
+export default class ChatScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerTransparent: true,
     headerLeft: (
@@ -41,45 +42,18 @@ export default class Profile extends Component {
   };
 
   render() {
-    const { isDrawerOpen } = this.state;
-    const userInfo = this.props.navigation.getParam("selectedUser");
-    const interests = Object.keys(userInfo.interests).reduce(
-      (outputArray, interest) => {
-        if (userInfo.interests[interest]) outputArray.push(interest);
-        return outputArray;
-      },
-      []
-    );
-    const validInterests =
-      interests.length > 0 ? interests.join(" / ") : "No interests given!";
+    // Chat will need userID, userName and clickedUserID as props
     return (
       <View style={{ flex: 1 }}>
         <Hamburger
           allNav={this.allNav}
           isDrawerOpen={isDrawerOpen}
           drawerStatus={this.drawerStatus}
-        >
-          <View style={profileStyles.profileText}>
-            <Text style={profileStyles.username}>{userInfo.username}</Text>
-            <Text>Real name: {userInfo.name}</Text>
-            <Text>Interests: {validInterests}</Text>
-          </View>
-          <Button
-            onPress={() => {
-              this.props.navigation.navigate("Chat", {
-                selectedUser: user
-              });
-            }}
-          >
-            <Text>Chat with {userInfo.name}!</Text>
-          </Button>
-        </Hamburger>
+        />
       </View>
     );
   }
 }
-
-// Chat will need userID, userName and clickedUserID as props
 
 Profile.propTypes = {
   navigation: PropTypes.object.isRequired
