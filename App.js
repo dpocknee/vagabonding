@@ -14,6 +14,7 @@ import MapScreen from './components/MapScreen';
 import ChatScreen from './components/ChatScreen';
 // import LogoutScreen from './components/LogoutScreen';
 import InboxScreen from './components/InboxScreen';
+import ProfileScreen from './components/ProfileScreen';
 
 import mockUsers from './mockUsers';
 
@@ -48,9 +49,9 @@ const mainFlow = createStackNavigator(
     Inbox: {
       screen: InboxScreen,
     },
-    // Logout: {
-    //   screen: LogoutScreen,
-    // },
+    Profile: {
+      screen: ProfileScreen,
+    },
   },
   {
     initialRouteName: 'Map',
