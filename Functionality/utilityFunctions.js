@@ -38,7 +38,6 @@ const getUserLocation = async (user, cb) => {
             errorMessage: null,
           };
           cb(null, newObj);
-          // return newObj;
         })
         .catch((err) => {
           console.log(err, '<<<<Update Users Location');
@@ -78,7 +77,7 @@ const filterUsersByDistance = async (user, cb) => {
         currentUserLocation = doc[0].location;
       }
     });
-    const nearbyUsersObj = userDocs.reduce((nearbyUsers, cur, index) => {
+    const nearbyUsersObj = userDocs.reduce((nearbyUsers, cur) => {
       if (cur[0].location.latitude || cur[0].location.longitude) {
         const distance = getDistance(currentUserLocation, cur[0].location, 100);
         const userObj = cur[0];

@@ -18,15 +18,16 @@ const Users = (props) => {
         <TouchableOpacity
           onPress={() => onSelectUser(user)}
           style={theme.cardStyle}
-          key={user.name}
+          key={user[1].name}
         >
           <Text style={theme.cardActionStyle}>
-            {user.name}
+            {user[1].name}
             {' '}
           </Text>
           <Text style={theme.cardContentStyle}>
-            Interests: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis
-            pellentesque lacus eleifend lacinia...
+            Distance:
+            {user[1].distance}
+m away
           </Text>
         </TouchableOpacity>
       ))}

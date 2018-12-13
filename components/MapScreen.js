@@ -108,7 +108,8 @@ export default class MapScreen extends Component {
   render() {
     const { locationAndError, nearbyUsers } = this.state;
     const { screenProps } = this.props;
-    if (!locationAndError) {
+    console.log(nearbyUsers, 'nearbyUsers');
+    if (!locationAndError || !nearbyUsers) {
       return (
         <View style={styles.container}>
           <Text>Loading...</Text>
@@ -117,7 +118,7 @@ export default class MapScreen extends Component {
       );
     }
     const { isDrawerOpen } = this.state;
-    console.log(locationAndError.location.latitude, locationAndError.location.longitude, 'here')
+    console.log(locationAndError.location.latitude, locationAndError.location.longitude, 'here');
     return (
       <View style={{ flex: 1 }}>
         <Hamburger allNav={this.allNav} isDrawerOpen={isDrawerOpen}>
@@ -131,7 +132,7 @@ export default class MapScreen extends Component {
               longitudeDelta: 0.05,
             }}
           >
-          <Expo.MapView.Marker
+            <Expo.MapView.Marker
               coordinate={locationAndError.location}
               title="you are here: "
               // description={where.name}
@@ -146,13 +147,13 @@ export default class MapScreen extends Component {
           </Expo.MapView>
 
           {/* users component */}
-          {/* <Users
+          <Users
             style={{ flex: 1 }}
-            users={screenProps.users}
+            users={nearbyUsers}
             onSelectUser={(user) => {
               this.props.navigation.navigate('ProfileScreen');
             }}
-          /> */}
+          />
         </Hamburger>
       </View>
     );
