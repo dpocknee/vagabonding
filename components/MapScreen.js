@@ -43,11 +43,12 @@ export default class MapScreen extends Component {
 
   state = {
     locationAndError: null,
+    isDrawerOpen: false,
   };
 
   componentDidMount() {
     const { navigation } = this.props;
-    navigation.setParams({ drawerStatus: this.drawerSatus });
+    navigation.setParams({ drawerStatus: this.drawerStatus });
     firebase.auth().onAuthStateChanged((currentUser) => {
       if (currentUser) {
         getUserLocation(currentUser, (err, locationAndError) => {
@@ -68,7 +69,7 @@ export default class MapScreen extends Component {
     });
   }
 
-  drawerSatus = () => {
+  drawerStatus = () => {
     this.setState((state) => {
       const inverseDrawer = !state.isDrawerOpen;
       return { isDrawerOpen: inverseDrawer };
@@ -81,8 +82,10 @@ export default class MapScreen extends Component {
   };
 
   render() {
-    const { locationAndError, nearbyUsers, currentUser } = this.state;
-    const { screenProps } = this.props;
+    const {
+      locationAndError, nearbyUsers, currentUser, isDrawerOpen,
+    } = this.state;
+    const { navigation } = this.props;
     if (!locationAndError || !nearbyUsers) {
       return (
         <View style={styles.container}>
@@ -93,38 +96,44 @@ export default class MapScreen extends Component {
     }
     return (
       <View style={{ flex: 1 }}>
-        <Hamburger allNav={this.allNav} isDrawerOpen={isDrawerOpen}>
-          <Expo.MapView
-            style={{ height: 500 }}
-            provider={Expo.MapView.PROVIDER_GOOGLE}
-            initialRegion={{
-              latitude: locationAndError.location.latitude,
-              longitude: locationAndError.location.longitude,
-              latitudeDelta: 0.05,
-              longitudeDelta: 0.05,
-            }}
-          >
-            <Expo.MapView.Marker
-              coordinate={locationAndError.location}
-              title="you are here: "
-              pinColor="blue"
-            />
-            <Expo.MapView.Circle
-              center={locationAndError.location}
-              radius={1500}
-              fillColor="rgba(204, 210, 192, 0.5)"
-              style={{ opacity: 0.5 }}
-            />
-          </Expo.MapView>
+        <Hamburger
+          allNav={this.allNav}
+          isDrawerOpen={isDrawerOpen}
+          drawerStatus={this.drawerStatus}
+        >
+          <>
+            <Expo.MapView
+              style={{ height: 500 }}
+              provider={Expo.MapView.PROVIDER_GOOGLE}
+              initialRegion={{
+                latitude: locationAndError.location.latitude,
+                longitude: locationAndError.location.longitude,
+                latitudeDelta: 0.05,
+                longitudeDelta: 0.05,
+              }}
+            >
+              <Expo.MapView.Marker
+                coordinate={locationAndError.location}
+                title="you are here: "
+                pinColor="blue"
+              />
+              <Expo.MapView.Circle
+                center={locationAndError.location}
+                radius={1500}
+                fillColor="rgba(204, 210, 192, 0.5)"
+                style={{ opacity: 0.5 }}
+              />
+            </Expo.MapView>
 
-          <Users
-            style={{ flex: 1 }}
-            currentUser={currentUser}
-            users={nearbyUsers}
-            onSelectUser={(user) => {
-              this.props.navigation.navigate('ProfileScreen');
-            }}
-          />
+            <Users
+              style={{ flex: 1 }}
+              currentUser={currentUser}
+              users={nearbyUsers}
+              onSelectUser={(user) => {
+                navigation.navigate('ProfileScreen');
+              }}
+            />
+          </>
         </Hamburger>
       </View>
     );
@@ -132,6 +141,5 @@ export default class MapScreen extends Component {
 }
 
 MapScreen.propTypes = {
-  screenProps: PropTypes.object.isRequired,
   navigation: PropTypes.object.isRequired,
 };
