@@ -11,9 +11,8 @@ import Login from './components/LogIn';
 // import Chat from './components/Chat';
 //  *****FOR TEST PURPOSES ONLY*****
 import MapScreen from './components/MapScreen';
-import ChatScreen from './components/ChatScreen';
-import LogoutScreen from './components/LogoutScreen';
 import InboxScreen from './components/InboxScreen';
+import ProfileScreen from './components/ProfileScreen';
 
 import mockUsers from './mockUsers';
 
@@ -42,14 +41,14 @@ const mainFlow = createStackNavigator(
     Map: {
       screen: MapScreen,
     },
-    Chat: {
-      screen: ChatScreen,
-    },
+    // Chat: {
+    //   screen: ChatScreen,
+    // },
     Inbox: {
       screen: InboxScreen,
     },
-    Logout: {
-      screen: LogoutScreen,
+    Profile: {
+      screen: ProfileScreen,
     },
   },
   {
