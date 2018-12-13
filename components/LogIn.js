@@ -36,9 +36,10 @@ class Login extends Component {
           .doc(currentUser.uid)
           .update({ loggedIn: true });
       })
-      .then(this.props.navigation.navigate('mainFlow'))
+      .then(() => {
+        this.props.navigation.navigate('mainFlow');
+      })
       .catch((err) => {
-        console.log(err, '<<<<<Login Func');
         this.setState({
           errorMessage: err.message,
         });

@@ -7,9 +7,6 @@ import PropTypes from 'prop-types';
 import Users from './Users';
 import Hamburger from './Hamburger';
 
-/* eslint react/require-default-props: 0 */
-/* eslint react/forbid-prop-types: 0 */
-
 export default class MapScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerTransparent: true,
@@ -42,10 +39,7 @@ export default class MapScreen extends Component {
   }
 
   drawerStatus = () => {
-    this.setState((state) => {
-      const inverseDrawer = !state.isDrawerOpen;
-      return { isDrawerOpen: inverseDrawer };
-    });
+    this.setState(state => ({ isDrawerOpen: !state.isDrawerOpen }));
   };
 
   getlocation = async () => {
