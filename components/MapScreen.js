@@ -106,9 +106,8 @@ export default class MapScreen extends Component {
   };
 
   render() {
-    const { locationAndError, nearbyUsers } = this.state;
+    const { locationAndError, nearbyUsers, currentUser } = this.state;
     const { screenProps } = this.props;
-    console.log(nearbyUsers, 'nearbyUsers');
     if (!locationAndError || !nearbyUsers) {
       return (
         <View style={styles.container}>
@@ -118,7 +117,6 @@ export default class MapScreen extends Component {
       );
     }
     const { isDrawerOpen } = this.state;
-    console.log(locationAndError.location.latitude, locationAndError.location.longitude, 'here');
     return (
       <View style={{ flex: 1 }}>
         <Hamburger allNav={this.allNav} isDrawerOpen={isDrawerOpen}>
@@ -149,6 +147,7 @@ export default class MapScreen extends Component {
           {/* users component */}
           <Users
             style={{ flex: 1 }}
+            currentUser={currentUser}
             users={nearbyUsers}
             onSelectUser={(user) => {
               this.props.navigation.navigate('ProfileScreen');

@@ -11,10 +11,11 @@ import PropTypes from 'prop-types';
 const theme = getTheme();
 
 const Users = (props) => {
-  const { users, onSelectUser } = props;
+  const { users, onSelectUser, currentUser } = props;
   return (
     <ScrollView>
-      {users.map(user => (
+      {users.map(
+        user => user[0] !== currentUser.uid && (
         <TouchableOpacity
           onPress={() => onSelectUser(user)}
           style={theme.cardStyle}
@@ -25,12 +26,13 @@ const Users = (props) => {
             {' '}
           </Text>
           <Text style={theme.cardContentStyle}>
-            Distance:
+                Distance:
             {user[1].distance}
 m away
           </Text>
         </TouchableOpacity>
-      ))}
+        ),
+      )}
     </ScrollView>
   );
 };

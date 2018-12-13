@@ -82,34 +82,7 @@ const AppContainer = createAppContainer(appNavigation);
 
 // Note: Entire navigation is in this component, if navigation breaks may be to do with this component
 export default class App extends React.Component {
-  // state = {
-  //   location: null,
-  //   where: null,
-  // };
-
-  // componentDidMount() {
-  //   this.getlocation();
-  // }
-
-  // getlocation = async () => {
-  //   const { status } = await Expo.Permissions.askAsync(Expo.Permissions.LOCATION);
-  //   if (status !== 'granted') {
-  //     const oldTrafford = (await Expo.Location.geocodeAsync('Sir Matt Busby Way'))[0];
-  //     // console.error('Location denied');
-  //     this.setState({
-  //       location: oldTrafford,
-  //     });
-  //   } else {
-  //     const location = await Expo.Location.getCurrentPositionAsync({});
-  //     const where = (await Expo.Location.reverseGeocodeAsync(location.coords))[0];
-  //     this.setState({
-  //       location,
-  //       where,
-  //     });
-  //   }
-  // };
-
   render() {
-    return <AppContainer screenProps={{ users: mockUsers }} />;
+    return <AppContainer />;
   }
 }
