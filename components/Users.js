@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Text, View, ScrollView, Button,
+  Text, View, ScrollView, Button, TouchableOpacity,
 } from 'react-native';
 import { getTheme } from 'react-native-material-kit';
 import PropTypes from 'prop-types';
@@ -11,31 +11,37 @@ import PropTypes from 'prop-types';
 const theme = getTheme();
 
 const Users = (props) => {
-  const { users, navigation } = props;
+  const { users, onSelectUser, currentUser } = props;
   return (
     <ScrollView>
-      {users.map(user => (
-        <View style={theme.cardStyle} key={user.name}>
+      {users.map(
+        user => user[0] !== currentUser.uid && (
+        <TouchableOpacity
+          onPress={() => onSelectUser(user)}
+          style={theme.cardStyle}
+          key={user[1].name}
+        >
           <Text style={theme.cardActionStyle}>
-            {user.name}
+            {user[1].name}
             {' '}
           </Text>
           <Text style={theme.cardContentStyle}>
-            Interests: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis
-            pellentesque lacus eleifend lacinia...
+                Distance:
+            {user[1].distance}
+m away
           </Text>
-          <Button title="chat" onPress={() => navigation.navigate('ChatScreen')} />
-        </View>
-      ))}
+        </TouchableOpacity>
+        ),
+      )}
     </ScrollView>
   );
-
-  // return <ScrollView style={{ flex: 1 }}>{this.props.user}</ScrollView>;
 };
 
 Users.propTypes = {
-  navigation: PropTypes.object.isRequired,
+  navigation: { navigate: PropTypes.object.isRequired },
   users: PropTypes.array.isRequired,
+  onSelectUser: PropTypes.func.isRequired,
+  currentUser: PropTypes.object.isRequired,
 };
 
 export default Users;
