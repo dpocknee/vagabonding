@@ -43,9 +43,6 @@ export default class MapScreen extends Component {
 
   state = {
     locationAndError: null,
-    // location: null,
-    // where: null,
-    // isDrawerOpen: false,
   };
 
   componentDidMount() {
@@ -72,33 +69,11 @@ export default class MapScreen extends Component {
   }
 
   drawerSatus = () => {
-    // console.log('WOOHAH!');
     this.setState((state) => {
       const inverseDrawer = !state.isDrawerOpen;
       return { isDrawerOpen: inverseDrawer };
     });
   };
-
-  // getlocation = async () => {
-  //   const { status } = await Expo.Permissions.askAsync(Expo.Permissions.LOCATION);
-  //   // if (status !== 'granted') {
-  //   console.log('STATUS', status);
-  //   const oldTrafford = (await Expo.Location.geocodeAsync('Sir Matt Busby Way'))[0];
-  //   this.setState({
-  //     location: { coords: oldTrafford },
-  //     where: { coords: oldTrafford },
-  //   });
-  //   console.log('OLD TRAFFORD', oldTrafford);
-  // } else {
-  //   console.log('granted', status);
-  //   const location = await Expo.Location.getCurrentPositionAsync({});
-  //   const where = (await Expo.Location.reverseGeocodeAsync(location.coords))[0];
-  //   this.setState({
-  //     location,
-  //     where,
-  //   });
-  // }
-  // };
 
   allNav = (screen) => {
     const { navigation } = this.props;
@@ -133,7 +108,6 @@ export default class MapScreen extends Component {
             <Expo.MapView.Marker
               coordinate={locationAndError.location}
               title="you are here: "
-              // description={where.name}
               pinColor="blue"
             />
             <Expo.MapView.Circle
@@ -144,7 +118,6 @@ export default class MapScreen extends Component {
             />
           </Expo.MapView>
 
-          {/* users component */}
           <Users
             style={{ flex: 1 }}
             currentUser={currentUser}

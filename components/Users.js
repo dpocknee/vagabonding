@@ -40,6 +40,8 @@ m away
 Users.propTypes = {
   navigation: { navigate: PropTypes.object.isRequired },
   users: PropTypes.array.isRequired,
+  onSelectUser: PropTypes.func.isRequired,
+  currentUser: PropTypes.object.isRequired,
 };
 
 export default Users;
