@@ -1,4 +1,4 @@
-const users = [
+const mockUsers = [
   [
     'user1',
     {
@@ -266,4 +266,4 @@ const users = [
 //   },
 // ];
 
-export default users;
+export default mockUsers;

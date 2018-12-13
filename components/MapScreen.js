@@ -8,6 +8,7 @@ import * as firebase from 'firebase';
 import Users from './Users';
 import MenuWrapper from './MenuWrapper';
 import MapScreenStyles from '../styles/MapScreen.styles';
+// import mockUsers from '../mockUsers';
 
 const { getUserLocation, filterUsersByDistance } = require('../Functionality/utilityFunctions');
 
@@ -30,19 +31,23 @@ export default class MapScreen extends Component {
 
   state = {
     locationAndError: null,
-    dev: true, // special dev variable for David's computer
+    dev: true, // special dev variable for computer emulators
     // which can't use GPS.
   };
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged((currentUser) => {
       if (currentUser) {
+        // This is just a dev thing if any computers are using emulators without GPS.
+        // It sets a default GPS position somewhere near the middle of Manchester.
+        // REMOVE FOR PRODUCTION:
         if (this.state.dev) {
           this.setState({
             currentUser,
             locationAndError: { location: { latitude: 53.4758302, longitude: -2.2465945 } },
             nearbyUsers: [],
           });
+          // ---------------
         } else {
           getUserLocation(currentUser, (err, locationAndError) => {
             this.setState(
@@ -60,6 +65,7 @@ export default class MapScreen extends Component {
           });
         }
       } else {
+        // presumably some type of error handling?
         this.setState({
           currentUser,
           locationAndError: { location: { latitude: 37.422, longitude: -122.084 } },
