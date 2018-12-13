@@ -1,24 +1,19 @@
 import React, { Component } from 'react';
 import { GiftedChat } from 'react-native-gifted-chat';
 
-const {
-  userID,
-  clickedUserID,
-  getPreviousMessages,
-  userName,
-  sendMessage,
-  chatsRef,
-} = require('../Functionality/chatFunctions');
+const { getPreviousMessages, sendMessage, chatsRef } = require('../Functionality/chatFunctions');
 
 class Chat extends Component {
-  // Chat will need userID, userName and clickedUserID as props
+  // Chat will need currentUserID, currentUserName and selectedUserID as props
   state = {
     messages: [],
     doc: '',
   };
 
   componentWillMount() {
-    getPreviousMessages(userID, clickedUserID)
+    const { currentUserID, currentUsername, selectedUserID } = this.props;
+    console.log(currentUserID, currentUsername, selectedUserID);
+    getPreviousMessages(currentUserID, selectedUserID)
       .then((messageObj) => {
         chatsRef.doc(messageObj.doc).onSnapshot((doc) => {
           const messages = doc.data().messages.reverse();
@@ -52,11 +47,12 @@ class Chat extends Component {
   // }
 
   render() {
+    const { currentUserID, currentUserName } = this.props;
     return (
       <GiftedChat
         messages={this.state.messages}
         onSend={messages => this.onSend(messages)}
-        user={{ _id: userID, name: userName }}
+        user={{ _id: currentUserID, name: currentUserName }}
       />
     );
   }

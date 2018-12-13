@@ -3,9 +3,6 @@ import 'firebase/firestore';
 
 const { firestore } = require('../config');
 
-const userID = '1234';
-const userName = 'Aaron';
-const clickedUserID = '5678';
 const chatsRef = firestore.collection('chats');
 const usersRef = firestore.collection('users');
 
@@ -99,10 +96,7 @@ const getChatPartnerNames = async otherUserID => usersRef
   });
 
 module.exports = {
-  userID,
-  clickedUserID,
   getPreviousMessages,
-  userName,
   sendMessage,
   chatsRef,
   getChats,

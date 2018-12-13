@@ -130,7 +130,7 @@ export default class MapScreen extends Component {
               currentUser={currentUser}
               users={nearbyUsers}
               onSelectUser={(user) => {
-                navigation.navigate('ProfileScreen');
+                navigation.navigate('Profile', { selectedUser: user, currentUser });
               }}
             />
           </>
