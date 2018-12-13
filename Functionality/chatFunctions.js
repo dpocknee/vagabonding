@@ -22,6 +22,7 @@ const getPreviousMessages = async (currentUser, clickedUser) => {
         chatsRef.doc(`${currentUser}${clickedUser}`).set({
           users: [`${currentUser}${clickedUser}`, `${clickedUser}${currentUser}`],
           messages: [],
+          usersArr: [`${currentUser}`, `${clickedUser}`],
         });
         return { doc: `${currentUser}${clickedUser}`, messages: [] };
       }
@@ -52,6 +53,12 @@ const sendMessage = async (message, doc) => {
       console.log(err, '<<<<<updateMessagesErr');
     });
 };
+
+// Query database, return all user conversations
+
+// Add listener incase new conversations are added
+
+// In map, take off 'otheruser' property
 
 module.exports = {
   userID,

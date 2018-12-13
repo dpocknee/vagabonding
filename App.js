@@ -8,7 +8,7 @@ import SignUp from './components/SignUp';
 import Login from './components/LogIn';
 //  *****FOR TEST PURPOSES ONLY*****
 // import HomePage from './components/HomePage';
-// import Chat from './components/Chat';
+import Chat from './components/Chat';
 //  *****FOR TEST PURPOSES ONLY*****
 import MapScreen from './components/MapScreen';
 import ChatScreen from './components/ChatScreen';
@@ -43,7 +43,7 @@ const mainFlow = createStackNavigator(
       screen: MapScreen,
     },
     Chat: {
-      screen: ChatScreen,
+      screen: Chat,
     },
     Inbox: {
       screen: InboxScreen,
@@ -53,7 +53,7 @@ const mainFlow = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'Map',
+    initialRouteName: 'Chat',
   },
 );
 // *****FOR TEST PURPOSES ONLY*****
