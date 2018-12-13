@@ -26,20 +26,14 @@ class SignUp extends Component {
     email: '',
     password: '',
     errorMessage: null,
-    museumsChecked: false,
-    barsChecked: false,
-    restaurantsChecked: false,
+    museums: false,
+    bars: false,
+    restaurants: false,
   };
 
   handleSignUp = () => {
     const {
-      name,
-      username,
-      email,
-      password,
-      museumsChecked,
-      barsChecked,
-      restaurantsChecked,
+      name, username, email, password, museums, bars, restaurants,
     } = this.state;
 
     firebase
@@ -53,9 +47,7 @@ class SignUp extends Component {
           .set({
             location: { latitude: null, longitude: null },
             loggedIn: true,
-            museumsChecked,
-            barsChecked,
-            restaurantsChecked,
+            interests: { museums, bars, restaurants },
             name,
             username,
             radius: 1000,
@@ -77,9 +69,9 @@ class SignUp extends Component {
       username,
       email,
       password,
-      museumsChecked,
-      barsChecked,
-      restaurantsChecked,
+      museums,
+      bars,
+      restaurants,
     } = this.state;
 
     return (
@@ -118,18 +110,18 @@ class SignUp extends Component {
         <Text>Tick the things that interest you</Text>
         <CheckBox
           title="Museums and galleries"
-          checked={museumsChecked}
-          onPress={() => this.setState({ museumsChecked: !museumsChecked })}
+          checked={museums}
+          onPress={() => this.setState({ museums: !museums })}
         />
         <CheckBox
           title="Bars and clubs"
-          checked={barsChecked}
-          onPress={() => this.setState({ barsChecked: !barsChecked })}
+          checked={bars}
+          onPress={() => this.setState({ bars: !bars })}
         />
         <CheckBox
           title="Local restaurants"
-          checked={restaurantsChecked}
-          onPress={() => this.setState({ restaurantsChecked: !restaurantsChecked })}
+          checked={restaurants}
+          onPress={() => this.setState({ restaurants: !restaurants })}
         />
         <Button title="Sign Up" onPress={this.handleSignUp} />
         <Button
