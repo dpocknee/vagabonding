@@ -1,64 +1,64 @@
-import React from "react";
-import * as Expo from "expo";
+import React from 'react';
+import * as Expo from 'expo';
 import {
   createSwitchNavigator,
   createStackNavigator,
-  createAppContainer
-} from "react-navigation";
-import "firebase/firestore";
-import AuthLoading from "./components/AuthLoading";
-import Loading from "./components/Loading";
-import SignUp from "./components/SignUp";
-import Login from "./components/LogIn";
-import ChatScreen from "./components/ChatScreen";
+  createAppContainer,
+} from 'react-navigation';
+import 'firebase/firestore';
+import AuthLoading from './components/AuthLoading';
+import Loading from './components/Loading';
+import SignUp from './components/SignUp';
+import Login from './components/LogIn';
+import ChatScreen from './components/ChatScreen';
 //  *****FOR TEST PURPOSES ONLY*****
 // import HomePage from './components/HomePage';
 // import Chat from './components/Chat';
 //  *****FOR TEST PURPOSES ONLY*****
-import MapScreen from "./components/MapScreen";
-import InboxScreen from "./components/InboxScreen";
-import ProfileScreen from "./components/ProfileScreen";
+import MapScreen from './components/MapScreen';
+import InboxScreen from './components/InboxScreen';
+import ProfileScreen from './components/ProfileScreen';
 
-import mockUsers from "./mockUsers";
+import mockUsers from './mockUsers';
 
 /* eslint react/no-unused-state: 0 */
 
 const loginFlow = createSwitchNavigator(
   {
     Loading: {
-      screen: Loading
+      screen: Loading,
     },
     LogIn: {
-      screen: Login
+      screen: Login,
     },
     SignUp: {
-      screen: SignUp
-    }
+      screen: SignUp,
+    },
   },
   {
-    initialRouteName: "Loading"
-  }
+    initialRouteName: 'Loading',
+  },
 );
 
 const mainFlow = createStackNavigator(
   // Add main app components here - remember to include screen property
   {
     Map: {
-      screen: MapScreen
+      screen: MapScreen,
     },
     Chat: {
-      screen: ChatScreen
+      screen: ChatScreen,
     },
     Inbox: {
-      screen: InboxScreen
+      screen: InboxScreen,
     },
     Profile: {
-      screen: ProfileScreen
-    }
+      screen: ProfileScreen,
+    },
   },
   {
-    initialRouteName: "Map"
-  }
+    initialRouteName: 'Map',
+  },
 );
 // *****FOR TEST PURPOSES ONLY*****
 // {
@@ -76,9 +76,9 @@ const appNavigation = createSwitchNavigator(
   {
     AuthLoading,
     loginFlow,
-    mainFlow
+    mainFlow,
   },
-  { initialRouteName: "AuthLoading" }
+  { initialRouteName: 'AuthLoading' },
   //   { initialRouteName: 'mainFlow' },
 );
 
@@ -90,7 +90,7 @@ const AppContainer = createAppContainer(appNavigation);
 export default class App extends React.Component {
   state = {
     location: null,
-    where: null
+    where: null,
   };
 
   componentDidMount() {
@@ -99,24 +99,24 @@ export default class App extends React.Component {
 
   getlocation = async () => {
     const { status } = await Expo.Permissions.askAsync(
-      Expo.Permissions.LOCATION
+      Expo.Permissions.LOCATION,
     );
-    if (status !== "granted") {
+    if (status !== 'granted') {
       const oldTrafford = (await Expo.Location.geocodeAsync(
-        "Sir Matt Busby Way"
+        'Sir Matt Busby Way',
       ))[0];
       // console.error('Location denied');
       this.setState({
-        location: oldTrafford
+        location: oldTrafford,
       });
     } else {
       const location = await Expo.Location.getCurrentPositionAsync({});
       const where = (await Expo.Location.reverseGeocodeAsync(
-        location.coords
+        location.coords,
       ))[0];
       this.setState({
         location,
-        where
+        where,
       });
     }
   };

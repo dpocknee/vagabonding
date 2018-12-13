@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { View, Text } from "react-native";
-import { Button, Icon } from "native-base";
-import PropTypes from "prop-types";
-import Hamburger from "./Hamburger";
-import profileStyles from "../styles/Profile.styles";
-import Chat from "./Chat";
+import React, { Component } from 'react';
+import { View, Text } from 'react-native';
+import { Button, Icon } from 'native-base';
+import PropTypes from 'prop-types';
+import Hamburger from './Hamburger';
+import profileStyles from '../styles/Profile.styles';
+import Chat from './Chat';
 
 export default class ChatScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -14,17 +14,17 @@ export default class ChatScreen extends Component {
         iconLeft
         transparent
         onPress={() => {
-          navigation.getParam("drawerStatus")();
+          navigation.getParam('drawerStatus')();
         }}
         width={50}
       >
         <Icon type="FontAwesome" name="bars" />
       </Button>
-    )
+    ),
   });
 
   state = {
-    isDrawerOpen: false
+    isDrawerOpen: false,
   };
 
   componentDidMount() {
@@ -36,7 +36,7 @@ export default class ChatScreen extends Component {
     this.setState(state => ({ isDrawerOpen: !state.isDrawerOpen }));
   };
 
-  allNav = screen => {
+  allNav = (screen) => {
     const { navigation } = this.props;
     navigation.navigate(screen);
   };
@@ -56,5 +56,5 @@ export default class ChatScreen extends Component {
 }
 
 Profile.propTypes = {
-  navigation: PropTypes.object.isRequired
+  navigation: PropTypes.object.isRequired,
 };

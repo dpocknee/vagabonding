@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { View, Text } from "react-native";
-import { Button, Icon } from "native-base";
-import PropTypes from "prop-types";
-import Hamburger from "./Hamburger";
-import profileStyles from "../styles/Profile.styles";
+import React, { Component } from 'react';
+import { View, Text } from 'react-native';
+import { Button, Icon } from 'native-base';
+import PropTypes from 'prop-types';
+import Hamburger from './Hamburger';
+import profileStyles from '../styles/Profile.styles';
 
 export default class Profile extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -13,17 +13,17 @@ export default class Profile extends Component {
         iconLeft
         transparent
         onPress={() => {
-          navigation.getParam("drawerStatus")();
+          navigation.getParam('drawerStatus')();
         }}
         width={50}
       >
         <Icon type="FontAwesome" name="bars" />
       </Button>
-    )
+    ),
   });
 
   state = {
-    isDrawerOpen: false
+    isDrawerOpen: false,
   };
 
   componentDidMount() {
@@ -35,23 +35,22 @@ export default class Profile extends Component {
     this.setState(state => ({ isDrawerOpen: !state.isDrawerOpen }));
   };
 
-  allNav = screen => {
+  allNav = (screen) => {
     const { navigation } = this.props;
     navigation.navigate(screen);
   };
 
   render() {
     const { isDrawerOpen } = this.state;
-    const userInfo = this.props.navigation.getParam("selectedUser");
+    const userInfo = this.props.navigation.getParam('selectedUser');
     const interests = Object.keys(userInfo.interests).reduce(
       (outputArray, interest) => {
         if (userInfo.interests[interest]) outputArray.push(interest);
         return outputArray;
       },
-      []
+      [],
     );
-    const validInterests =
-      interests.length > 0 ? interests.join(" / ") : "No interests given!";
+    const validInterests = interests.length > 0 ? interests.join(' / ') : 'No interests given!';
     return (
       <View style={{ flex: 1 }}>
         <Hamburger
@@ -61,17 +60,27 @@ export default class Profile extends Component {
         >
           <View style={profileStyles.profileText}>
             <Text style={profileStyles.username}>{userInfo.username}</Text>
-            <Text>Real name: {userInfo.name}</Text>
-            <Text>Interests: {validInterests}</Text>
+            <Text>
+Real name:
+              {userInfo.name}
+            </Text>
+            <Text>
+Interests:
+              {validInterests}
+            </Text>
           </View>
           <Button
             onPress={() => {
-              this.props.navigation.navigate("Chat", {
-                selectedUser: user
+              this.props.navigation.navigate('Chat', {
+                selectedUser: user,
               });
             }}
           >
-            <Text>Chat with {userInfo.name}!</Text>
+            <Text>
+Chat with
+              {userInfo.name}
+!
+            </Text>
           </Button>
         </Hamburger>
       </View>
@@ -82,5 +91,5 @@ export default class Profile extends Component {
 // Chat will need userID, userName and clickedUserID as props
 
 Profile.propTypes = {
-  navigation: PropTypes.object.isRequired
+  navigation: PropTypes.object.isRequired,
 };
