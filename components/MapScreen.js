@@ -8,7 +8,7 @@ import * as firebase from 'firebase';
 import Users from './Users';
 import Hamburger from './Hamburger';
 
-const { getUserLocation } = require('../Functionality/utilityFunctions');
+const { getUserLocation, filterUsersByDistance } = require('../Functionality/utilityFunctions');
 
 /* eslint react/require-default-props: 0 */
 /* eslint react/forbid-prop-types: 0 */
@@ -31,30 +31,42 @@ export default class MapScreen extends Component {
   });
 
   state = {
-    location: null,
-    where: null,
-    isDrawerOpen: false,
+    locationAndError: null,
+    // location: null,
+    // where: null,
+    // isDrawerOpen: false,
   };
 
-  componentDidMount() {
+  componentWillMount() {
     const { navigation } = this.props;
     navigation.setParams({ drawerStatus: this.drawerSatus });
-
-    // get current logged in user
     firebase.auth().onAuthStateChanged((currentUser) => {
-      if (currentUser) { 
-       const location =  await getUserLocation(currentUser)
-       console.log(location)
+      if (currentUser) {
+        getUserLocation(currentUser, (err, locationAndError) => {
+          this.setState(
+            {
+              currentUser,
+              locationAndError,
+            },
+            () => {
+              filterUsersByDistance(this.state.currentUser, (err, nearbyUsers) => {
+                console.log(nearbyUsers, 'nearbyUsersInMap');
+                this.setState({ nearbyUsers });
+              });
+            },
+          );
+        });
+      }
     });
   }
 
-  drawerSatus = () => {
-    // console.log('WOOHAH!');
-    this.setState((state) => {
-      const inverseDrawer = !state.isDrawerOpen;
-      return { isDrawerOpen: inverseDrawer };
-    });
-  };
+  // drawerSatus = () => {
+  //   // console.log('WOOHAH!');
+  //   this.setState((state) => {
+  //     const inverseDrawer = !state.isDrawerOpen;
+  //     return { isDrawerOpen: inverseDrawer };
+  //   });
+  // };
 
   // getlocation = async () => {
   //   const { status } = await Expo.Permissions.askAsync(Expo.Permissions.LOCATION);
@@ -83,10 +95,10 @@ export default class MapScreen extends Component {
   };
 
   render() {
-    const { location, where } = this.state;
+    const { locationAndError, nearbyUsers } = this.state;
     const { screenProps } = this.props;
-    console.log(location, 'render console');
-    if (!location) {
+    console.log(nearbyUsers, 'in render');
+    if (!locationAndError) {
       return (
         <View
           style={{
@@ -102,17 +114,17 @@ export default class MapScreen extends Component {
     return (
       <View style={{ flex: 1 }}>
         <Hamburger allNav={this.allNav} isDrawerOpen={isDrawerOpen}>
-          <Expo.MapView
+          {/* <Expo.MapView
             style={{ height: 500 }}
             provider={Expo.MapView.PROVIDER_GOOGLE}
             initialRegion={{
-              latitude: location.latitude,
-              longitude: location.longitude,
+              latitude: locationAndError.latitude,
+              longitude: locationAndError.longitude,
               latitudeDelta: 0.05,
               longitudeDelta: 0.05,
             }}
-          >
-            <Expo.MapView.Marker
+          > */}
+          {/* <Expo.MapView.Marker
               coordinate={location.coords}
               title="you are here: "
               description={where.name}
@@ -124,16 +136,16 @@ export default class MapScreen extends Component {
               fillColor="rgba(204, 210, 192, 0.5)"
               style={{ opacity: 0.5 }}
             />
-          </Expo.MapView>
+          </Expo.MapView> */}
 
           {/* users component */}
-          <Users
+          {/* <Users
             style={{ flex: 1 }}
             users={screenProps.users}
             onSelectUser={(user) => {
               this.props.navigation.navigate('ProfileScreen');
             }}
-          />
+          /> */}
         </Hamburger>
       </View>
     );

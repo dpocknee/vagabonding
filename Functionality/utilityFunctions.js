@@ -6,7 +6,6 @@ import { isPointInCircle, getDistance } from 'geolib';
 const { firestore } = require('../config');
 
 const getUserLocation = async (user, cb) => {
-  // console.log(user, 'inside utils');
   const { status } = await Permissions.askAsync(Permissions.LOCATION);
   const errorMessage = 'Permission to access location was denied.';
   if (status !== 'granted') {
@@ -38,8 +37,8 @@ const getUserLocation = async (user, cb) => {
             },
             errorMessage: null,
           };
-          // cb(null, newObj);
-          return newObj;
+          cb(null, newObj);
+          // return newObj;
         })
         .catch((err) => {
           console.log(err, '<<<<Update Users Location');
@@ -79,17 +78,19 @@ const filterUsersByDistance = async (user, cb) => {
         currentUserLocation = doc[0].location;
       }
     });
-    const nearbyUsersObj = userDocs.reduce((nearbyUsers, cur) => {
-      const distance = getDistance(currentUserLocation, cur[0].location, 100);
-      const userObj = cur[0];
-      if (
-        isPointInCircle(cur[0].location, currentUserLocation, radius)
-        // This line checks to see if the current user sits within the other users radius as well
-        // && isPointInCircle(currentUserLocation, cur[0].location, cur[0].radius)
-      ) {
-        nearbyUsers[cur[1]] = { ...userObj, distance };
-        return nearbyUsers;
+    const nearbyUsersObj = userDocs.reduce((nearbyUsers, cur, index) => {
+      if (cur[0].location.latitude || cur[0].location.longitude) {
+        const distance = getDistance(currentUserLocation, cur[0].location, 100);
+        const userObj = cur[0];
+        if (
+          isPointInCircle(cur[0].location, currentUserLocation, radius)
+          // This line checks to see if the current user sits within the other users radius as well
+          // && isPointInCircle(currentUserLocation, cur[0].location, cur[0].radius)
+        ) {
+          nearbyUsers[cur[1]] = { ...userObj, distance };
+        }
       }
+      return nearbyUsers;
     }, {});
     cb(null, nearbyUsersObj);
   }
