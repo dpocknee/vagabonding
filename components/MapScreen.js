@@ -1,28 +1,15 @@
 import React, { Component } from 'react';
-import {
-  View, Text, ActivityIndicator, StyleSheet,
-} from 'react-native';
+import { View, Text, ActivityIndicator } from 'react-native';
 import { Button, Icon } from 'native-base';
 import * as Expo from 'expo';
 import PropTypes from 'prop-types';
 import * as firebase from 'firebase';
 
 import Users from './Users';
-import Hamburger from './Hamburger';
-import AuthLoading from './AuthLoading';
+import MenuWrapper from './MenuWrapper';
+import MapScreenStyles from '../styles/MapScreen.styles';
 
 const { getUserLocation, filterUsersByDistance } = require('../Functionality/utilityFunctions');
-
-/* eslint react/require-default-props: 0 */
-/* eslint react/forbid-prop-types: 0 */
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default class MapScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -43,52 +30,50 @@ export default class MapScreen extends Component {
 
   state = {
     locationAndError: null,
-    isDrawerOpen: false,
+    dev: true, // special dev variable for David's computer
+    // which can't use GPS.
   };
 
   componentDidMount() {
-    const { navigation } = this.props;
-    navigation.setParams({ drawerStatus: this.drawerStatus });
     firebase.auth().onAuthStateChanged((currentUser) => {
       if (currentUser) {
-        getUserLocation(currentUser, (err, locationAndError) => {
-          this.setState(
-            {
-              currentUser,
-              locationAndError,
-            },
-            () => {
-              filterUsersByDistance(this.state.currentUser, (err, nearbyUsers) => {
-                const nearbyUsersArray = Object.entries(nearbyUsers);
-                this.setState({ nearbyUsers: nearbyUsersArray });
-              });
-            },
-          );
+        if (this.state.dev) {
+          this.setState({
+            currentUser,
+            locationAndError: { location: { latitude: 53.4758302, longitude: -2.2465945 } },
+            nearbyUsers: [],
+          });
+        } else {
+          getUserLocation(currentUser, (err, locationAndError) => {
+            this.setState(
+              {
+                currentUser,
+                locationAndError,
+              },
+              () => {
+                filterUsersByDistance(this.state.currentUser, (err, nearbyUsers) => {
+                  const nearbyUsersArray = Object.entries(nearbyUsers);
+                  this.setState({ nearbyUsers: nearbyUsersArray });
+                });
+              },
+            );
+          });
+        }
+      } else {
+        this.setState({
+          currentUser,
+          locationAndError: { location: { latitude: 37.422, longitude: -122.084 } },
         });
       }
     });
   }
 
-  drawerStatus = () => {
-    this.setState((state) => {
-      const inverseDrawer = !state.isDrawerOpen;
-      return { isDrawerOpen: inverseDrawer };
-    });
-  };
-
-  allNav = (screen) => {
-    const { navigation } = this.props;
-    navigation.navigate(screen);
-  };
-
   render() {
-    const {
-      locationAndError, nearbyUsers, currentUser, isDrawerOpen,
-    } = this.state;
+    const { locationAndError, nearbyUsers, currentUser } = this.state;
     const { navigation } = this.props;
     if (!locationAndError || !nearbyUsers) {
       return (
-        <View style={styles.container}>
+        <View style={MapScreenStyles.container}>
           <Text>Loading...</Text>
           <ActivityIndicator size="large" />
         </View>
@@ -96,11 +81,7 @@ export default class MapScreen extends Component {
     }
     return (
       <View style={{ flex: 1 }}>
-        <Hamburger
-          allNav={this.allNav}
-          isDrawerOpen={isDrawerOpen}
-          drawerStatus={this.drawerStatus}
-        >
+        <MenuWrapper navigation={navigation}>
           <>
             <Expo.MapView
               style={{ height: 500 }}
@@ -134,7 +115,7 @@ export default class MapScreen extends Component {
               }}
             />
           </>
-        </Hamburger>
+        </MenuWrapper>
       </View>
     );
   }

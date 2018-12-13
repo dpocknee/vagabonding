@@ -1,11 +1,8 @@
 import React from 'react';
 import * as Expo from 'expo';
-import {
-  createSwitchNavigator,
-  createStackNavigator,
-  createAppContainer,
-} from 'react-navigation';
+import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 import 'firebase/firestore';
+import { Button, Icon } from 'native-base';
 import AuthLoading from './components/AuthLoading';
 import Loading from './components/Loading';
 import SignUp from './components/SignUp';
@@ -18,10 +15,7 @@ import ChatScreen from './components/ChatScreen';
 import MapScreen from './components/MapScreen';
 import InboxScreen from './components/InboxScreen';
 import ProfileScreen from './components/ProfileScreen';
-
-import mockUsers from './mockUsers';
-
-/* eslint react/no-unused-state: 0 */
+// import MainWrapper from './components/MainWrapper';
 
 const loginFlow = createSwitchNavigator(
   {
@@ -60,17 +54,6 @@ const mainFlow = createStackNavigator(
     initialRouteName: 'Map',
   },
 );
-// *****FOR TEST PURPOSES ONLY*****
-// {
-//   // Chat: {
-//   //   screen: Chat,
-//   // },
-//   //   HomePage: {
-//   //     screen: HomePage,
-//   //   },
-// },
-// { initialRouteName: 'Chat' },
-// *****FOR TEST PURPOSES ONLY*****
 
 const appNavigation = createSwitchNavigator(
   {
@@ -79,7 +62,6 @@ const appNavigation = createSwitchNavigator(
     mainFlow,
   },
   { initialRouteName: 'AuthLoading' },
-  //   { initialRouteName: 'mainFlow' },
 );
 
 const AppContainer = createAppContainer(appNavigation);
@@ -92,3 +74,4 @@ export default class App extends React.Component {
     return <AppContainer />;
   }
 }
+// https://medium.com/@jan.hesters/building-a-react-native-app-with-complex-navigation-using-react-navigation-85a479308f52
