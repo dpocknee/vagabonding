@@ -63,4 +63,6 @@ typings/
 # firebase config file
 config.js
 
+.expo
+.expo/
 .expo/*

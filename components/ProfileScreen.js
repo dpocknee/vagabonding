@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { Button, Icon } from 'native-base';
 import PropTypes from 'prop-types';
-import Hamburger from './Hamburger';
+import MenuWrapper from './MenuWrapper';
 import profileStyles from '../styles/Profile.styles';
 
 export default class Profile extends Component {
@@ -22,26 +22,8 @@ export default class Profile extends Component {
     ),
   });
 
-  state = {
-    isDrawerOpen: false,
-  };
-
-  componentDidMount() {
-    const { navigation } = this.props;
-    navigation.setParams({ drawerStatus: this.drawerStatus });
-  }
-
-  drawerStatus = () => {
-    this.setState(state => ({ isDrawerOpen: !state.isDrawerOpen }));
-  };
-
-  allNav = (screen) => {
-    const { navigation } = this.props;
-    navigation.navigate(screen);
-  };
-
   render() {
-    const { isDrawerOpen } = this.state;
+    const { navigation } = this.props;
     const userId = this.props.navigation.getParam('selectedUser')[0];
     const userInfo = this.props.navigation.getParam('selectedUser')[1];
     const currentUser = this.props.navigation.getParam('currentUser');
@@ -57,11 +39,7 @@ export default class Profile extends Component {
     const validInterests = interests.length > 0 ? interests.join(' / ') : 'No interests given!';
     return (
       <View style={{ flex: 1 }}>
-        <Hamburger
-          allNav={this.allNav}
-          isDrawerOpen={isDrawerOpen}
-          drawerStatus={this.drawerStatus}
-        >
+        <MenuWrapper navigation={navigation}>
           <>
             <View style={profileStyles.profileText}>
               <Icon type="FontAwesome" name="user-circle" style={{ fontSize: 40 }} />
@@ -92,7 +70,7 @@ export default class Profile extends Component {
               </Text>
             </Button>
           </>
-        </Hamburger>
+        </MenuWrapper>
       </View>
     );
   }

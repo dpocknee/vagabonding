@@ -59,7 +59,7 @@ const Sidebar = (props) => {
             allNav('loginFlow');
           }}
         >
-          <Icon type="FontAwesome" name="times" />
+          <Icon type="FontAwesome" name="hand-o-left" />
           <Text style={menuTextStyle}>Logout</Text>
         </Button>
         <Button
@@ -73,7 +73,7 @@ const Sidebar = (props) => {
           }}
         >
           <Icon type="FontAwesome" name="times" />
-          <Text style={menuTextStyle}>Close</Text>
+          <Text style={menuTextStyle}>Close Menu</Text>
         </Button>
       </Content>
     </Container>
