@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, KeyboardAvoidingView } from 'react-native';
 import { Button, Icon } from 'native-base';
 import PropTypes from 'prop-types';
 import MenuWrapper from './MenuWrapper';
@@ -32,11 +32,17 @@ export default class ChatScreen extends Component {
       <View style={{ flex: 1 }}>
         <MenuWrapper navigation={navigation}>
           <>
-            <Chat
-              currentUserID={currentUserID}
-              currentUsername={currentUsername}
-              selectedUserID={selectedUserID}
-            />
+            <KeyboardAvoidingView
+              behavior="padding"
+              style={{ flex: 1 }}
+              keyboardVerticalOffset={30}
+            >
+              <Chat
+                currentUserID={currentUserID}
+                currentUsername={currentUsername}
+                selectedUserID={selectedUserID}
+              />
+            </KeyboardAvoidingView>
           </>
         </MenuWrapper>
       </View>
