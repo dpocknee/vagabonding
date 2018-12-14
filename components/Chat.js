@@ -29,7 +29,7 @@ class Chat extends Component {
   }
 
   onSend(messages = []) {
-    console.log('OnSend: ', messages[0], this.state.doc);
+    // console.log('OnSend: ', messages[0], this.state.doc);
     sendMessage(messages[0], this.state.doc)
       .then((newMessage) => {
         //* **** OFFLINE MODE????? ********

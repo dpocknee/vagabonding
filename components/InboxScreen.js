@@ -7,7 +7,6 @@ import Inbox from './Inbox';
 
 export default class InboxScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTransparent: true,
     headerLeft: (
       <Button
         iconLeft
@@ -27,7 +26,7 @@ export default class InboxScreen extends Component {
     return (
       <View style={{ flex: 1 }}>
         <MenuWrapper navigation={navigation}>
-          <Inbox />
+          <Inbox navigation={navigation} />
         </MenuWrapper>
       </View>
     );

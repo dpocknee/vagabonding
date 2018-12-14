@@ -111,16 +111,14 @@ const logOut = () => {
     });
 };
 
-const getCurrentUserInfo = (uid) => {
-  firestore
-    .collection('users')
-    .doc(uid)
-    .get()
-    .then(snapshot => snapshot.data())
-    .catch((err) => {
-      console.log(err, '<<<<Get Logged In Users');
-    });
-};
+const getCurrentUserInfo = uid => firestore
+  .collection('users')
+  .doc(uid)
+  .get()
+  .then(snapshot => snapshot.data())
+  .catch((err) => {
+    console.log(err, '<<<<Get Logged In Users');
+  });
 
 export {
   getUserLocation, getLoggedInUsers, filterUsersByDistance, logOut, getCurrentUserInfo,
