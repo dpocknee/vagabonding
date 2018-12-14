@@ -7,7 +7,6 @@ import profileStyles from '../styles/Profile.styles';
 
 export default class Profile extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTransparent: true,
     headerLeft: (
       <Button
         iconLeft
@@ -32,10 +31,12 @@ export default class Profile extends Component {
 
     console.log('CURRENT USER INFO: ', currentUserInfo);
     const currentUsername = currentUserInfo[0][1].username;
-    const interests = Object.keys(userInfo.interests).reduce((outputArray, interest) => {
-      if (userInfo.interests[interest]) outputArray.push(interest);
-      return outputArray;
-    }, []);
+    const interests = userInfo.interests
+      ? Object.keys(userInfo.interests).reduce((outputArray, interest) => {
+        if (userInfo.interests[interest]) outputArray.push(interest);
+        return outputArray;
+      }, [])
+      : [];
     const validInterests = interests.length > 0 ? interests.join(' / ') : 'No interests given!';
     return (
       <View style={{ flex: 1 }}>
