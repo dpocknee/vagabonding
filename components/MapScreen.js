@@ -27,6 +27,18 @@ export default class MapScreen extends Component {
         <Icon type="FontAwesome" name="bars" />
       </Button>
     ),
+    headerRight: (
+      <Button
+        iconRight
+        transparent
+        onPress={() => {
+          navigation.push('Map');
+        }}
+        width={50}
+      >
+        <Icon type="FontAwesome" name="refresh" />
+      </Button>
+    ),
   });
 
   state = {
@@ -117,7 +129,7 @@ export default class MapScreen extends Component {
               currentUser={currentUser}
               users={nearbyUsers}
               onSelectUser={(user) => {
-                navigation.navigate('Profile', { selectedUser: user, currentUser, nearbyUsers });
+                navigation.push('Profile', { selectedUser: user, currentUser, nearbyUsers });
               }}
             />
           </>

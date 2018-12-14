@@ -56,7 +56,7 @@ export default class Profile extends Component {
 
             <Button
               onPress={() => {
-                this.props.navigation.navigate('Chat', {
+                this.props.navigation.push('Chat', {
                   currentUserID: currentUser.uid,
                   currentUsername,
                   selectedUserID: userId,

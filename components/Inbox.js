@@ -5,7 +5,10 @@ import {
 import { getTheme } from 'react-native-material-kit';
 import firebase from 'firebase';
 
+
 const { getChatPartnerNames, chatsRef } = require('../Functionality/chatFunctions');
+const { getCurrentUserInfo } = require('../Functionality/utilityFunctions');
+
 
 // console.log('currentUserSTUFF: ', currentUser, currentUserID);
 const theme = getTheme();
@@ -21,10 +24,14 @@ class Inbox extends Component {
     let currentUserID;
     firebase.auth().onAuthStateChanged((user) => {
       currentUserID = user.uid;
+      ***************
+      const currentUserInfo = getCurrentUserInfo(currentUserID);
+      ***************
       const allUserChats = chatsRef.where('usersArr', 'array-contains', `${currentUserID}`);
       allUserChats.onSnapshot((querySnapshot) => {
         querySnapshot.docChanges().forEach((change) => {
           if (change.type === 'added') {
+     
             const chatObj = {};
             change.doc.data().usersArr[0] === currentUserID
               ? (chatObj.otherUser = change.doc.data().usersArr[1])
