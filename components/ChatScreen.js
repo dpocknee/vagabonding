@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, KeyboardAvoidingView } from 'react-native';
+import { View, KeyboardAvoidingView } from 'react-native';
 import { Button, Icon } from 'native-base';
 import PropTypes from 'prop-types';
 import MenuWrapper from './MenuWrapper';
 import Chat from './Chat';
+import { getCurrentUserInfo } from '../Functionality/utilityFunctions';
 
 export default class ChatScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -20,6 +21,9 @@ export default class ChatScreen extends Component {
         <Icon type="FontAwesome" name="bars" />
       </Button>
     ),
+    title: `Chat with ${navigation.getParam('selectedUsername')} (${navigation.getParam(
+      'selectedUserUsername',
+    )})`,
   });
 
   render() {

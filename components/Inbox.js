@@ -88,6 +88,8 @@ class Inbox extends Component {
               currentUserID,
               currentUsername,
               selectedUserID: chat.otherUser,
+              selectedUserUsername: chat.otherUserUsername,
+              selectedUsername: chat.otherUserName,
             })
             }
           >

@@ -19,6 +19,7 @@ export default class InboxScreen extends Component {
         <Icon type="FontAwesome" name="bars" />
       </Button>
     ),
+    title: 'Inbox',
   });
 
   render() {
