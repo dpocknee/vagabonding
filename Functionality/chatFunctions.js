@@ -17,7 +17,10 @@ const getPreviousMessages = async (currentUser, clickedUser) => {
     .then((querySnapshot) => {
       if (querySnapshot.empty) {
         chatsRef.doc(`${currentUser}${clickedUser}`).set({
-          users: [`${currentUser}${clickedUser}`, `${clickedUser}${currentUser}`],
+          users: [
+            `${currentUser}${clickedUser}`,
+            `${clickedUser}${currentUser}`,
+          ],
           messages: [],
           usersArr: [`${currentUser}`, `${clickedUser}`],
         });
@@ -36,6 +39,7 @@ const getPreviousMessages = async (currentUser, clickedUser) => {
     })
     .catch((err) => {
       console.log(err, '<<<<<Get Previous Messages');
+      // this.props.navigation.push('Error');
     });
 };
 
@@ -51,6 +55,7 @@ const sendMessage = async (message, doc) => {
     .then(() => newMessage)
     .catch((err) => {
       console.log(err, '<<<<<updateMessagesErr');
+      // this.props.navigation.push('Error');
     });
 };
 
@@ -82,6 +87,10 @@ const getChatPartnerNames = async otherUserID => usersRef
     chatPartnerInfo.username = querySnapshot.data().username;
     chatPartnerInfo.name = querySnapshot.data().name;
     return chatPartnerInfo;
+  })
+  .catch((err) => {
+    console.log(err, '<<<<<<getChatPartnerNamesError');
+    // this.props.navigation.push('Error');
   });
 
 module.exports = {

@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { GiftedChat } from 'react-native-gifted-chat';
 
-const { getPreviousMessages, sendMessage, chatsRef } = require('../Functionality/chatFunctions');
+const {
+  getPreviousMessages,
+  sendMessage,
+  chatsRef,
+} = require('../Functionality/chatFunctions');
 
 class Chat extends Component {
   // Chat will need currentUserID, currentUserName and selectedUserID as props
@@ -24,6 +28,7 @@ class Chat extends Component {
       })
       .catch((err) => {
         console.log(err, '<<<Chat Mount');
+        // this.props.navigation.push('Error');
       });
   }
 
@@ -39,6 +44,7 @@ class Chat extends Component {
       })
       .catch((err) => {
         console.log(err, '<<<<sendMessage Error');
+        // this.props.navigation.push('Error');
       });
   }
 
