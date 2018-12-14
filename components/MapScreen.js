@@ -8,7 +8,6 @@ import * as firebase from 'firebase';
 import Users from './Users';
 import MenuWrapper from './MenuWrapper';
 import MapScreenStyles from '../styles/MapScreen.styles';
-// import mockUsers from '../mockUsers';
 
 const { getUserLocation, filterUsersByDistance } = require('../Functionality/utilityFunctions');
 
@@ -61,14 +60,14 @@ export default class MapScreen extends Component {
           });
           // ---------------
         } else {
-          getUserLocation(currentUser, (err, locationAndError) => {
+          getUserLocation(currentUser, (err1, locationAndError) => {
             this.setState(
               {
                 currentUser,
                 locationAndError,
               },
               () => {
-                filterUsersByDistance(this.state.currentUser, (err, nearbyUsers) => {
+                filterUsersByDistance(this.state.currentUser, (err2, nearbyUsers) => {
                   const nearbyUsersArray = Object.entries(nearbyUsers);
                   this.setState({ nearbyUsers: nearbyUsersArray });
                 });
