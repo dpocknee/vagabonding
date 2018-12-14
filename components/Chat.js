@@ -17,10 +17,10 @@ class Chat extends Component {
       .then((messageObj) => {
         chatsRef.doc(messageObj.doc).onSnapshot((doc) => {
           const messages = doc.data().messages.reverse();
-          this.setState(previousState => ({
+          this.setState({
             doc: messageObj.doc,
             messages,
-          }));
+          });
         });
       })
       .catch((err) => {

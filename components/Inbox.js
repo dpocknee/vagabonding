@@ -5,30 +5,13 @@ import {
 import { getTheme } from 'react-native-material-kit';
 import firebase from 'firebase';
 
-const { getChats, getChatPartnerNames } = require('../Functionality/chatFunctions');
+const { getChatPartnerNames, chatsRef } = require('../Functionality/chatFunctions');
 
 // console.log('currentUserSTUFF: ', currentUser, currentUserID);
 const theme = getTheme();
 
 class Inbox extends Component {
   //* *********NEEDS CURRENT USERID AS PROP*************** */
-
-  // static navigationOptions = ({ navigation }) => ({
-  //   headerTransparent: true,
-  //   headerLeft: (
-  //     <Button
-  //       iconLeft
-  //       transparent
-  //       onPress={() => {
-  //         navigation.getParam('drawerStatus')();
-  //       }}
-  //       width={50}
-  //     >
-  //       <Icon type="FontAwesome" name="bars" />
-  //     </Button>
-  //   ),
-  // });
-
   state = {
     chats: [],
     loading: true,
@@ -38,22 +21,30 @@ class Inbox extends Component {
     let currentUserID;
     firebase.auth().onAuthStateChanged((user) => {
       currentUserID = user.uid;
-      return getChats(currentUserID).then((chats) => {
-        const completedChatObjs = chats.map(chatObj => getChatPartnerNames(chatObj.otherUser).then((chatPartnerObj) => {
-          const compObj = {
-            ...chatObj,
-            otherUserUsername: chatPartnerObj.username,
-            otherUserName: chatPartnerObj.name,
-          };
-          return compObj;
-        }));
-        Promise.all(completedChatObjs).then(result => this.setState({
-          chats: result,
-        }));
-
-        // this.setState({
-        //   chats: completedChatObjs,
-        // });
+      const allUserChats = chatsRef.where('usersArr', 'array-contains', `${currentUserID}`);
+      allUserChats.onSnapshot((querySnapshot) => {
+        querySnapshot.docChanges().forEach((change) => {
+          if (change.type === 'added') {
+            const chatObj = {};
+            change.doc.data().usersArr[0] === currentUserID
+              ? (chatObj.otherUser = change.doc.data().usersArr[1])
+              : (chatObj.otherUser = change.doc.data().usersArr[0]);
+            chatObj.messages = change.doc.data().messages;
+            getChatPartnerNames(chatObj.otherUser).then((chatPartnerObj) => {
+              const compObj = {
+                ...chatObj,
+                otherUserUsername: chatPartnerObj.username,
+                otherUserName: chatPartnerObj.name,
+              };
+              this.setState(previousState => ({
+                chats: [...previousState.chats, compObj],
+              }));
+            });
+          }
+          if (change.type === 'modified') {
+            console.log(change.doc.data(), '<<<<< Chat Modified');
+          }
+        });
       });
     });
   }
