@@ -6,7 +6,6 @@ import firebase from 'firebase';
 const { getChatPartnerNames, chatsRef } = require('../Functionality/chatFunctions');
 const { getCurrentUserInfo } = require('../Functionality/utilityFunctions');
 
-// console.log('currentUserSTUFF: ', currentUser, currentUserID);
 const theme = getTheme();
 
 class Inbox extends Component {
@@ -24,7 +23,6 @@ class Inbox extends Component {
       currentUserID = user.uid;
       // ***************
       getCurrentUserInfo(currentUserID).then((currentUserInfo) => {
-        console.log('currentUserInfo: ', currentUserInfo, 'username: ', currentUserInfo.username);
         this.setState({
           currentUserID,
           currentUsername: currentUserInfo.username,
@@ -71,11 +69,6 @@ class Inbox extends Component {
                 chats: [...oldChats, compObj],
               });
             });
-            /*
-            Create new array - spread of chats in state.
-            Filter new array to contain all chats but modified chat (copy of compObj)
-            set state with filtered array and compObj
-            */
           }
         });
       });
@@ -84,15 +77,14 @@ class Inbox extends Component {
 
   render() {
     const { chats, currentUserID, currentUsername } = this.state;
-    console.log('Inbox state: ', currentUserID, currentUsername);
-    const { navigation } = this.props;
+    const { allNav } = this.props;
     return (
       <ScrollView>
         {chats.map((chat, index) => (
           <TouchableOpacity
             style={theme.cardStyle}
             key={`inbox${chat.otherUser}`}
-            onPress={() => navigation.navigate('Chat', {
+            onPress={() => allNav({
               currentUserID,
               currentUsername,
               selectedUserID: chat.otherUser,
