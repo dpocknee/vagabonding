@@ -12,7 +12,7 @@ class Chat extends Component {
 
   componentWillMount() {
     const { currentUserID, currentUsername, selectedUserID } = this.props;
-    console.log('CURRENT STUFF: ', currentUserID, currentUsername, selectedUserID);
+    console.log('CURRENT STUFF: ', currentUsername);
     getPreviousMessages(currentUserID, selectedUserID)
       .then((messageObj) => {
         chatsRef.doc(messageObj.doc).onSnapshot((doc) => {

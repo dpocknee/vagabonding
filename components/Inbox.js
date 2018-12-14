@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import {
-  View, ScrollView, Text, Button, TouchableOpacity,
-} from 'react-native';
+import { ScrollView, Text, TouchableOpacity } from 'react-native';
 import { getTheme } from 'react-native-material-kit';
 import firebase from 'firebase';
 
@@ -15,7 +13,7 @@ class Inbox extends Component {
   //* *********NEEDS CURRENT USERID AS PROP*************** */
   state = {
     chats: [],
-    loading: true,
+    // loading: true,
     currentUserID: null,
     currentUsername: null,
   };
@@ -25,13 +23,13 @@ class Inbox extends Component {
     firebase.auth().onAuthStateChanged((user) => {
       currentUserID = user.uid;
       // ***************
-      const currentUserInfo = getCurrentUserInfo(currentUserID);
-      console.log('currentUserInfo: ', currentUserInfo);
-      this.setState({
-        currentUserID,
-        currentUsername: currentUserInfo,
+      getCurrentUserInfo(currentUserID).then((currentUserInfo) => {
+        console.log('currentUserInfo: ', currentUserInfo, 'username: ', currentUserInfo.username);
+        this.setState({
+          currentUserID,
+          currentUsername: currentUserInfo.username,
+        });
       });
-
       // ***************
       const allUserChats = chatsRef.where('usersArr', 'array-contains', `${currentUserID}`);
       allUserChats.onSnapshot((querySnapshot) => {
