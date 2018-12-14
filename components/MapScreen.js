@@ -27,6 +27,18 @@ export default class MapScreen extends Component {
         <Icon type="FontAwesome" name="bars" />
       </Button>
     ),
+    headerRight: (
+      <Button
+        iconRight
+        transparent
+        onPress={() => {
+          navigation.push('Map');
+        }}
+        width={50}
+      >
+        <Icon type="FontAwesome" name="refresh" />
+      </Button>
+    ),
   });
 
   state = {
