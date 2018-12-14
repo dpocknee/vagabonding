@@ -54,33 +54,25 @@ const sendMessage = async (message, doc) => {
     });
 };
 
-// To put a listeners on the chats collection, use .onSnapshot in the place of .get():
-// allUserChats.onSnapshot(querySnapshot => {
-//   querySnapshot.docChanges().forEach(change => {
-//     if (change.type === "added") {
-//       console.log(change.doc.data());
-//     }
-//   });
-// });
 /** *************** */
-const getChats = async (user) => {
-  const allUserChats = chatsRef.where('usersArr', 'array-contains', `${user}`);
-  return allUserChats.get().then((querySnapshot) => {
-    if (querySnapshot.empty) {
-      return [];
-    }
-    const chats = [];
-    querySnapshot.forEach((conversationDoc) => {
-      const chatObj = {};
-      conversationDoc.data().usersArr[0] === user
-        ? (chatObj.otherUser = conversationDoc.data().usersArr[1])
-        : (chatObj.otherUser = conversationDoc.data().usersArr[0]);
-      chatObj.messages = conversationDoc.data().messages;
-      chats.push(chatObj);
-    });
-    return chats;
-  });
-};
+// const getChats = async (user) => {
+//   const allUserChats = chatsRef.where('usersArr', 'array-contains', `${user}`);
+//   return allUserChats.get().then((querySnapshot) => {
+//     if (querySnapshot.empty) {
+//       return [];
+//     }
+//     const chats = [];
+//     querySnapshot.forEach((conversationDoc) => {
+//       const chatObj = {};
+//       conversationDoc.data().usersArr[0] === user
+//         ? (chatObj.otherUser = conversationDoc.data().usersArr[1])
+//         : (chatObj.otherUser = conversationDoc.data().usersArr[0]);
+//       chatObj.messages = conversationDoc.data().messages;
+//       chats.push(chatObj);
+//     });
+//     return chats;
+//   });
+// };
 
 const getChatPartnerNames = async otherUserID => usersRef
   .doc(otherUserID)
@@ -96,6 +88,7 @@ module.exports = {
   getPreviousMessages,
   sendMessage,
   chatsRef,
-  getChats,
+  // getChats,
   getChatPartnerNames,
+  // inboxListener,
 };
