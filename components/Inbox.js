@@ -6,6 +6,7 @@ import { getTheme } from 'react-native-material-kit';
 import firebase from 'firebase';
 
 const { getChats, getChatPartnerNames } = require('../Functionality/chatFunctions');
+const { getCurrentUserInfo } = require('../Functionality/utilityFunctions');
 
 // console.log('currentUserSTUFF: ', currentUser, currentUserID);
 const theme = getTheme();
@@ -38,6 +39,7 @@ class Inbox extends Component {
     let currentUserID;
     firebase.auth().onAuthStateChanged((user) => {
       currentUserID = user.uid;
+      const currentUserInfo = getCurrentUserInfo(currentUserID);
       return getChats(currentUserID).then((chats) => {
         const completedChatObjs = chats.map(chatObj => getChatPartnerNames(chatObj.otherUser).then((chatPartnerObj) => {
           const compObj = {
