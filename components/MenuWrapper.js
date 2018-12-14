@@ -23,7 +23,7 @@ export default class MenuWrapper extends Component {
 
   allNav = (screen) => {
     const { navigation } = this.props;
-    navigation.navigate(screen);
+    navigation.push(screen);
   };
 
   render() {
