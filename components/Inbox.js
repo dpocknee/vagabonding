@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ScrollView, Text, TouchableOpacity } from 'react-native';
 import { getTheme } from 'react-native-material-kit';
 import firebase from 'firebase';
+import Loading from './Loading';
 
 const { getChatPartnerNames, chatsRef } = require('../Functionality/chatFunctions');
 const { getCurrentUserInfo } = require('../Functionality/utilityFunctions');
@@ -78,6 +79,9 @@ class Inbox extends Component {
   render() {
     const { chats, currentUserID, currentUsername } = this.state;
     const { allNav } = this.props;
+    if (!chats) {
+      return <Loading />;
+    }
     return (
       <ScrollView>
         {chats.map((chat, index) => (

@@ -1,16 +1,7 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet, Text, ActivityIndicator, View,
-} from 'react-native';
+import { Text, ActivityIndicator, View } from 'react-native';
 import * as firebase from 'firebase';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+import LoadingStyles from '../styles/Loading.styles';
 
 class Loading extends Component {
   componentDidMount() {
@@ -21,7 +12,7 @@ class Loading extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={LoadingStyles.container}>
         <Text>Loading...</Text>
         <ActivityIndicator size="large" />
       </View>

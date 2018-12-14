@@ -84,7 +84,7 @@ const filterUsersByDistance = async (user, cb) => {
         if (
           isPointInCircle(cur[0].location, currentUserLocation, radius)
           // This line checks to see if the current user sits within the other users radius as well
-          // && isPointInCircle(currentUserLocation, cur[0].location, cur[0].radius)
+          && isPointInCircle(currentUserLocation, cur[0].location, cur[0].radius)
         ) {
           nearbyUsers[cur[1]] = { ...userObj, distance };
         }

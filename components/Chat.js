@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { GiftedChat } from 'react-native-gifted-chat';
+import Loading from './Loading';
 
 const { getPreviousMessages, sendMessage, chatsRef } = require('../Functionality/chatFunctions');
 
 class Chat extends Component {
   // Chat will need currentUserID, currentUserName and selectedUserID as props
   state = {
-    messages: [],
+    messages: null,
     doc: '',
   };
 
@@ -48,6 +49,10 @@ class Chat extends Component {
 
   render() {
     const { currentUserID, currentUsername } = this.props;
+    const { messages } = this.state;
+    if (!messages) {
+      return <Loading />;
+    }
     return (
       <GiftedChat
         messages={this.state.messages}

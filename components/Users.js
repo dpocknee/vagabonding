@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { getTheme } from 'react-native-material-kit';
 import PropTypes from 'prop-types';
+import Loading from './Loading';
 
 /* eslint react/require-default-props: 0 */
 /* eslint react/forbid-prop-types: 0 */
@@ -12,6 +13,9 @@ const theme = getTheme();
 
 const Users = (props) => {
   const { users, onSelectUser, currentUser } = props;
+  if (!users) {
+    return <Loading />;
+  }
   return (
     <ScrollView>
       {users.map(
