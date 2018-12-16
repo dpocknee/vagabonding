@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Button, Icon } from 'native-base';
-import PropTypes from 'prop-types';
+import { Drawer } from 'native-base';
 import Sidebar from './Sidebar';
 import drawerStyles from '../styles/Hamburger.styles';
 
@@ -30,11 +29,11 @@ export default class MenuWrapper extends Component {
     const closeDrawer = () => {
       this.drawer._root.close();
     };
-
+    // What's this openDrawer thingymajig upto???
     const openDrawer = () => {
       this.drawer._root.open();
     };
-
+    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     const { children } = this.props;
     const { isDrawerOpen } = this.state;
 

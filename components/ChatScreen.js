@@ -4,7 +4,6 @@ import { Button, Icon } from 'native-base';
 import PropTypes from 'prop-types';
 import MenuWrapper from './MenuWrapper';
 import Chat from './Chat';
-import { getCurrentUserInfo } from '../Functionality/utilityFunctions';
 
 export default class ChatScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -31,7 +30,7 @@ export default class ChatScreen extends Component {
     const currentUserID = navigation.getParam('currentUserID');
     const currentUsername = navigation.getParam('currentUsername');
     const selectedUserID = navigation.getParam('selectedUserID');
-    // Chat will need userID, userName and clickedUserID as props
+
     return (
       <View style={{ flex: 1 }}>
         <MenuWrapper navigation={navigation}>

@@ -54,26 +54,6 @@ const sendMessage = async (message, doc) => {
     });
 };
 
-/** *************** */
-// const getChats = async (user) => {
-//   const allUserChats = chatsRef.where('usersArr', 'array-contains', `${user}`);
-//   return allUserChats.get().then((querySnapshot) => {
-//     if (querySnapshot.empty) {
-//       return [];
-//     }
-//     const chats = [];
-//     querySnapshot.forEach((conversationDoc) => {
-//       const chatObj = {};
-//       conversationDoc.data().usersArr[0] === user
-//         ? (chatObj.otherUser = conversationDoc.data().usersArr[1])
-//         : (chatObj.otherUser = conversationDoc.data().usersArr[0]);
-//       chatObj.messages = conversationDoc.data().messages;
-//       chats.push(chatObj);
-//     });
-//     return chats;
-//   });
-// };
-
 const getChatPartnerNames = async otherUserID => usersRef
   .doc(otherUserID)
   .get()
@@ -88,7 +68,5 @@ module.exports = {
   getPreviousMessages,
   sendMessage,
   chatsRef,
-  // getChats,
   getChatPartnerNames,
-  // inboxListener,
 };

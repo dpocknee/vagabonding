@@ -82,21 +82,21 @@ class SignUp extends Component {
           placeholder="name"
           autoCapitalize="words"
           style={styles.textInput}
-          onChangeText={name => this.setState({ name })}
+          onChangeText={newName => this.setState({ name: newName })}
           value={name}
         />
         <TextInput
           placeholder="username"
           autoCapitalize="words"
           style={styles.textInput}
-          onChangeText={username => this.setState({ username })}
+          onChangeText={newUsername => this.setState({ username: newUsername })}
           value={username}
         />
         <TextInput
           placeholder="email"
           autoCapitalize="none"
           style={styles.textInput}
-          onChangeText={email => this.setState({ email })}
+          onChangeText={newEmail => this.setState({ email: newEmail })}
           value={email}
         />
         <TextInput
@@ -104,7 +104,7 @@ class SignUp extends Component {
           autoCapitalize="none"
           secureTextEntry
           style={styles.textInput}
-          onChangeText={password => this.setState({ password })}
+          onChangeText={newPassword => this.setState({ password: newPassword })}
           value={password}
         />
         <Text>Tick the things that interest you</Text>
