@@ -1,41 +1,42 @@
-import React, { Component } from 'react';
-import { GiftedChat } from 'react-native-gifted-chat';
-import ErrorComponent from './ErrorComponent';
+import React, { Component } from "react";
+import { GiftedChat, Bubble } from "react-native-gifted-chat";
+import colours from "../styles/Colours.styles";
+import ErrorComponent from "./ErrorComponent";
 
 const {
   getPreviousMessages,
   sendMessage,
-  chatsRef,
-} = require('../Functionality/chatFunctions');
+  chatsRef
+} = require("../Functionality/chatFunctions");
 
 class Chat extends Component {
   state = {
     messages: [],
-    doc: '',
-    errorMessage: null,
+    doc: "",
+    errorMessage: null
   };
 
   componentWillMount() {
     const { currentUserID, selectedUserID } = this.props;
     getPreviousMessages(currentUserID, selectedUserID)
-      .then((messageObj) => {
-        if (typeof messageObj !== 'object') {
+      .then(messageObj => {
+        if (typeof messageObj !== "object") {
           this.setState({
-            errorMessage: messageObj,
+            errorMessage: messageObj
           });
         } else {
-          chatsRef.doc(messageObj.doc).onSnapshot((doc) => {
+          chatsRef.doc(messageObj.doc).onSnapshot(doc => {
             const messages = doc.data().messages.reverse();
             this.setState({
               doc: messageObj.doc,
-              messages,
+              messages
             });
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         this.setState({
-          errorMessage: err.message,
+          errorMessage: err.message
         });
       });
   }
@@ -43,6 +44,25 @@ class Chat extends Component {
   onSend(messages = []) {
     sendMessage(messages[0], this.state.doc);
   }
+
+  renderBubble = props => (
+    <Bubble
+      {...props}
+      textStyle={{
+        left: {
+          color: "white"
+        }
+      }}
+      wrapperStyle={{
+        left: {
+          backgroundColor: colours.cards.color
+        },
+        right: {
+          backgroundColor: colours.header.backgroundColor
+        }
+      }}
+    />
+  );
 
   render() {
     const { currentUserID, currentUsername } = this.props;
@@ -56,6 +76,7 @@ class Chat extends Component {
             messages={this.state.messages}
             onSend={messages => this.onSend(messages)}
             user={{ _id: currentUserID, name: currentUsername }}
+            renderBubble={this.renderBubble}
           />
         )}
       </>

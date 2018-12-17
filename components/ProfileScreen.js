@@ -4,6 +4,7 @@ import { Button, Icon } from 'native-base';
 import PropTypes from 'prop-types';
 import MenuWrapper from './MenuWrapper';
 import profileStyles from '../styles/Profile.styles';
+import colours from '../styles/Colours.styles';
 
 export default class Profile extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -20,6 +21,10 @@ export default class Profile extends Component {
       </Button>
     ),
     title: 'Profile Page',
+    headerStyle: {
+      backgroundColor: colours.header.backgroundColor,
+    },
+    headerTintColor: colours.header.color,
   });
 
   state = {
