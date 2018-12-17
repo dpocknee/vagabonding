@@ -29,11 +29,9 @@ export default class MenuWrapper extends Component {
     const closeDrawer = () => {
       this.drawer._root.close();
     };
-    // What's this openDrawer thingymajig upto???
     const openDrawer = () => {
       this.drawer._root.open();
     };
-    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     const { children } = this.props;
     const { isDrawerOpen } = this.state;
 
