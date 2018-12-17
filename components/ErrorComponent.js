@@ -1,12 +1,13 @@
-import React from 'react';
-import { Text } from 'react-native';
+import React from "react";
+import { Text } from "react-native";
 
-const ErrorComponent = () => {
-  return (
-    <div>
-      <Text>An error has occured</Text>
-    </div>
-  );
-};
+const ErrorComponent = message => (
+  <div>
+    <Text>
+      An error has occured:
+      {message}
+    </Text>
+  </div>
+);
 
 export default ErrorComponent;
