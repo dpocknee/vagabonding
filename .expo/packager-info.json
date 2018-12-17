@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerNgrokUrl": "https://v9-6un.anonymous.nc-project.exp.direct",
+  "packagerNgrokUrl": "https://packager.v9-6un.anonymous.nc-project.exp.direct",
+  "ngrokPid": 3830
 }
