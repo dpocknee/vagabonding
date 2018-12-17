@@ -19,6 +19,7 @@ export default class Profile extends Component {
         <Icon type="FontAwesome" name="bars" />
       </Button>
     ),
+    title: 'Profile Page',
   });
 
   render() {
@@ -29,7 +30,6 @@ export default class Profile extends Component {
     const nearbyUsers = this.props.navigation.getParam('nearbyUsers');
     const currentUserInfo = nearbyUsers.filter(user => user[0] === currentUser.uid);
 
-    console.log('CURRENT USER INFO: ', currentUserInfo);
     const currentUsername = currentUserInfo[0][1].username;
     const interests = userInfo.interests
       ? Object.keys(userInfo.interests).reduce((outputArray, interest) => {
@@ -61,6 +61,8 @@ export default class Profile extends Component {
                   currentUserID: currentUser.uid,
                   currentUsername,
                   selectedUserID: userId,
+                  selectedUserUsername: userInfo.username,
+                  selectedUsername: userInfo.name,
                 });
               }}
             >
