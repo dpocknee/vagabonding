@@ -5,7 +5,7 @@ const logo = require('../assets/Connections.png');
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: '#9CB660',
+    backgroundColor: '#1D9FBF',
   },
   logo: {
     resizeMode: 'contain',
