@@ -22,7 +22,7 @@ export default class MapScreen extends Component {
         iconLeft
         transparent
         onPress={() => {
-          navigation.getParam('drawerStatus')();
+          navigation.getParam('buttonChange')();
         }}
         width={50}
       >
@@ -45,12 +45,16 @@ export default class MapScreen extends Component {
 
   state = {
     locationAndError: null,
+    button: false,
     dev: false, // special dev variable for computer emulators
     // which can't use GPS.
     errorMessage: null,
   };
 
   componentDidMount() {
+    const { navigation } = this.props;
+    navigation.setParams({ buttonChange: this.buttonChange });
+
     firebase.auth().onAuthStateChanged((currentUser) => {
       if (currentUser) {
         // This is just a dev thing if any computers are using emulators without GPS.
@@ -94,6 +98,13 @@ export default class MapScreen extends Component {
     });
   }
 
+  buttonChange = () => {
+    this.setState((state) => {
+      const buttonClick = !state.button;
+      return { button: buttonClick };
+    });
+  };
+
   render() {
     const { locationAndError, nearbyUsers, currentUser } = this.state;
     const { navigation } = this.props;
@@ -107,7 +118,7 @@ export default class MapScreen extends Component {
     }
     return (
       <View style={{ flex: 1 }}>
-        <MenuWrapper navigation={navigation}>
+        <MenuWrapper navigation={navigation} currentPage="map" buttonState={this.state.button}>
           <>
             <Expo.MapView
               style={{ height: 500 }}
