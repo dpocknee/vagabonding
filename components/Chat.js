@@ -1,56 +1,39 @@
-import React, { Component } from 'react';
-import { GiftedChat } from 'react-native-gifted-chat';
+import React, { Component } from "react";
+import { GiftedChat } from "react-native-gifted-chat";
 
 const {
   getPreviousMessages,
   sendMessage,
-  chatsRef,
-} = require('../Functionality/chatFunctions');
+  chatsRef
+} = require("../Functionality/chatFunctions");
 
 class Chat extends Component {
-  // Chat will need currentUserID, currentUserName and selectedUserID as props
   state = {
     messages: [],
-    doc: '',
+    doc: ""
   };
 
   componentWillMount() {
     const { currentUserID, selectedUserID } = this.props;
     getPreviousMessages(currentUserID, selectedUserID)
-      .then((messageObj) => {
-        chatsRef.doc(messageObj.doc).onSnapshot((doc) => {
+      .then(messageObj => {
+        chatsRef.doc(messageObj.doc).onSnapshot(doc => {
           const messages = doc.data().messages.reverse();
           this.setState({
             doc: messageObj.doc,
-            messages,
+            messages
           });
         });
       })
-      .catch((err) => {
-        console.log(err, '<<<Chat Mount');
+      .catch(err => {
+        console.log(err, "<<<Chat Mount");
         // this.props.navigation.push('Error');
       });
   }
 
   onSend(messages = []) {
-    // console.log('OnSend: ', messages[0], this.state.doc);
-    sendMessage(messages[0], this.state.doc)
-      .then((newMessage) => {
-        //* **** OFFLINE MODE????? ********
-        // this.setState(previousState => ({
-        //   messages: GiftedChat.append(previousState.messages, [newMessage]),
-        // }));
-        //* **** OFFLINE MODE????? ********
-      })
-      .catch((err) => {
-        console.log(err, '<<<<sendMessage Error');
-        // this.props.navigation.push('Error');
-      });
+    sendMessage(messages[0], this.state.doc);
   }
-
-  // onReceive(text) {
-  //   // (in setState) - messages: GiftedChat.append(previousState.messages, text)
-  // }
 
   render() {
     const { currentUserID, currentUsername } = this.props;
