@@ -90,7 +90,7 @@ export default class MapScreen extends Component {
         <MenuWrapper navigation={navigation}>
           <>
             <Expo.MapView
-              style={{ height: 500 }}
+              style={{ flex: 3 }}
               provider={Expo.MapView.PROVIDER_GOOGLE}
               initialRegion={{
                 latitude: locationAndError.location.latitude,
