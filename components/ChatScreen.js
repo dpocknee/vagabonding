@@ -4,10 +4,11 @@ import { Button, Icon } from 'native-base';
 import PropTypes from 'prop-types';
 import MenuWrapper from './MenuWrapper';
 import Chat from './Chat';
+import colours from '../styles/Colours.styles';
 
 export default class ChatScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTransparent: true,
+    headerTransparent: false,
     headerLeft: (
       <Button
         iconLeft
@@ -23,6 +24,10 @@ export default class ChatScreen extends Component {
     title: `Chat with ${navigation.getParam('selectedUsername')} (${navigation.getParam(
       'selectedUserUsername',
     )})`,
+    headerStyle: {
+      backgroundColor: colours.header.backgroundColor,
+    },
+    headerTintColor: colours.header.color,
   });
 
   render() {
