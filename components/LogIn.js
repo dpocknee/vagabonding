@@ -3,6 +3,7 @@ import {
   StyleSheet, Text, TextInput, View, Button,
 } from 'react-native';
 import * as firebase from 'firebase';
+import ErrorComponent from './ErrorComponent';
 
 const { firestore } = require('../config');
 
@@ -47,10 +48,14 @@ class Login extends Component {
   };
 
   render() {
+    const { errorMessage } = this.state;
+    errorMessage && <ErrorComponent errorMessage={errorMessage} />;
     return (
       <View style={styles.container}>
         <Text>Login</Text>
-        {this.state.errorMessage && <Text style={{ color: 'red' }}>{this.state.errorMessage}</Text>}
+        {this.state.errorMessage && (
+          <Text style={{ color: 'red' }}>{this.state.errorMessage}</Text>
+        )}
         <TextInput
           placeholder="email"
           autoCapitalize="none"

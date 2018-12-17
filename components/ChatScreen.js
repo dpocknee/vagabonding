@@ -4,26 +4,47 @@ import { Button, Icon } from 'native-base';
 import PropTypes from 'prop-types';
 import MenuWrapper from './MenuWrapper';
 import Chat from './Chat';
+import colours from '../styles/Colours.styles';
 
 export default class ChatScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTransparent: true,
+    headerTransparent: false,
     headerLeft: (
       <Button
         iconLeft
         transparent
         onPress={() => {
-          navigation.getParam('drawerStatus')();
+          navigation.getParam('buttonChange')();
         }}
         width={50}
       >
         <Icon type="FontAwesome" name="bars" />
       </Button>
     ),
-    title: `Chat with ${navigation.getParam('selectedUsername')} (${navigation.getParam(
-      'selectedUserUsername',
-    )})`,
+    title: `Chat with ${navigation.getParam(
+      'selectedUsername',
+    )} (${navigation.getParam('selectedUserUsername')})`,
+    headerStyle: {
+      backgroundColor: colours.header.backgroundColor,
+    },
+    headerTintColor: colours.header.color,
   });
+
+  state = {
+    button: false,
+  };
+
+  componentDidMount() {
+    const { navigation } = this.props;
+    navigation.setParams({ buttonChange: this.buttonChange });
+  }
+
+  buttonChange = () => {
+    this.setState((state) => {
+      const buttonClick = !state.button;
+      return { button: buttonClick };
+    });
+  };
 
   render() {
     const { navigation } = this.props;
@@ -33,7 +54,11 @@ export default class ChatScreen extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <MenuWrapper navigation={navigation}>
+        <MenuWrapper
+          navigation={navigation}
+          currentPage="chat"
+          buttonState={this.state.button}
+        >
           <>
             <KeyboardAvoidingView
               behavior="padding"
@@ -44,6 +69,7 @@ export default class ChatScreen extends Component {
                 currentUserID={currentUserID}
                 currentUsername={currentUsername}
                 selectedUserID={selectedUserID}
+                navigation={navigation}
               />
             </KeyboardAvoidingView>
           </>

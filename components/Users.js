@@ -22,7 +22,8 @@ const Users = (props) => {
           </Text>
           <Text style={theme.cardContentStyle}>
             {user[1].distance === 0 ? 'Less Than 100' : user[1].distance}
-m away
+m
+                away
           </Text>
         </TouchableOpacity>
         ),

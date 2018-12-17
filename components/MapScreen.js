@@ -10,8 +10,10 @@ import MapScreenStyles from "../styles/MapScreen.styles";
 
 const {
   getUserLocation,
+
   filterUsersByDistance
 } = require("../Functionality/utilityFunctions");
+
 
 export default class MapScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -21,7 +23,7 @@ export default class MapScreen extends Component {
         iconLeft
         transparent
         onPress={() => {
-          navigation.getParam("drawerStatus")();
+          navigation.getParam('buttonChange')();
         }}
         width={50}
       >
@@ -44,12 +46,16 @@ export default class MapScreen extends Component {
 
   state = {
     locationAndError: null,
-    dev: false // special dev variable for computer emulators
+    button: false,
+    dev: false, // special dev variable for computer emulators
     // which can't use GPS.
   };
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(currentUser => {
+    const { navigation } = this.props;
+    navigation.setParams({ buttonChange: this.buttonChange });
+
+    firebase.auth().onAuthStateChanged((currentUser) => {
       if (currentUser) {
         // This is just a dev thing if any computers are using emulators without GPS.
         // It sets a default GPS position somewhere near the middle of Manchester.
@@ -58,9 +64,9 @@ export default class MapScreen extends Component {
           this.setState({
             currentUser,
             locationAndError: {
-              location: { latitude: 53.4758302, longitude: -2.2465945 }
+              location: { latitude: 53.4758302, longitude: -2.2465945 },
             },
-            nearbyUsers: []
+            nearbyUsers: [],
           });
           // ---------------
         } else {
@@ -76,17 +82,26 @@ export default class MapScreen extends Component {
                   (err2, nearbyUsers) => {
                     const nearbyUsersArray = Object.entries(nearbyUsers);
                     this.setState({ nearbyUsers: nearbyUsersArray });
-                  }
-                );
-              }
+                  },
+                ).catch(() => {
+                  this.props.navigation.navigate('Error');
+                });
+              },
             );
+          }).catch(() => {
+            this.props.navigation.navigate('Error');
           });
         }
-      } else {
-        // presumably some type of error handling?
       }
     });
   }
+
+  buttonChange = () => {
+    this.setState((state) => {
+      const buttonClick = !state.button;
+      return { button: buttonClick };
+    });
+  };
 
   render() {
     const { locationAndError, nearbyUsers, currentUser } = this.state;
@@ -101,7 +116,11 @@ export default class MapScreen extends Component {
     }
     return (
       <View style={{ flex: 1 }}>
-        <MenuWrapper navigation={navigation}>
+        <MenuWrapper
+          navigation={navigation}
+          currentPage="map"
+          buttonState={this.state.button}
+        >
           <>
             <Expo.MapView
               style={{ height: 500 }}
@@ -130,11 +149,11 @@ export default class MapScreen extends Component {
               style={{ flex: 1 }}
               currentUser={currentUser}
               users={nearbyUsers}
-              onSelectUser={user => {
-                navigation.push("Profile", {
+              onSelectUser={(user) => {
+                navigation.push('Profile', {
                   selectedUser: user,
                   currentUser,
-                  nearbyUsers
+                  nearbyUsers,
                 });
               }}
             />
