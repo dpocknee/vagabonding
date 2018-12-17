@@ -76,11 +76,6 @@ export default class MapScreen extends Component {
         }
       } else {
         // presumably some type of error handling?
-        // DOESNT MAKE SENSE - This is an 'else' block for if theres no user - cant set state currentUser if there's no current user - Currently Throws an error on logout
-        this.setState({
-          currentUser,
-          locationAndError: { location: { latitude: 37.422, longitude: -122.084 } },
-        });
       }
     });
   }
