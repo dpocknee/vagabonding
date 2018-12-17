@@ -7,7 +7,6 @@ import * as firebase from 'firebase';
 import Users from './Users';
 import MenuWrapper from './MenuWrapper';
 import MapScreenStyles from '../styles/MapScreen.styles';
-import { logOut } from '../Functionality/utilityFunctions';
 
 const {
   getUserLocation,
@@ -48,7 +47,6 @@ export default class MapScreen extends Component {
     button: false,
     dev: false, // special dev variable for computer emulators
     // which can't use GPS.
-    errorMessage: null,
   };
 
   componentDidMount() {
@@ -83,18 +81,16 @@ export default class MapScreen extends Component {
                     const nearbyUsersArray = Object.entries(nearbyUsers);
                     this.setState({ nearbyUsers: nearbyUsersArray });
                   },
-                );
+                ).catch(() => {
+                  this.props.navigation.navigate('Error');
+                });
               },
             );
+          }).catch(() => {
+            this.props.navigation.navigate('Error');
           });
         }
       }
-      // } else {
-      //   const { navigation } = this.props;
-      //   console.log(this.props, "<<< props in MapScreen");
-      //   // logOut();
-      //   navigation.push("ErrorComponent", { errorMessage: "Login failed!" });
-      // }
     });
   }
 
@@ -118,7 +114,11 @@ export default class MapScreen extends Component {
     }
     return (
       <View style={{ flex: 1 }}>
-        <MenuWrapper navigation={navigation} currentPage="map" buttonState={this.state.button}>
+        <MenuWrapper
+          navigation={navigation}
+          currentPage="map"
+          buttonState={this.state.button}
+        >
           <>
             <Expo.MapView
               style={{ height: 500 }}

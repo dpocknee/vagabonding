@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 import colours from '../styles/Colours.styles';
-import ErrorComponent from './ErrorComponent';
 
 const {
   getPreviousMessages,
