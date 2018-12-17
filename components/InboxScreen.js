@@ -13,7 +13,7 @@ export default class InboxScreen extends Component {
         iconLeft
         transparent
         onPress={() => {
-          navigation.getParam('drawerStatus')();
+          navigation.getParam('buttonChange')();
         }}
         width={50}
       >
@@ -27,11 +27,28 @@ export default class InboxScreen extends Component {
     headerTintColor: colours.header.color,
   });
 
+  state = {
+    button: false,
+  };
+
+  componentDidMount() {
+    const { navigation } = this.props;
+    navigation.setParams({ buttonChange: this.buttonChange });
+  }
+
+  buttonChange = () => {
+    this.setState((state) => {
+      const buttonClick = !state.button;
+      return { button: buttonClick };
+    });
+  };
+
   render() {
     const { navigation } = this.props;
+
     return (
       <View style={{ flex: 1 }}>
-        <MenuWrapper navigation={navigation}>
+        <MenuWrapper navigation={navigation} currentPage="inbox" buttonState={this.state.button}>
           <Inbox
             allNav={(chatProps) => {
               navigation.push('Chat', chatProps);
