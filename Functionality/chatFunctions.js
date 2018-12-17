@@ -38,10 +38,7 @@ const getPreviousMessages = async (currentUser, clickedUser) => {
       };
     })
     .catch(err => {
-      console.log(err, "<<<<<Get Previous Messages");
-      this.setState({
-        errorMessage: err.message
-      });
+      return err.message;
     });
 };
 
@@ -56,8 +53,7 @@ const sendMessage = async (message, doc) => {
     })
     .then(() => newMessage)
     .catch(err => {
-      console.log(err, "<<<<<updateMessagesErr");
-      // this.props.navigation.push('Error');
+      return err.message;
     });
 };
 
@@ -72,8 +68,7 @@ const getChatPartnerNames = async otherUserID =>
       return chatPartnerInfo;
     })
     .catch(err => {
-      console.log(err, "<<<<<<getChatPartnerNamesError");
-      // this.props.navigation.push('Error');
+      return err.message;
     });
 
 module.exports = {

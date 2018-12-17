@@ -67,7 +67,7 @@ const getLoggedInUsers = () =>
       return userDocs;
     })
     .catch(err => {
-      console.log(err, "<<<<Get Logged In Users");
+      return err.message;
     });
 
 const filterUsersByDistance = async (user, cb) => {
@@ -113,7 +113,7 @@ const logOut = () => {
         .update({ loggedIn: false });
     })
     .catch(err => {
-      console.log(err, "<<<<Logout Func");
+      return err.message;
     });
 };
 
@@ -124,7 +124,7 @@ const getCurrentUserInfo = uid =>
     .get()
     .then(snapshot => snapshot.data())
     .catch(err => {
-      console.log(err, "<<<<Get Logged In Users");
+      return err.message;
     });
 
 export {

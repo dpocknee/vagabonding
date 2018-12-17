@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { GiftedChat } from "react-native-gifted-chat";
+import ErrorComponent from "./ErrorComponent";
 
 const {
   getPreviousMessages,
@@ -18,16 +19,21 @@ class Chat extends Component {
     const { currentUserID, selectedUserID } = this.props;
     getPreviousMessages(currentUserID, selectedUserID)
       .then(messageObj => {
-        chatsRef.doc(messageObj.doc).onSnapshot(doc => {
-          const messages = doc.data().messages.reverse();
+        if (typeof messageObj !== "object") {
           this.setState({
-            doc: messageObj.doc,
-            messages
+            errorMessage: messageObj
           });
-        });
+        } else {
+          chatsRef.doc(messageObj.doc).onSnapshot(doc => {
+            const messages = doc.data().messages.reverse();
+            this.setState({
+              doc: messageObj.doc,
+              messages
+            });
+          });
+        }
       })
       .catch(err => {
-        console.log(err.message, "<<< Error message");
         this.setState({
           errorMessage: err.message
         });
@@ -41,13 +47,18 @@ class Chat extends Component {
   render() {
     const { currentUserID, currentUsername } = this.props;
     const { errorMessage } = this.state;
-    errorMessage && <ErrorComponent errorMessage={errorMessage} />;
     return (
-      <GiftedChat
-        messages={this.state.messages}
-        onSend={messages => this.onSend(messages)}
-        user={{ _id: currentUserID, name: currentUsername }}
-      />
+      <>
+        {errorMessage ? (
+          <ErrorComponent />
+        ) : (
+          <GiftedChat
+            messages={this.state.messages}
+            onSend={messages => this.onSend(messages)}
+            user={{ _id: currentUserID, name: currentUsername }}
+          />
+        )}
+      </>
     );
   }
 }

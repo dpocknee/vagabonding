@@ -52,7 +52,6 @@ export default class MapScreen extends Component {
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(currentUser => {
-      // currentUser = null;
       if (currentUser) {
         // This is just a dev thing if any computers are using emulators without GPS.
         // It sets a default GPS position somewhere near the middle of Manchester.
@@ -85,12 +84,13 @@ export default class MapScreen extends Component {
             );
           });
         }
-      } else {
-        const { navigation } = this.props;
-        console.log(this.props, "<<< props in MapScreen");
-        // logOut();
-        navigation.push("ErrorComponent", { errorMessage: "Login failed!" });
       }
+      // } else {
+      //   const { navigation } = this.props;
+      //   console.log(this.props, "<<< props in MapScreen");
+      //   // logOut();
+      //   navigation.push("ErrorComponent", { errorMessage: "Login failed!" });
+      // }
     });
   }
 
