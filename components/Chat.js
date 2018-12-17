@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { GiftedChat } from 'react-native-gifted-chat';
+import { GiftedChat, Bubble } from 'react-native-gifted-chat';
+import colours from '../styles/Colours.styles';
 
 const { getPreviousMessages, sendMessage, chatsRef } = require('../Functionality/chatFunctions');
 
@@ -30,6 +31,25 @@ class Chat extends Component {
     sendMessage(messages[0], this.state.doc);
   }
 
+  renderBubble = props => (
+    <Bubble
+      {...props}
+      textStyle={{
+        left: {
+          color: 'white',
+        },
+      }}
+      wrapperStyle={{
+        left: {
+          backgroundColor: colours.cards.color,
+        },
+        right: {
+          backgroundColor: colours.header.backgroundColor,
+        },
+      }}
+    />
+  );
+
   render() {
     const { currentUserID, currentUsername } = this.props;
     return (
@@ -37,6 +57,7 @@ class Chat extends Component {
         messages={this.state.messages}
         onSend={messages => this.onSend(messages)}
         user={{ _id: currentUserID, name: currentUsername }}
+        renderBubble={this.renderBubble}
       />
     );
   }

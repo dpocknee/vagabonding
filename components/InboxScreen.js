@@ -4,6 +4,7 @@ import { Button, Icon } from 'native-base';
 import PropTypes from 'prop-types';
 import MenuWrapper from './MenuWrapper';
 import Inbox from './Inbox';
+import colours from '../styles/Colours.styles';
 
 export default class InboxScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -20,6 +21,10 @@ export default class InboxScreen extends Component {
       </Button>
     ),
     title: 'Inbox',
+    headerStyle: {
+      backgroundColor: colours.header.backgroundColor,
+    },
+    headerTintColor: colours.header.color,
   });
 
   state = {
