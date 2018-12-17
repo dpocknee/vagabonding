@@ -4,6 +4,7 @@ import { Button, Icon } from 'native-base';
 import PropTypes from 'prop-types';
 import MenuWrapper from './MenuWrapper';
 import profileStyles from '../styles/Profile.styles';
+import colours from '../styles/Colours.styles';
 
 export default class Profile extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -12,14 +13,35 @@ export default class Profile extends Component {
         iconLeft
         transparent
         onPress={() => {
-          navigation.getParam('drawerStatus')();
+          navigation.getParam('buttonChange')();
         }}
         width={50}
       >
         <Icon type="FontAwesome" name="bars" />
       </Button>
     ),
+    title: 'Profile Page',
+    headerStyle: {
+      backgroundColor: colours.header.backgroundColor,
+    },
+    headerTintColor: colours.header.color,
   });
+
+  state = {
+    button: false,
+  };
+
+  componentDidMount() {
+    const { navigation } = this.props;
+    navigation.setParams({ buttonChange: this.buttonChange });
+  }
+
+  buttonChange = () => {
+    this.setState((state) => {
+      const buttonClick = !state.button;
+      return { button: buttonClick };
+    });
+  };
 
   render() {
     const { navigation } = this.props;
@@ -29,7 +51,6 @@ export default class Profile extends Component {
     const nearbyUsers = this.props.navigation.getParam('nearbyUsers');
     const currentUserInfo = nearbyUsers.filter(user => user[0] === currentUser.uid);
 
-    console.log('CURRENT USER INFO: ', currentUserInfo);
     const currentUsername = currentUserInfo[0][1].username;
     const interests = userInfo.interests
       ? Object.keys(userInfo.interests).reduce((outputArray, interest) => {
@@ -40,7 +61,7 @@ export default class Profile extends Component {
     const validInterests = interests.length > 0 ? interests.join(' / ') : 'No interests given!';
     return (
       <View style={{ flex: 1 }}>
-        <MenuWrapper navigation={navigation}>
+        <MenuWrapper navigation={navigation} currentPage="profile" buttonState={this.state.button}>
           <>
             <View style={profileStyles.profileText}>
               <Icon type="FontAwesome" name="user-circle" style={{ fontSize: 40 }} />
@@ -61,6 +82,8 @@ export default class Profile extends Component {
                   currentUserID: currentUser.uid,
                   currentUsername,
                   selectedUserID: userId,
+                  selectedUserUsername: userInfo.username,
+                  selectedUsername: userInfo.name,
                 });
               }}
             >
@@ -76,8 +99,6 @@ export default class Profile extends Component {
     );
   }
 }
-
-// Chat will need userID, userName and clickedUserID as props
 
 Profile.propTypes = {
   navigation: PropTypes.object.isRequired,

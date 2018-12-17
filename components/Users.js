@@ -1,13 +1,8 @@
 import React from 'react';
-import {
-  Text, View, ScrollView, Button, TouchableOpacity,
-} from 'react-native';
+import { Text, ScrollView, TouchableOpacity } from 'react-native';
 import { getTheme } from 'react-native-material-kit';
 import PropTypes from 'prop-types';
 import Loading from './Loading';
-
-/* eslint react/require-default-props: 0 */
-/* eslint react/forbid-prop-types: 0 */
 
 const theme = getTheme();
 
@@ -41,7 +36,6 @@ m away
 };
 
 Users.propTypes = {
-  navigation: { navigate: PropTypes.object.isRequired },
   users: PropTypes.array.isRequired,
   onSelectUser: PropTypes.func.isRequired,
   currentUser: PropTypes.object.isRequired,

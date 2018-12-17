@@ -4,7 +4,10 @@ import { Button, Icon, Text } from 'native-base';
 import * as Expo from 'expo';
 import PropTypes from 'prop-types';
 import * as firebase from 'firebase';
+<<<<<<< HEAD
 import Loading from './Loading';
+=======
+>>>>>>> f61b5ec2f29c515187f0a95ca10f0ffec1ec99fb
 import Users from './Users';
 import MenuWrapper from './MenuWrapper';
 
@@ -22,7 +25,7 @@ export default class MapScreen extends Component {
         iconLeft
         transparent
         onPress={() => {
-          navigation.getParam('drawerStatus')();
+          navigation.getParam('buttonChange')();
         }}
         width={50}
       >
@@ -45,11 +48,15 @@ export default class MapScreen extends Component {
 
   state = {
     locationAndError: null,
+    button: false,
     dev: false, // special dev variable for computer emulators
     // which can't use GPS.
   };
 
   componentDidMount() {
+    const { navigation } = this.props;
+    navigation.setParams({ buttonChange: this.buttonChange });
+
     firebase.auth().onAuthStateChanged((currentUser) => {
       if (currentUser) {
         // This is just a dev thing if any computers are using emulators without GPS.
@@ -83,13 +90,16 @@ export default class MapScreen extends Component {
         }
       } else {
         // presumably some type of error handling?
-        this.setState({
-          currentUser,
-          locationAndError: { location: { latitude: 37.422, longitude: -122.084 } },
-        });
       }
     });
   }
+
+  buttonChange = () => {
+    this.setState((state) => {
+      const buttonClick = !state.button;
+      return { button: buttonClick };
+    });
+  };
 
   render() {
     const {
@@ -102,7 +112,7 @@ export default class MapScreen extends Component {
     }
     return (
       <View style={{ flex: 1 }}>
-        <MenuWrapper navigation={navigation}>
+        <MenuWrapper navigation={navigation} currentPage="map" buttonState={this.state.button}>
           <>
             <Expo.MapView
               style={{ height: 500 }}
