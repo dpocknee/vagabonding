@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import { GiftedChat, Bubble } from 'react-native-gifted-chat';
-import colours from '../styles/Colours.styles';
+import { GiftedChat } from 'react-native-gifted-chat';
+import Loading from './Loading';
 
 const { getPreviousMessages, sendMessage, chatsRef } = require('../Functionality/chatFunctions');
 
 class Chat extends Component {
+  // Chat will need currentUserID, currentUserName and selectedUserID as props
   state = {
     messages: null,
     doc: '',
   };
 
   componentWillMount() {
-    const { currentUserID, selectedUserID } = this.props;
+    const { currentUserID, currentUsername, selectedUserID } = this.props;
     getPreviousMessages(currentUserID, selectedUserID)
       .then((messageObj) => {
         chatsRef.doc(messageObj.doc).onSnapshot((doc) => {
@@ -28,27 +29,23 @@ class Chat extends Component {
   }
 
   onSend(messages = []) {
-    sendMessage(messages[0], this.state.doc);
+    // console.log('OnSend: ', messages[0], this.state.doc);
+    sendMessage(messages[0], this.state.doc)
+      .then((newMessage) => {
+        //* **** OFFLINE MODE????? ********
+        // this.setState(previousState => ({
+        //   messages: GiftedChat.append(previousState.messages, [newMessage]),
+        // }));
+        //* **** OFFLINE MODE????? ********
+      })
+      .catch((err) => {
+        console.log(err, '<<<<sendMessage Error');
+      });
   }
 
-  renderBubble = props => (
-    <Bubble
-      {...props}
-      textStyle={{
-        left: {
-          color: 'white',
-        },
-      }}
-      wrapperStyle={{
-        left: {
-          backgroundColor: colours.cards.color,
-        },
-        right: {
-          backgroundColor: colours.header.backgroundColor,
-        },
-      }}
-    />
-  );
+  // onReceive(text) {
+  //   // (in setState) - messages: GiftedChat.append(previousState.messages, text)
+  // }
 
   render() {
     const { currentUserID, currentUsername } = this.props;
@@ -61,7 +58,6 @@ class Chat extends Component {
         messages={this.state.messages}
         onSend={messages => this.onSend(messages)}
         user={{ _id: currentUserID, name: currentUsername }}
-        renderBubble={this.renderBubble}
       />
     );
   }

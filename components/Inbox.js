@@ -10,70 +10,69 @@ const { getCurrentUserInfo } = require('../Functionality/utilityFunctions');
 const theme = getTheme();
 
 class Inbox extends Component {
+  //* *********NEEDS CURRENT USERID AS PROP*************** */
   state = {
     chats: [],
+    // loading: true,
     currentUserID: null,
     currentUsername: null,
   };
 
   componentDidMount() {
-    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-      const userID = user.uid;
-      getCurrentUserInfo(userID).then((currentUserInfo) => {
-        this.setState(
-          {
-            currentUserID: userID,
-            currentUsername: currentUserInfo.username,
-          },
-          () => {
-            const { currentUserID } = this.state;
-            const allUserChats = chatsRef.where('usersArr', 'array-contains', `${currentUserID}`);
-            allUserChats.onSnapshot((querySnapshot) => {
-              querySnapshot.docChanges().forEach((change) => {
-                if (change.type === 'added') {
-                  const chatObj = {};
-                  change.doc.data().usersArr[0] === currentUserID
-                    ? (chatObj.otherUser = change.doc.data().usersArr[1])
-                    : (chatObj.otherUser = change.doc.data().usersArr[0]);
-                  chatObj.messages = change.doc.data().messages;
-                  getChatPartnerNames(chatObj.otherUser).then((chatPartnerObj) => {
-                    const compObj = {
-                      ...chatObj,
-                      otherUserUsername: chatPartnerObj.username,
-                      otherUserName: chatPartnerObj.name,
-                    };
-                    this.setState(previousState => ({
-                      chats: [...previousState.chats, compObj],
-                    }));
-                  });
-                }
-                if (change.type === 'modified') {
-                  const chatObj = {};
-                  change.doc.data().usersArr[0] === currentUserID
-                    ? (chatObj.otherUser = change.doc.data().usersArr[1])
-                    : (chatObj.otherUser = change.doc.data().usersArr[0]);
-                  chatObj.messages = change.doc.data().messages;
-                  getChatPartnerNames(chatObj.otherUser).then((chatPartnerObj) => {
-                    const compObj = {
-                      ...chatObj,
-                      otherUserUsername: chatPartnerObj.username,
-                      otherUserName: chatPartnerObj.name,
-                    };
-                    const currentChats = [...this.state.chats];
-                    const oldChats = currentChats.filter(
-                      chatObject => chatObject.otherUser !== compObj.otherUser,
-                    );
-                    this.setState({
-                      chats: [...oldChats, compObj],
-                    });
-                  });
-                }
+    let currentUserID;
+    firebase.auth().onAuthStateChanged((user) => {
+      currentUserID = user.uid;
+      // ***************
+      getCurrentUserInfo(currentUserID).then((currentUserInfo) => {
+        this.setState({
+          currentUserID,
+          currentUsername: currentUserInfo.username,
+        });
+      });
+      // ***************
+      const allUserChats = chatsRef.where('usersArr', 'array-contains', `${currentUserID}`);
+      allUserChats.onSnapshot((querySnapshot) => {
+        querySnapshot.docChanges().forEach((change) => {
+          if (change.type === 'added') {
+            const chatObj = {};
+            change.doc.data().usersArr[0] === currentUserID
+              ? (chatObj.otherUser = change.doc.data().usersArr[1])
+              : (chatObj.otherUser = change.doc.data().usersArr[0]);
+            chatObj.messages = change.doc.data().messages;
+            getChatPartnerNames(chatObj.otherUser).then((chatPartnerObj) => {
+              const compObj = {
+                ...chatObj,
+                otherUserUsername: chatPartnerObj.username,
+                otherUserName: chatPartnerObj.name,
+              };
+              this.setState(previousState => ({
+                chats: [...previousState.chats, compObj],
+              }));
+            });
+          }
+          if (change.type === 'modified') {
+            const chatObj = {};
+            change.doc.data().usersArr[0] === currentUserID
+              ? (chatObj.otherUser = change.doc.data().usersArr[1])
+              : (chatObj.otherUser = change.doc.data().usersArr[0]);
+            chatObj.messages = change.doc.data().messages;
+            getChatPartnerNames(chatObj.otherUser).then((chatPartnerObj) => {
+              const compObj = {
+                ...chatObj,
+                otherUserUsername: chatPartnerObj.username,
+                otherUserName: chatPartnerObj.name,
+              };
+              const currentChats = [...this.state.chats];
+              const oldChats = currentChats.filter(
+                chatObj => chatObj.otherUser !== compObj.otherUser,
+              );
+              this.setState({
+                chats: [...oldChats, compObj],
               });
             });
-          },
-        );
+          }
+        });
       });
-      unsubscribe();
     });
   }
 
@@ -85,7 +84,7 @@ class Inbox extends Component {
     }
     return (
       <ScrollView>
-        {chats.map(chat => (
+        {chats.map((chat, index) => (
           <TouchableOpacity
             style={theme.cardStyle}
             key={`inbox${chat.otherUser}`}
@@ -93,8 +92,6 @@ class Inbox extends Component {
               currentUserID,
               currentUsername,
               selectedUserID: chat.otherUser,
-              selectedUserUsername: chat.otherUserUsername,
-              selectedUsername: chat.otherUserName,
             })
             }
           >

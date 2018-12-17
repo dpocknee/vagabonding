@@ -5,15 +5,21 @@ import {
 } from 'native-base';
 import propTypes from 'prop-types';
 import { logOut } from '../Functionality/utilityFunctions';
-import { sidebarStyles } from '../styles/Hamburger.styles';
 
 const Sidebar = (props) => {
-  const {
-    closeDrawer, allNav, drawerStatus, currentPage,
-  } = props;
+  const { closeDrawer, allNav, drawerStatus } = props;
+  const menuTextStyle = { left: 5, color: 'darkblue' };
   return (
-    <Container style={sidebarStyles.container}>
-      <Content style={currentPage === 'map' ? sidebarStyles.contentMap : sidebarStyles.content}>
+    <Container
+      style={{
+        backgroundColor: 'white',
+        opacity: 0.8,
+        width: 150,
+        flex: 0.5,
+        paddingTop: 20,
+      }}
+    >
+      <Content style={{ paddingTop: 50 }}>
         <Button
           iconLeft
           transparent
@@ -25,7 +31,7 @@ const Sidebar = (props) => {
           }}
         >
           <Icon type="FontAwesome" name="map" />
-          <Text style={sidebarStyles.menuTextStyle}>Map</Text>
+          <Text style={menuTextStyle}>Map</Text>
         </Button>
         <Button
           iconLeft
@@ -39,7 +45,7 @@ const Sidebar = (props) => {
           }}
         >
           <Icon type="FontAwesome" name="envelope" />
-          <Text style={sidebarStyles.menuTextStyle}>Inbox</Text>
+          <Text style={menuTextStyle}>Inbox</Text>
         </Button>
         <Button
           iconLeft
@@ -54,7 +60,7 @@ const Sidebar = (props) => {
           }}
         >
           <Icon type="FontAwesome" name="hand-o-left" />
-          <Text style={sidebarStyles.menuTextStyle}>Logout</Text>
+          <Text style={menuTextStyle}>Logout</Text>
         </Button>
         <Button
           iconLeft
@@ -67,7 +73,7 @@ const Sidebar = (props) => {
           }}
         >
           <Icon type="FontAwesome" name="times" />
-          <Text style={sidebarStyles.menuTextStyle}>Close Menu</Text>
+          <Text style={menuTextStyle}>Close Menu</Text>
         </Button>
       </Content>
     </Container>

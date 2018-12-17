@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Drawer } from 'native-base';
+import { Drawer, Button, Icon } from 'native-base';
+import PropTypes from 'prop-types';
 import Sidebar from './Sidebar';
-import { drawerStyles } from '../styles/Hamburger.styles';
+import drawerStyles from '../styles/Hamburger.styles';
 
 export default class MenuWrapper extends Component {
   state = {
@@ -11,12 +12,6 @@ export default class MenuWrapper extends Component {
   componentDidMount() {
     const { navigation } = this.props;
     navigation.setParams({ drawerStatus: this.drawerStatus });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props.buttonState !== prevProps.buttonState) {
-      this.drawerStatus();
-    }
   }
 
   drawerStatus = () => {
@@ -36,34 +31,34 @@ export default class MenuWrapper extends Component {
       this.drawer._root.close();
     };
 
+    const openDrawer = () => {
+      this.drawer._root.open();
+    };
 
-    const { children, currentPage } = this.props;
+    const { children } = this.props;
     const { isDrawerOpen } = this.state;
 
     return (
-      <>
-        <Drawer
-          type="overlay"
-          styles={drawerStyles}
-          side="top"
-          open={isDrawerOpen}
-          tapToClose
-          ref={(ref) => {
-            this.drawer = ref;
-          }}
-          acceptTap
-          content={(
-            <Sidebar
-              allNav={this.allNav}
-              closeDrawer={closeDrawer}
-              drawerStatus={this.drawerStatus}
-              currentPage={currentPage}
-            />
+      <Drawer
+        type="overlay"
+        styles={drawerStyles}
+        side="top"
+        open={isDrawerOpen}
+        tapToClose
+        ref={(ref) => {
+          this.drawer = ref;
+        }}
+        acceptTap
+        content={(
+          <Sidebar
+            allNav={this.allNav}
+            closeDrawer={closeDrawer}
+            drawerStatus={this.drawerStatus}
+          />
 )}
-        >
-          {children}
-        </Drawer>
-      </>
+      >
+        {children}
+      </Drawer>
     );
   }
 }
