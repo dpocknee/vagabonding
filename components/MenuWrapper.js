@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Button, Icon } from 'native-base';
-import PropTypes from 'prop-types';
+import { Drawer } from 'native-base';
 import Sidebar from './Sidebar';
 import { drawerStyles } from '../styles/Hamburger.styles';
 
@@ -36,6 +35,7 @@ export default class MenuWrapper extends Component {
     const closeDrawer = () => {
       this.drawer._root.close();
     };
+
 
     const { children, currentPage } = this.props;
     const { isDrawerOpen } = this.state;

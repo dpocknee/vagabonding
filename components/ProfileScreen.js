@@ -95,8 +95,6 @@ export default class Profile extends Component {
   }
 }
 
-// Chat will need userID, userName and clickedUserID as props
-
 Profile.propTypes = {
   navigation: PropTypes.object.isRequired,
 };

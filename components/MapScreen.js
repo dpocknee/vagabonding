@@ -4,7 +4,6 @@ import { Button, Icon } from 'native-base';
 import * as Expo from 'expo';
 import PropTypes from 'prop-types';
 import * as firebase from 'firebase';
-
 import Users from './Users';
 import MenuWrapper from './MenuWrapper';
 import MapScreenStyles from '../styles/MapScreen.styles';
@@ -81,10 +80,6 @@ export default class MapScreen extends Component {
         }
       } else {
         // presumably some type of error handling?
-        this.setState({
-          currentUser,
-          locationAndError: { location: { latitude: 37.422, longitude: -122.084 } },
-        });
       }
     });
   }
