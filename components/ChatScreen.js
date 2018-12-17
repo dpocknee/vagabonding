@@ -21,9 +21,9 @@ export default class ChatScreen extends Component {
         <Icon type="FontAwesome" name="bars" />
       </Button>
     ),
-    title: `Chat with ${navigation.getParam('selectedUsername')} (${navigation.getParam(
-      'selectedUserUsername',
-    )})`,
+    title: `Chat with ${navigation.getParam(
+      'selectedUsername',
+    )} (${navigation.getParam('selectedUserUsername')})`,
     headerStyle: {
       backgroundColor: colours.header.backgroundColor,
     },
@@ -54,7 +54,11 @@ export default class ChatScreen extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <MenuWrapper navigation={navigation} currentPage="chat" buttonState={this.state.button}>
+        <MenuWrapper
+          navigation={navigation}
+          currentPage="chat"
+          buttonState={this.state.button}
+        >
           <>
             <KeyboardAvoidingView
               behavior="padding"
@@ -65,6 +69,7 @@ export default class ChatScreen extends Component {
                 currentUserID={currentUserID}
                 currentUsername={currentUsername}
                 selectedUserID={selectedUserID}
+                navigation={navigation}
               />
             </KeyboardAvoidingView>
           </>

@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 import colours from '../styles/Colours.styles';
 
-const { getPreviousMessages, sendMessage, chatsRef } = require('../Functionality/chatFunctions');
+const {
+  getPreviousMessages,
+  sendMessage,
+  chatsRef,
+} = require('../Functionality/chatFunctions');
 
 class Chat extends Component {
   state = {
@@ -22,13 +26,15 @@ class Chat extends Component {
           });
         });
       })
-      .catch((err) => {
-        console.log(err, '<<<Chat Mount');
+      .catch(() => {
+        this.props.navigation.navigate('Error');
       });
   }
 
   onSend(messages = []) {
-    sendMessage(messages[0], this.state.doc);
+    sendMessage(messages[0], this.state.doc).catch(() => {
+      this.props.navigation.navigate('Error');
+    });
   }
 
   renderBubble = props => (

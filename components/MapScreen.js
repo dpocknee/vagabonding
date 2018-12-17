@@ -8,7 +8,10 @@ import Users from './Users';
 import MenuWrapper from './MenuWrapper';
 import MapScreenStyles from '../styles/MapScreen.styles';
 
-const { getUserLocation, filterUsersByDistance } = require('../Functionality/utilityFunctions');
+const {
+  getUserLocation,
+  filterUsersByDistance,
+} = require('../Functionality/utilityFunctions');
 
 export default class MapScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -58,7 +61,9 @@ export default class MapScreen extends Component {
         if (this.state.dev) {
           this.setState({
             currentUser,
-            locationAndError: { location: { latitude: 53.4758302, longitude: -2.2465945 } },
+            locationAndError: {
+              location: { latitude: 53.4758302, longitude: -2.2465945 },
+            },
             nearbyUsers: [],
           });
           // ---------------
@@ -70,16 +75,21 @@ export default class MapScreen extends Component {
                 locationAndError,
               },
               () => {
-                filterUsersByDistance(this.state.currentUser, (err2, nearbyUsers) => {
-                  const nearbyUsersArray = Object.entries(nearbyUsers);
-                  this.setState({ nearbyUsers: nearbyUsersArray });
+                filterUsersByDistance(
+                  this.state.currentUser,
+                  (err2, nearbyUsers) => {
+                    const nearbyUsersArray = Object.entries(nearbyUsers);
+                    this.setState({ nearbyUsers: nearbyUsersArray });
+                  },
+                ).catch(() => {
+                  this.props.navigation.navigate('Error');
                 });
               },
             );
+          }).catch(() => {
+            this.props.navigation.navigate('Error');
           });
         }
-      } else {
-        // presumably some type of error handling?
       }
     });
   }
@@ -104,7 +114,11 @@ export default class MapScreen extends Component {
     }
     return (
       <View style={{ flex: 1 }}>
-        <MenuWrapper navigation={navigation} currentPage="map" buttonState={this.state.button}>
+        <MenuWrapper
+          navigation={navigation}
+          currentPage="map"
+          buttonState={this.state.button}
+        >
           <>
             <Expo.MapView
               style={{ height: 500 }}
@@ -134,7 +148,11 @@ export default class MapScreen extends Component {
               currentUser={currentUser}
               users={nearbyUsers}
               onSelectUser={(user) => {
-                navigation.push('Profile', { selectedUser: user, currentUser, nearbyUsers });
+                navigation.push('Profile', {
+                  selectedUser: user,
+                  currentUser,
+                  nearbyUsers,
+                });
               }}
             />
           </>

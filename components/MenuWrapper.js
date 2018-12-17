@@ -13,7 +13,7 @@ export default class MenuWrapper extends Component {
     navigation.setParams({ drawerStatus: this.drawerStatus });
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (this.props.buttonState !== prevProps.buttonState) {
       this.drawerStatus();
     }
@@ -35,7 +35,6 @@ export default class MenuWrapper extends Component {
     const closeDrawer = () => {
       this.drawer._root.close();
     };
-
 
     const { children, currentPage } = this.props;
     const { isDrawerOpen } = this.state;

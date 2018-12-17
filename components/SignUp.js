@@ -33,7 +33,13 @@ class SignUp extends Component {
 
   handleSignUp = () => {
     const {
-      name, username, email, password, museums, bars, restaurants,
+      name,
+      username,
+      email,
+      password,
+      museums,
+      bars,
+      restaurants,
     } = this.state;
 
     firebase
@@ -55,7 +61,6 @@ class SignUp extends Component {
         this.props.navigation.navigate('mainFlow');
       })
       .catch((err) => {
-        console.log(err, '<<<<Create User');
         this.setState({
           errorMessage: err.message,
         });
