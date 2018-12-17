@@ -1,26 +1,28 @@
-import React, { Component } from "react";
-import { StyleSheet, Text, TextInput, View, Button } from "react-native";
-import * as firebase from "firebase";
-import ErrorComponent from "./ErrorComponent";
+import React, { Component } from 'react';
+import {
+  StyleSheet, Text, TextInput, View, Button,
+} from 'react-native';
+import * as firebase from 'firebase';
+import ErrorComponent from './ErrorComponent';
 
-const { firestore } = require("../config");
+const { firestore } = require('../config');
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center" },
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   textInput: {
     height: 40,
-    width: "90%",
-    borderColor: "gray",
+    width: '90%',
+    borderColor: 'gray',
     borderWidth: 1,
-    marginTop: 8
-  }
+    marginTop: 8,
+  },
 });
 
 class Login extends Component {
   state = {
-    email: "",
-    password: "",
-    errorMessage: null
+    email: '',
+    password: '',
+    errorMessage: null,
   };
 
   handleLogin = () => {
@@ -31,16 +33,16 @@ class Login extends Component {
       .then(() => {
         const { currentUser } = firebase.auth();
         firestore
-          .collection("users")
+          .collection('users')
           .doc(currentUser.uid)
           .update({ loggedIn: true });
       })
       .then(() => {
-        this.props.navigation.navigate("mainFlow");
+        this.props.navigation.navigate('mainFlow');
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({
-          errorMessage: err.message
+          errorMessage: err.message,
         });
       });
   };
@@ -52,7 +54,7 @@ class Login extends Component {
       <View style={styles.container}>
         <Text>Login</Text>
         {this.state.errorMessage && (
-          <Text style={{ color: "red" }}>{this.state.errorMessage}</Text>
+          <Text style={{ color: 'red' }}>{this.state.errorMessage}</Text>
         )}
         <TextInput
           placeholder="email"
@@ -73,7 +75,7 @@ class Login extends Component {
         <Button
           title="Don't have an account? Sign up"
           onPress={() => {
-            this.props.navigation.navigate("SignUp");
+            this.props.navigation.navigate('SignUp');
           }}
         />
       </View>
