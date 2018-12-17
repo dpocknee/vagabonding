@@ -22,7 +22,7 @@ const Users = (props) => {
         resolve();
       }, 2000);
     });
-    refreshPromise.then(() => navigation.push('Map'));
+    return refreshPromise.then(() => navigation.push('Map'));
   };
   if (!users) {
     return <Loading />;

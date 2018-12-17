@@ -131,6 +131,7 @@ export default class MapScreen extends Component {
               style={{ flex: 1 }}
               currentUser={currentUser}
               users={nearbyUsers}
+              navigation={navigation}
               onSelectUser={(user) => {
                 navigation.push('Profile', { selectedUser: user, currentUser, nearbyUsers });
               }}

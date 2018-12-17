@@ -5,7 +5,12 @@ const LoadingStyles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#16324F',
+  },
+  logo: {
+    alignItems: 'center',
+    padding: 100,
+    width: 175,
+    height: 175,
   },
 });
 
