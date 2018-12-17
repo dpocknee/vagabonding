@@ -6,6 +6,7 @@ import MenuWrapper from './MenuWrapper';
 import profileStyles from '../styles/Profile.styles';
 import colours from '../styles/Colours.styles';
 
+
 export default class Profile extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: (
@@ -45,54 +46,61 @@ export default class Profile extends Component {
 
   render() {
     const { navigation } = this.props;
-    const userId = this.props.navigation.getParam('selectedUser')[0];
-    const userInfo = this.props.navigation.getParam('selectedUser')[1];
-    const currentUser = this.props.navigation.getParam('currentUser');
-    const nearbyUsers = this.props.navigation.getParam('nearbyUsers');
-    const currentUserInfo = nearbyUsers.filter(user => user[0] === currentUser.uid);
+    const userId = this.props.navigation.getParam("selectedUser")[0];
+    const userInfo = this.props.navigation.getParam("selectedUser")[1];
+    const currentUser = this.props.navigation.getParam("currentUser");
+    const nearbyUsers = this.props.navigation.getParam("nearbyUsers");
+    const currentUserInfo = nearbyUsers.filter(
+      user => user[0] === currentUser.uid
+    );
 
     const currentUsername = currentUserInfo[0][1].username;
     const interests = userInfo.interests
       ? Object.keys(userInfo.interests).reduce((outputArray, interest) => {
-        if (userInfo.interests[interest]) outputArray.push(interest);
-        return outputArray;
-      }, [])
+          if (userInfo.interests[interest]) outputArray.push(interest);
+          return outputArray;
+        }, [])
       : [];
-    const validInterests = interests.length > 0 ? interests.join(' / ') : 'No interests given!';
+    const validInterests =
+      interests.length > 0 ? interests.join(" / ") : "No interests given!";
     return (
       <View style={{ flex: 1 }}>
         <MenuWrapper navigation={navigation} currentPage="profile" buttonState={this.state.button}>
           <>
             <View style={profileStyles.profileText}>
-              <Icon type="FontAwesome" name="user-circle" style={{ fontSize: 40 }} />
+              <Icon
+                type="FontAwesome"
+                name="user-circle"
+                style={{ fontSize: 40 }}
+              />
               <Text style={profileStyles.username}>{userInfo.username}</Text>
-              <Text>
+              <Text style={profileStyles.info}>
                 Real name:
                 {userInfo.name}
               </Text>
-              <Text>
-                Interests:
-                {validInterests}
+              <Text style={profileStyles.info}>
+                Interests: {validInterests}
               </Text>
             </View>
-
-            <Button
-              onPress={() => {
-                this.props.navigation.push('Chat', {
-                  currentUserID: currentUser.uid,
-                  currentUsername,
-                  selectedUserID: userId,
-                  selectedUserUsername: userInfo.username,
-                  selectedUsername: userInfo.name,
-                });
-              }}
-            >
-              <Text>
-                Chat with
-                {userInfo.name}
-!
-              </Text>
-            </Button>
+            <View style={profileStyles.chat}>
+              <TouchableOpacity
+                style={profileStyles.button}
+                onPress={() => {
+                  this.props.navigation.push("Chat", {
+                    currentUserID: currentUser.uid,
+                    currentUsername,
+                    selectedUserID: userId,
+                    selectedUserUsername: userInfo.username,
+                    selectedUsername: userInfo.name
+                  });
+                }}
+              >
+                <Text>
+                  Chat with
+                  {userInfo.name}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </>
         </MenuWrapper>
       </View>
@@ -101,5 +109,5 @@ export default class Profile extends Component {
 }
 
 Profile.propTypes = {
-  navigation: PropTypes.object.isRequired,
+  navigation: PropTypes.object.isRequired
 };
