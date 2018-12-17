@@ -3,5 +3,9 @@
   "lanType": "ip",
   "dev": true,
   "minify": false,
+<<<<<<< HEAD
   "urlRandomness": "pi-jy6"
+=======
+  "urlRandomness": "c3-s38"
+>>>>>>> 258accdb82a9558130f094f02408bf4fdccb98a5
 }

@@ -86,6 +86,7 @@ export default class MapScreen extends Component {
           });
         }
       } else {
+<<<<<<< HEAD
         const { navigation } = this.props;
         console.log(this.props, "<<< props in MapScreen");
         this.setState({
@@ -94,6 +95,9 @@ export default class MapScreen extends Component {
           logOut();
           navigation.push('loginFlow')
         });
+=======
+        // presumably some type of error handling?
+>>>>>>> 258accdb82a9558130f094f02408bf4fdccb98a5
       }
     });
   }
