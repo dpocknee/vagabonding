@@ -1,79 +1,83 @@
-import { Location, Permissions } from 'expo';
-import * as firebase from 'firebase';
-import 'firebase/firestore';
-import { isPointInCircle, getDistance } from 'geolib';
+import { Location, Permissions } from "expo";
+import * as firebase from "firebase";
+import "firebase/firestore";
+import { isPointInCircle, getDistance } from "geolib";
 
-const { firestore } = require('../config');
+const { firestore } = require("../config");
 
 const getUserLocation = async (user, cb) => {
   const { status } = await Permissions.askAsync(Permissions.LOCATION);
-  const errorMessage = 'Permission to access location was denied.';
-  if (status !== 'granted') {
+  const errorMessage = "Permission to access location was denied.";
+  if (status !== "granted") {
     return {
       location: {
         latitude: null,
-        longitude: null,
+        longitude: null
       },
-      errorMessage,
+      errorMessage
     };
   }
   await Location.getCurrentPositionAsync({})
-    .then((location) => {
+    .then(location => {
       const { latitude, longitude } = location.coords;
       firestore
-        .collection('users')
+        .collection("users")
         .doc(user.uid)
         .update({
           location: {
             latitude,
-            longitude,
-          },
+            longitude
+          }
         })
         .then(() => {
           const newObj = {
             location: {
               latitude,
-              longitude,
+              longitude
             },
-            errorMessage: null,
+            errorMessage: null
           };
           cb(null, newObj);
-        })
-        .catch((err) => {
-          console.log(err, '<<<<Update Users Location');
-          this.props.navigation.push('ErrorComponent');
         });
     })
-    .catch(console.log);
+    .catch(() => {
+      return {
+        location: {
+          latitude: null,
+          longitude: null
+        },
+        errorMessage
+      };
+    });
 };
 
-const getLoggedInUsers = () => firestore
-  .collection('users')
-  .where('loggedIn', '==', true)
-  .get()
-  .then((snapshot) => {
-    if (snapshot.empty) {
-      return [];
-    }
-    const userDocs = [];
-    snapshot.forEach((doc) => {
-      userDocs.push([doc.data(), doc.id]);
+const getLoggedInUsers = () =>
+  firestore
+    .collection("users")
+    .where("loggedIn", "==", true)
+    .get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        return [];
+      }
+      const userDocs = [];
+      snapshot.forEach(doc => {
+        userDocs.push([doc.data(), doc.id]);
+      });
+      return userDocs;
+    })
+    .catch(err => {
+      console.log(err, "<<<<Get Logged In Users");
     });
-    return userDocs;
-  })
-  .catch((err) => {
-    console.log(err, '<<<<Get Logged In Users');
-    this.props.navigation.push('ErrorComponent');
-  });
 
 const filterUsersByDistance = async (user, cb) => {
   const userDocs = await getLoggedInUsers();
   if (!userDocs.length) {
-    console.log('No users nearby');
+    console.log("No users nearby");
   } else {
     let radius;
     let currentUserLocation;
-    userDocs.forEach((doc) => {
+    userDocs.forEach(doc => {
       if (doc.includes(user.uid)) {
         radius = doc[0].radius;
         currentUserLocation = doc[0].location;
@@ -104,30 +108,29 @@ const logOut = () => {
     .signOut()
     .then(() => {
       firestore
-        .collection('users')
+        .collection("users")
         .doc(currentUser.uid)
         .update({ loggedIn: false });
     })
-    .catch((err) => {
-      console.log(err, '<<<<Logout Func');
-      this.props.navigation.push('ErrorComponent');
+    .catch(err => {
+      console.log(err, "<<<<Logout Func");
     });
 };
 
-const getCurrentUserInfo = uid => firestore
-  .collection('users')
-  .doc(uid)
-  .get()
-  .then(snapshot => snapshot.data())
-  .catch((err) => {
-    console.log(err, '<<<<Get Logged In Users');
-    this.props.navigation.push('ErrorComponent');
-  });
+const getCurrentUserInfo = uid =>
+  firestore
+    .collection("users")
+    .doc(uid)
+    .get()
+    .then(snapshot => snapshot.data())
+    .catch(err => {
+      console.log(err, "<<<<Get Logged In Users");
+    });
 
 export {
   getUserLocation,
   getLoggedInUsers,
   filterUsersByDistance,
   logOut,
-  getCurrentUserInfo,
+  getCurrentUserInfo
 };

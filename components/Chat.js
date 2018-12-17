@@ -10,7 +10,8 @@ const {
 class Chat extends Component {
   state = {
     messages: [],
-    doc: ""
+    doc: "",
+    errorMessage: null
   };
 
   componentWillMount() {
@@ -26,8 +27,10 @@ class Chat extends Component {
         });
       })
       .catch(err => {
-        console.log(err, "<<<Chat Mount");
-        // this.props.navigation.push('Error');
+        console.log(err.message, "<<< Error message");
+        this.setState({
+          errorMessage: err.message
+        });
       });
   }
 
@@ -37,6 +40,8 @@ class Chat extends Component {
 
   render() {
     const { currentUserID, currentUsername } = this.props;
+    const { errorMessage } = this.state;
+    errorMessage && <ErrorComponent errorMessage={errorMessage} />;
     return (
       <GiftedChat
         messages={this.state.messages}
