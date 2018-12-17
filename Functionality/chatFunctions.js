@@ -7,7 +7,6 @@ const chatsRef = firestore.collection('chats');
 const usersRef = firestore.collection('users');
 
 const getPreviousMessages = async (currentUser, clickedUser) => {
-  throw 'ahhhh';
   const queryPreviousChatHistory = chatsRef.where(
     'users',
     'array-contains',
