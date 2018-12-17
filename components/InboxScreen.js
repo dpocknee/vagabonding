@@ -48,11 +48,16 @@ export default class InboxScreen extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <MenuWrapper navigation={navigation} currentPage="inbox" buttonState={this.state.button}>
+        <MenuWrapper
+          navigation={navigation}
+          currentPage="inbox"
+          buttonState={this.state.button}
+        >
           <Inbox
             allNav={(chatProps) => {
               navigation.push('Chat', chatProps);
             }}
+            navigation={navigation}
           />
         </MenuWrapper>
       </View>

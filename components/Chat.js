@@ -1,48 +1,41 @@
-import React, { Component } from "react";
-import { GiftedChat, Bubble } from "react-native-gifted-chat";
-import colours from "../styles/Colours.styles";
-import ErrorComponent from "./ErrorComponent";
+import React, { Component } from 'react';
+import { GiftedChat, Bubble } from 'react-native-gifted-chat';
+import colours from '../styles/Colours.styles';
+import ErrorComponent from './ErrorComponent';
 
 const {
   getPreviousMessages,
   sendMessage,
-  chatsRef
-} = require("../Functionality/chatFunctions");
+  chatsRef,
+} = require('../Functionality/chatFunctions');
 
 class Chat extends Component {
   state = {
     messages: [],
-    doc: "",
-    errorMessage: null
+    doc: '',
   };
 
   componentWillMount() {
     const { currentUserID, selectedUserID } = this.props;
     getPreviousMessages(currentUserID, selectedUserID)
-      .then(messageObj => {
-        if (typeof messageObj !== "object") {
+      .then((messageObj) => {
+        chatsRef.doc(messageObj.doc).onSnapshot((doc) => {
+          const messages = doc.data().messages.reverse();
           this.setState({
-            errorMessage: messageObj
+            doc: messageObj.doc,
+            messages,
           });
-        } else {
-          chatsRef.doc(messageObj.doc).onSnapshot(doc => {
-            const messages = doc.data().messages.reverse();
-            this.setState({
-              doc: messageObj.doc,
-              messages
-            });
-          });
-        }
-      })
-      .catch(err => {
-        this.setState({
-          errorMessage: err.message
         });
+      })
+      .catch(() => {
+        this.props.navigation.navigate('Error');
       });
   }
 
   onSend(messages = []) {
-    sendMessage(messages[0], this.state.doc);
+    sendMessage(messages[0], this.state.doc).catch(() => {
+      this.props.navigation.navigate('Error');
+    });
   }
 
   renderBubble = props => (
@@ -50,36 +43,29 @@ class Chat extends Component {
       {...props}
       textStyle={{
         left: {
-          color: "white"
-        }
+          color: 'white',
+        },
       }}
       wrapperStyle={{
         left: {
-          backgroundColor: colours.cards.color
+          backgroundColor: colours.cards.color,
         },
         right: {
-          backgroundColor: colours.header.backgroundColor
-        }
+          backgroundColor: colours.header.backgroundColor,
+        },
       }}
     />
   );
 
   render() {
     const { currentUserID, currentUsername } = this.props;
-    const { errorMessage } = this.state;
     return (
-      <>
-        {errorMessage ? (
-          <ErrorComponent />
-        ) : (
-          <GiftedChat
-            messages={this.state.messages}
-            onSend={messages => this.onSend(messages)}
-            user={{ _id: currentUserID, name: currentUsername }}
-            renderBubble={this.renderBubble}
-          />
-        )}
-      </>
+      <GiftedChat
+        messages={this.state.messages}
+        onSend={messages => this.onSend(messages)}
+        user={{ _id: currentUserID, name: currentUsername }}
+        renderBubble={this.renderBubble}
+      />
     );
   }
 }

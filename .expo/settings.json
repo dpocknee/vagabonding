@@ -3,9 +3,5 @@
   "lanType": "ip",
   "dev": true,
   "minify": false,
-<<<<<<< HEAD
-  "urlRandomness": "pc-9dy"
-=======
-  "urlRandomness": "xs-td2"
->>>>>>> f61b5ec2f29c515187f0a95ca10f0ffec1ec99fb
+  "urlRandomness": "5m-es5"
 }
