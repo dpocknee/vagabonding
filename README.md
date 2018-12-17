@@ -10,7 +10,7 @@ This project is still in development and as such is still unstable. A stable ver
 
 TBC is a mobile application for geolocation-based messaging. The app is designed for individuals who are looking for others in the nearby vicinity to share experiences with.
 
-A typical use scenario would involve a solo-trvaller new to a city, opening up the app and messaging another solo-traveller in the same city and arranging to meet up the next day to explore the local museums together.
+A typical use scenario would involve a solo-traveller new to a city, opening up the app and messaging another solo-traveller in the same city and arranging to meet up the next day to explore the local museums together.
 
 ### Collaborators
 
@@ -19,9 +19,9 @@ This application has been made possible by the hard work and dedication of:
 - Kurtis Angell
 - Aaron Boniface
 - Joanna Cholewa
+- Claire M
 - Hugh Paul
 - David Pocknee
-- Claire
 
 with special thanks to Northcoders for their support.
 
