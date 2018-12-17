@@ -29,7 +29,6 @@ export default class InboxScreen extends Component {
         <MenuWrapper navigation={navigation}>
           <Inbox
             allNav={(chatProps) => {
-              console.log('chat props:', chatProps);
               navigation.push('Chat', chatProps);
             }}
           />

@@ -4,7 +4,6 @@ import { GiftedChat } from 'react-native-gifted-chat';
 const { getPreviousMessages, sendMessage, chatsRef } = require('../Functionality/chatFunctions');
 
 class Chat extends Component {
-  // Chat will need currentUserID, currentUserName and selectedUserID as props
   state = {
     messages: [],
     doc: '',
@@ -28,23 +27,8 @@ class Chat extends Component {
   }
 
   onSend(messages = []) {
-    // console.log('OnSend: ', messages[0], this.state.doc);
-    sendMessage(messages[0], this.state.doc)
-      .then((newMessage) => {
-        //* **** OFFLINE MODE????? ********
-        // this.setState(previousState => ({
-        //   messages: GiftedChat.append(previousState.messages, [newMessage]),
-        // }));
-        //* **** OFFLINE MODE????? ********
-      })
-      .catch((err) => {
-        console.log(err, '<<<<sendMessage Error');
-      });
+    sendMessage(messages[0], this.state.doc);
   }
-
-  // onReceive(text) {
-  //   // (in setState) - messages: GiftedChat.append(previousState.messages, text)
-  // }
 
   render() {
     const { currentUserID, currentUsername } = this.props;

@@ -9,10 +9,8 @@ const { getCurrentUserInfo } = require('../Functionality/utilityFunctions');
 const theme = getTheme();
 
 class Inbox extends Component {
-  //* *********NEEDS CURRENT USERID AS PROP*************** */
   state = {
     chats: [],
-    // loading: true,
     currentUserID: null,
     currentUsername: null,
   };
@@ -21,14 +19,12 @@ class Inbox extends Component {
     let currentUserID;
     firebase.auth().onAuthStateChanged((user) => {
       currentUserID = user.uid;
-      // ***************
       getCurrentUserInfo(currentUserID).then((currentUserInfo) => {
         this.setState({
           currentUserID,
           currentUsername: currentUserInfo.username,
         });
       });
-      // ***************
       const allUserChats = chatsRef.where('usersArr', 'array-contains', `${currentUserID}`);
       allUserChats.onSnapshot((querySnapshot) => {
         querySnapshot.docChanges().forEach((change) => {
@@ -63,7 +59,7 @@ class Inbox extends Component {
               };
               const currentChats = [...this.state.chats];
               const oldChats = currentChats.filter(
-                chatObj => chatObj.otherUser !== compObj.otherUser,
+                chatObject => chatObject.otherUser !== compObj.otherUser,
               );
               this.setState({
                 chats: [...oldChats, compObj],
@@ -80,7 +76,7 @@ class Inbox extends Component {
     const { allNav } = this.props;
     return (
       <ScrollView>
-        {chats.map((chat, index) => (
+        {chats.map(chat => (
           <TouchableOpacity
             style={theme.cardStyle}
             key={`inbox${chat.otherUser}`}
