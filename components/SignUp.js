@@ -1,23 +1,15 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet, Text, TextInput, View, Button,
-} from 'react-native';
+import { TextInput, View, Text } from 'react-native';
 import * as firebase from 'firebase';
 import { CheckBox } from 'react-native-elements';
 import 'firebase/firestore';
+import {
+  H1, H2, H3, Button,
+} from 'native-base';
+import signUpStyles from '../styles/SignUp.styles';
+import { generalStyling, generalFont } from '../styles/generalStyling.styles';
 
 const { firestore } = require('../config');
-
-const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  textInput: {
-    height: 40,
-    width: '90%',
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginTop: 8,
-  },
-});
 
 class SignUp extends Component {
   state = {
@@ -75,27 +67,28 @@ class SignUp extends Component {
     } = this.state;
 
     return (
-      <View style={styles.container}>
-        <Text>Sign Up</Text>
+      <View style={signUpStyles.container}>
+        <H1 style={generalStyling.h1}>Whatever the title of this app is</H1>
+        <H2 style={generalStyling.h2}>Sign Up</H2>
         {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
         <TextInput
           placeholder="name"
           autoCapitalize="words"
-          style={styles.textInput}
+          style={generalStyling.textInput}
           onChangeText={newName => this.setState({ name: newName })}
           value={name}
         />
         <TextInput
           placeholder="username"
           autoCapitalize="words"
-          style={styles.textInput}
+          style={generalStyling.textInput}
           onChangeText={newUsername => this.setState({ username: newUsername })}
           value={username}
         />
         <TextInput
           placeholder="email"
           autoCapitalize="none"
-          style={styles.textInput}
+          style={generalStyling.textInput}
           onChangeText={newEmail => this.setState({ email: newEmail })}
           value={email}
         />
@@ -103,33 +96,55 @@ class SignUp extends Component {
           placeholder="password"
           autoCapitalize="none"
           secureTextEntry
-          style={styles.textInput}
+          style={generalStyling.textInput}
           onChangeText={newPassword => this.setState({ password: newPassword })}
           value={password}
         />
-        <Text>Tick the things that interest you</Text>
-        <CheckBox
-          title="Museums and galleries"
-          checked={museums}
-          onPress={() => this.setState({ museums: !museums })}
-        />
-        <CheckBox
-          title="Bars and clubs"
-          checked={bars}
-          onPress={() => this.setState({ bars: !bars })}
-        />
-        <CheckBox
-          title="Local restaurants"
-          checked={restaurants}
-          onPress={() => this.setState({ restaurants: !restaurants })}
-        />
-        <Button title="Sign Up" onPress={this.handleSignUp} />
-        <Button
-          title="Already have an account? Login"
-          onPress={() => {
-            this.props.navigation.navigate('LogIn');
-          }}
-        />
+        <View style={signUpStyles.interests}>
+          <H3 style={generalStyling.h3}>Tick the things that interest you</H3>
+          <CheckBox
+            title="Museums and galleries"
+            checked={museums}
+            fontFamily={generalFont}
+            style={generalStyling.checkbox}
+            onPress={() => this.setState({ museums: !museums })}
+          />
+          <CheckBox
+            title="Bars and clubs"
+            checked={bars}
+            style={generalStyling.checkbox}
+            onPress={() => this.setState({ bars: !bars })}
+          />
+          <CheckBox
+            title="Local restaurants"
+            checked={restaurants}
+            style={generalStyling.checkbox}
+            onPress={() => this.setState({ restaurants: !restaurants })}
+          />
+        </View>
+        <View style={signUpStyles.buttons}>
+          <View style={{ flex: 0.5, alignItems: 'center', justifyContent: 'center' }}>
+            <View>
+              <Button title="Sign Up" onPress={this.handleSignUp} style={generalStyling.button}>
+                <Text style={generalStyling.buttonText}>Sign Up</Text>
+              </Button>
+            </View>
+          </View>
+          <View style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={generalStyling.normal}>Already Have an account?</Text>
+            <View>
+              <Button
+                title="Already have an account? Login"
+                style={generalStyling.button}
+                onPress={() => {
+                  this.props.navigation.navigate('LogIn');
+                }}
+              >
+                <Text style={generalStyling.buttonText}>Login</Text>
+              </Button>
+            </View>
+          </View>
+        </View>
       </View>
     );
   }
