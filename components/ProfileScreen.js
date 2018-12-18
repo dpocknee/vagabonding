@@ -46,23 +46,22 @@ export default class Profile extends Component {
 
   render() {
     const { navigation } = this.props;
-    const userId = this.props.navigation.getParam("selectedUser")[0];
-    const userInfo = this.props.navigation.getParam("selectedUser")[1];
-    const currentUser = this.props.navigation.getParam("currentUser");
-    const nearbyUsers = this.props.navigation.getParam("nearbyUsers");
+    const userId = this.props.navigation.getParam('selectedUser')[0];
+    const userInfo = this.props.navigation.getParam('selectedUser')[1];
+    const currentUser = this.props.navigation.getParam('currentUser');
+    const nearbyUsers = this.props.navigation.getParam('nearbyUsers');
     const currentUserInfo = nearbyUsers.filter(
-      user => user[0] === currentUser.uid
+      user => user[0] === currentUser.uid,
     );
 
     const currentUsername = currentUserInfo[0][1].username;
     const interests = userInfo.interests
       ? Object.keys(userInfo.interests).reduce((outputArray, interest) => {
-          if (userInfo.interests[interest]) outputArray.push(interest);
-          return outputArray;
-        }, [])
+        if (userInfo.interests[interest]) outputArray.push(interest);
+        return outputArray;
+      }, [])
       : [];
-    const validInterests =
-      interests.length > 0 ? interests.join(" / ") : "No interests given!";
+    const validInterests = interests.length > 0 ? interests.join(' / ') : 'No interests given!';
     return (
       <View style={{ flex: 1 }}>
         <MenuWrapper navigation={navigation} currentPage="profile" buttonState={this.state.button}>
@@ -79,19 +78,21 @@ export default class Profile extends Component {
                 {userInfo.name}
               </Text>
               <Text style={profileStyles.info}>
-                Interests: {validInterests}
+                Interests:
+                {' '}
+                {validInterests}
               </Text>
             </View>
             <View style={profileStyles.chat}>
               <TouchableOpacity
                 style={profileStyles.button}
                 onPress={() => {
-                  this.props.navigation.push("Chat", {
+                  this.props.navigation.push('Chat', {
                     currentUserID: currentUser.uid,
                     currentUsername,
                     selectedUserID: userId,
                     selectedUserUsername: userInfo.username,
-                    selectedUsername: userInfo.name
+                    selectedUsername: userInfo.name,
                   });
                 }}
               >
@@ -109,5 +110,5 @@ export default class Profile extends Component {
 }
 
 Profile.propTypes = {
-  navigation: PropTypes.object.isRequired
+  navigation: PropTypes.object.isRequired,
 };

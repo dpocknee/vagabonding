@@ -1,19 +1,18 @@
-import React, { Component } from "react";
-import { View, Text, ActivityIndicator } from "react-native";
-import { Button, Icon } from "native-base";
-import * as Expo from "expo";
-import PropTypes from "prop-types";
-import * as firebase from "firebase";
-import Users from "./Users";
-import MenuWrapper from "./MenuWrapper";
-import MapScreenStyles from "../styles/MapScreen.styles";
+import React, { Component } from 'react';
+import { View } from 'react-native';
+import { Button, Icon } from 'native-base';
+import * as Expo from 'expo';
+import PropTypes from 'prop-types';
+import * as firebase from 'firebase';
+import Users from './Users';
+import MenuWrapper from './MenuWrapper';
 import Loading from './Loading';
+
 const {
   getUserLocation,
   getCurrentUserInfo,
-  filterUsersByDistance
-} = require("../Functionality/utilityFunctions");
-
+  filterUsersByDistance,
+} = require('../Functionality/utilityFunctions');
 
 export default class MapScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -35,19 +34,20 @@ export default class MapScreen extends Component {
         iconRight
         transparent
         onPress={() => {
-          navigation.push("Map");
+          navigation.push('Map');
         }}
         width={50}
       >
         <Icon type="FontAwesome" name="refresh" />
       </Button>
-    )
+    ),
   });
 
   state = {
     locationAndError: null,
     button: false,
-    dev: false, // special dev variable for computer emulators
+    dev: false,
+    nearbyUsers: [], // special dev variable for computer emulators
     // which can't use GPS.
   };
 
@@ -77,16 +77,13 @@ export default class MapScreen extends Component {
             this.setState(
               {
                 currentUser,
-                locationAndError
+                locationAndError,
               },
               () => {
-                filterUsersByDistance(
-                  this.state.currentUser,
-                  (err2, nearbyUsers) => {
-                    const nearbyUsersArray = Object.entries(nearbyUsers);
-                    this.setState({ nearbyUsers: nearbyUsersArray });
-                  },
-                ).catch(() => {
+                filterUsersByDistance(this.state.currentUser, (err2, nearbyUsers) => {
+                  const nearbyUsersArray = Object.entries(nearbyUsers);
+                  this.setState({ nearbyUsers: nearbyUsersArray });
+                }).catch(() => {
                   this.props.navigation.navigate('Error');
                 });
               },
@@ -116,11 +113,7 @@ export default class MapScreen extends Component {
     }
     return (
       <View style={{ flex: 1 }}>
-        <MenuWrapper
-          navigation={navigation}
-          currentPage="map"
-          buttonState={this.state.button}
-        >
+        <MenuWrapper navigation={navigation} currentPage="map" buttonState={this.state.button}>
           <>
             <Expo.MapView
               style={{ height: 500 }}
@@ -129,7 +122,7 @@ export default class MapScreen extends Component {
                 latitude: locationAndError.location.latitude,
                 longitude: locationAndError.location.longitude,
                 latitudeDelta: 0.05,
-                longitudeDelta: 0.05
+                longitudeDelta: 0.05,
               }}
             >
               <Expo.MapView.Marker
@@ -166,5 +159,5 @@ export default class MapScreen extends Component {
 }
 
 MapScreen.propTypes = {
-  navigation: PropTypes.object.isRequired
+  navigation: PropTypes.object.isRequired,
 };
