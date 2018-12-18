@@ -39,6 +39,7 @@ class Login extends Component {
 
   render() {
     const { errorMessage } = this.state;
+    const comma = "'";
     errorMessage && <ErrorComponent errorMessage={errorMessage} />;
     return (
       <View style={loginStyles.container}>
@@ -59,23 +60,33 @@ class Login extends Component {
           onChangeText={password => this.setState({ password })}
           value={this.state.password}
         />
-        <View>
-          <View style={generalStyling.buttons}>
-            <Button title="Login" onPress={this.handleLogin} style={generalStyling.button}>
+        <View style={loginStyles.buttons}>
+          <View>
+            <Button rounded title="Login" onPress={this.handleLogin} style={generalStyling.button}>
               <Text style={generalStyling.buttonText}>Login</Text>
             </Button>
           </View>
-          <View>
-            <Text style={generalStyling.normal}>Don't have an account?</Text>
-            <Button
-              title="Don't have an account? Sign up"
-              style={generalStyling.button}
-              onPress={() => {
-                this.props.navigation.navigate('SignUp');
-              }}
-            >
-              <Text style={generalStyling.buttonText}>Sign up</Text>
-            </Button>
+          <View
+            style={{
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 20,
+            }}
+          >
+            <Text style={generalStyling.normal}>{`Don${comma}t have an account?`}</Text>
+            <View>
+              <Button
+                rounded
+                title="Don't have an account? Sign up"
+                style={generalStyling.button}
+                onPress={() => {
+                  this.props.navigation.navigate('SignUp');
+                }}
+              >
+                <Text style={generalStyling.buttonText}>Sign up</Text>
+              </Button>
+            </View>
           </View>
         </View>
       </View>

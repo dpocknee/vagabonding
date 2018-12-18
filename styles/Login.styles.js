@@ -10,6 +10,11 @@ const loginStyles = {
     backgroundColor: mainBackground,
     color: mainText,
   },
+  buttons: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 };
 
 export default loginStyles;
