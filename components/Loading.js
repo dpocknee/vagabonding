@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Text, ActivityIndicator, View, Image,
-} from 'react-native';
+import { View, Image } from 'react-native';
 import * as firebase from 'firebase';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { LinearGradient } from 'expo';

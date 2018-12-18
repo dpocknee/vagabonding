@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Loading from './Loading';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
+import Loading from './Loading';
 import colours from '../styles/Colours.styles';
 
 const {
