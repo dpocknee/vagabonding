@@ -10,7 +10,7 @@ import MapScreenStyles from "../styles/MapScreen.styles";
 import Loading from './Loading';
 const {
   getUserLocation,
-
+  getCurrentUserInfo,
   filterUsersByDistance
 } = require("../Functionality/utilityFunctions");
 
@@ -111,7 +111,6 @@ export default class MapScreen extends Component {
       locationAndError, nearbyUsers, currentUser, userRadius,
     } = this.state;
     const { navigation } = this.props;
-    console.log(locationAndError, 'locationAndError');
     if (!locationAndError) {
       return <Loading />;
     }
