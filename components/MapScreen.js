@@ -155,7 +155,6 @@ export default class MapScreen extends Component {
           </View>
           <View style={MapStyle.users}>
             <Users
-              style={{ flex: 1 }}
               city={userCity}
               currentUser={currentUser}
               users={nearbyUsers}
