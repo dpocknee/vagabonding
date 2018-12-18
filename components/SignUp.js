@@ -1,39 +1,43 @@
-import React, { Component } from 'react';
-import {
-  StyleSheet, Text, TextInput, View, Button,
-} from 'react-native';
-import * as firebase from 'firebase';
-import { CheckBox } from 'react-native-elements';
-import 'firebase/firestore';
+import React, { Component } from "react";
+import { StyleSheet, Text, TextInput, View, Button } from "react-native";
+import * as firebase from "firebase";
+import { CheckBox } from "react-native-elements";
+import "firebase/firestore";
 
-const { firestore } = require('../config');
+const { firestore } = require("../config");
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  container: { flex: 1, justifyContent: "center", alignItems: "center" },
   textInput: {
     height: 40,
-    width: '90%',
-    borderColor: 'gray',
+    width: "90%",
+    borderColor: "gray",
     borderWidth: 1,
-    marginTop: 8,
-  },
+    marginTop: 8
+  }
 });
 
 class SignUp extends Component {
   state = {
-    name: '',
-    username: '',
-    email: '',
-    password: '',
+    name: "",
+    username: "",
+    email: "",
+    password: "",
     errorMessage: null,
     museums: false,
     bars: false,
-    restaurants: false,
+    restaurants: false
   };
 
   handleSignUp = () => {
     const {
-      name, username, email, password, museums, bars, restaurants,
+      name,
+      username,
+      email,
+      password,
+      museums,
+      bars,
+      restaurants,
     } = this.state;
 
     firebase
@@ -42,7 +46,7 @@ class SignUp extends Component {
       .then(() => {
         const { currentUser } = firebase.auth();
         firestore
-          .collection('users')
+          .collection("users")
           .doc(currentUser.uid)
           .set({
             location: { latitude: null, longitude: null },
@@ -50,14 +54,13 @@ class SignUp extends Component {
             interests: { museums, bars, restaurants },
             name,
             username,
-            radius: 1000,
+            radius: 1000
           });
-        this.props.navigation.navigate('mainFlow');
+        this.props.navigation.navigate("mainFlow");
       })
       .catch((err) => {
-        console.log(err, '<<<<Create User');
         this.setState({
-          errorMessage: err.message,
+          errorMessage: err.message
         });
       });
   };
@@ -71,32 +74,32 @@ class SignUp extends Component {
       password,
       museums,
       bars,
-      restaurants,
+      restaurants
     } = this.state;
 
     return (
       <View style={styles.container}>
         <Text>Sign Up</Text>
-        {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
+        {errorMessage && <Text style={{ color: "red" }}>{errorMessage}</Text>}
         <TextInput
           placeholder="name"
           autoCapitalize="words"
           style={styles.textInput}
-          onChangeText={name => this.setState({ name })}
+          onChangeText={newName => this.setState({ name: newName })}
           value={name}
         />
         <TextInput
           placeholder="username"
           autoCapitalize="words"
           style={styles.textInput}
-          onChangeText={username => this.setState({ username })}
+          onChangeText={newUsername => this.setState({ username: newUsername })}
           value={username}
         />
         <TextInput
           placeholder="email"
           autoCapitalize="none"
           style={styles.textInput}
-          onChangeText={email => this.setState({ email })}
+          onChangeText={newEmail => this.setState({ email: newEmail })}
           value={email}
         />
         <TextInput
@@ -104,7 +107,7 @@ class SignUp extends Component {
           autoCapitalize="none"
           secureTextEntry
           style={styles.textInput}
-          onChangeText={password => this.setState({ password })}
+          onChangeText={newPassword => this.setState({ password: newPassword })}
           value={password}
         />
         <Text>Tick the things that interest you</Text>
@@ -127,7 +130,7 @@ class SignUp extends Component {
         <Button
           title="Already have an account? Login"
           onPress={() => {
-            this.props.navigation.navigate('LogIn');
+            this.props.navigation.navigate("LogIn");
           }}
         />
       </View>
