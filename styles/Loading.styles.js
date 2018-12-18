@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { colorSettings } from './Colors.styles';
 
 const LoadingStyles = StyleSheet.create({
   container: {
@@ -11,6 +12,9 @@ const LoadingStyles = StyleSheet.create({
     padding: 100,
     width: 175,
     height: 175,
+  },
+  spinner: {
+    color: colorSettings.loadingText,
   },
 });
 

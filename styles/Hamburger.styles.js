@@ -1,3 +1,5 @@
+import { colorSettings } from './Colors.styles';
+
 const drawerStyles = {
   drawer: {
     backgroundColor: 'transparent',
@@ -13,8 +15,8 @@ const drawerStyles = {
   },
   mainOverlay: {
     opacity: 0,
-    backgroundColor: 'black',
-    shadowColor: '#000000',
+    backgroundColor: colorSettings.menuOverlay,
+    shadowColor: colorSettings.menuOverlay,
     shadowOpacity: 0.8,
   },
   // Check here for native-base drawer styles: https://github.com/root-two/react-native-drawer
@@ -34,7 +36,7 @@ const sidebarStyles = {
   contentMap: {
     paddingTop: 50,
   },
-  menuTextStyle: { left: 5, color: 'darkblue' },
+  menuTextStyle: { left: 5, color: colorSettings.primaryColor },
 };
 
 export { sidebarStyles, drawerStyles };

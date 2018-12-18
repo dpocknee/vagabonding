@@ -20,17 +20,26 @@ const colorSettings = {
   textInputPlaceholder: this.lightText,
   textInputBorder: this.secondaryColor,
   // Gradient
-  gradientColor1: '#1D9FBF',
+  gradientColor1: primaryColor,
   gradientColor2: ['rgba(225,225,225,225)', 'transparent'],
   // Headers
   headerColor: primaryColor,
   headerTintColor: secondaryColor,
   // Chat Bubbles
-  chatYouColor: secondaryColor,
+  chatYouColor: primaryColor,
   chatThemColor: tertiaryColor,
   // Inbox
   inboxMessageCard: tertiaryColor,
   inboxMessageText: this.lightText,
+  // Map Screen
+  mapPinColor: primaryColor,
+  mapCircleFill: 'rgba(204, 210, 192, 0.5)',
+  // Hamburger Menu
+  hamburgerText: primaryColor,
+  menuOverlay: primaryColor,
+  iconColor: primaryColor,
+  // Loading Spinner
+  loadingText: primaryColor,
 };
 
 export {
