@@ -68,7 +68,7 @@ class Login extends Component {
             </Button>
           </View>
           <View>
-            <H2 style={generalStyling.h2}>Don't have an account?</H2>
+            <Text style={generalStyling.normal}>Don't have an account?</Text>
             <Button
               title="Don't have an account? Sign up"
               style={generalStyling.button}
