@@ -4,6 +4,7 @@ import { Button, Icon } from 'native-base';
 import PropTypes from 'prop-types';
 import MenuWrapper from './MenuWrapper';
 import Inbox from './Inbox';
+import colours from '../styles/Colours.styles';
 
 export default class InboxScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -20,6 +21,10 @@ export default class InboxScreen extends Component {
       </Button>
     ),
     title: 'Inbox',
+    headerStyle: {
+      backgroundColor: colours.header.backgroundColor,
+    },
+    headerTintColor: colours.header.color,
   });
 
   state = {
@@ -43,11 +48,16 @@ export default class InboxScreen extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <MenuWrapper navigation={navigation} currentPage="inbox" buttonState={this.state.button}>
+        <MenuWrapper
+          navigation={navigation}
+          currentPage="inbox"
+          buttonState={this.state.button}
+        >
           <Inbox
             allNav={(chatProps) => {
               navigation.push('Chat', chatProps);
             }}
+            navigation={navigation}
           />
         </MenuWrapper>
       </View>

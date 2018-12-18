@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, Platform } from 'react-native';
 import { Button, Icon } from 'native-base';
 import * as Expo from 'expo';
 import PropTypes from 'prop-types';
 import * as firebase from 'firebase';
 import Users from './Users';
 import MenuWrapper from './MenuWrapper';
-import MapScreenStyles from '../styles/MapScreen.styles';
+import LoadingComponent from './LoadingComponent';
 
-const { getUserLocation, filterUsersByDistance } = require('../Functionality/utilityFunctions');
+const {
+  getUserLocation,
+  getCurrentUserInfo,
+  filterUsersByDistance,
+} = require('../Functionality/utilityFunctions');
 
 export default class MapScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -33,6 +37,7 @@ export default class MapScreen extends Component {
           navigation.push('Map');
         }}
         width={50}
+        style={{ marginRight: Platform.select({ ios: 15, android: 0 }) }}
       >
         <Icon type="FontAwesome" name="refresh" />
       </Button>
@@ -42,7 +47,8 @@ export default class MapScreen extends Component {
   state = {
     locationAndError: null,
     button: false,
-    dev: false, // special dev variable for computer emulators
+    dev: false,
+    nearbyUsers: [], // special dev variable for computer emulators
     // which can't use GPS.
   };
 
@@ -55,10 +61,15 @@ export default class MapScreen extends Component {
         // This is just a dev thing if any computers are using emulators without GPS.
         // It sets a default GPS position somewhere near the middle of Manchester.
         // REMOVE FOR PRODUCTION:
+        getCurrentUserInfo(currentUser.uid).then((userInfo) => {
+          this.setState({ userRadius: userInfo.radius });
+        });
         if (this.state.dev) {
           this.setState({
             currentUser,
-            locationAndError: { location: { latitude: 53.4758302, longitude: -2.2465945 } },
+            locationAndError: {
+              location: { latitude: 53.4758302, longitude: -2.2465945 },
+            },
             nearbyUsers: [],
           });
           // ---------------
@@ -73,13 +84,15 @@ export default class MapScreen extends Component {
                 filterUsersByDistance(this.state.currentUser, (err2, nearbyUsers) => {
                   const nearbyUsersArray = Object.entries(nearbyUsers);
                   this.setState({ nearbyUsers: nearbyUsersArray });
+                }).catch(() => {
+                  this.props.navigation.navigate('Error');
                 });
               },
             );
+          }).catch(() => {
+            this.props.navigation.navigate('Error');
           });
         }
-      } else {
-        // presumably some type of error handling?
       }
     });
   }
@@ -92,22 +105,19 @@ export default class MapScreen extends Component {
   };
 
   render() {
-    const { locationAndError, nearbyUsers, currentUser } = this.state;
+    const {
+      locationAndError, nearbyUsers, currentUser, userRadius,
+    } = this.state;
     const { navigation } = this.props;
-    if (!locationAndError || !nearbyUsers) {
-      return (
-        <View style={MapScreenStyles.container}>
-          <Text>Loading...</Text>
-          <ActivityIndicator size="large" />
-        </View>
-      );
+    if (!locationAndError) {
+      return <LoadingComponent />;
     }
     return (
       <View style={{ flex: 1 }}>
         <MenuWrapper navigation={navigation} currentPage="map" buttonState={this.state.button}>
           <>
             <Expo.MapView
-              style={{ height: 500 }}
+              style={nearbyUsers.length >= 1 ? { flex: 1.8 } : { flex: 4 }}
               provider={Expo.MapView.PROVIDER_GOOGLE}
               initialRegion={{
                 latitude: locationAndError.location.latitude,
@@ -123,7 +133,7 @@ export default class MapScreen extends Component {
               />
               <Expo.MapView.Circle
                 center={locationAndError.location}
-                radius={1500}
+                radius={userRadius}
                 fillColor="rgba(204, 210, 192, 0.5)"
                 style={{ opacity: 0.5 }}
               />
@@ -133,8 +143,13 @@ export default class MapScreen extends Component {
               style={{ flex: 1 }}
               currentUser={currentUser}
               users={nearbyUsers}
+              navigation={navigation}
               onSelectUser={(user) => {
-                navigation.push('Profile', { selectedUser: user, currentUser, nearbyUsers });
+                navigation.push('Profile', {
+                  selectedUser: user,
+                  currentUser,
+                  nearbyUsers,
+                });
               }}
             />
           </>

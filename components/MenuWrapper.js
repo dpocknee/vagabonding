@@ -36,7 +36,6 @@ export default class MenuWrapper extends Component {
       this.drawer._root.close();
     };
 
-
     const { children, currentPage } = this.props;
     const { isDrawerOpen } = this.state;
 

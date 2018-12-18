@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Button, Icon } from 'native-base';
 import PropTypes from 'prop-types';
 import MenuWrapper from './MenuWrapper';
 import profileStyles from '../styles/Profile.styles';
 import generalStyling from '../styles/generalStyling.styles';
+import colours from '../styles/Colours.styles';
 
 export default class Profile extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -21,6 +22,10 @@ export default class Profile extends Component {
       </Button>
     ),
     title: 'Profile Page',
+    headerStyle: {
+      backgroundColor: colours.header.backgroundColor,
+    },
+    headerTintColor: colours.header.color,
   });
 
   state = {
@@ -45,7 +50,9 @@ export default class Profile extends Component {
     const userInfo = this.props.navigation.getParam('selectedUser')[1];
     const currentUser = this.props.navigation.getParam('currentUser');
     const nearbyUsers = this.props.navigation.getParam('nearbyUsers');
-    const currentUserInfo = nearbyUsers.filter(user => user[0] === currentUser.uid);
+    const currentUserInfo = nearbyUsers.filter(
+      user => user[0] === currentUser.uid,
+    );
 
     const currentUsername = currentUserInfo[0][1].username;
     const interests = userInfo.interests
@@ -62,33 +69,35 @@ export default class Profile extends Component {
             <View style={generalStyling}>
               <Icon type="FontAwesome" name="user-circle" style={{ fontSize: 40 }} />
               <Text style={profileStyles.username}>{userInfo.username}</Text>
-              <Text>
+              <Text style={profileStyles.info}>
                 Real name:
                 {userInfo.name}
               </Text>
-              <Text>
+              <Text style={profileStyles.info}>
                 Interests:
+                {' '}
                 {validInterests}
               </Text>
             </View>
-
-            <Button
-              onPress={() => {
-                this.props.navigation.push('Chat', {
-                  currentUserID: currentUser.uid,
-                  currentUsername,
-                  selectedUserID: userId,
-                  selectedUserUsername: userInfo.username,
-                  selectedUsername: userInfo.name,
-                });
-              }}
-            >
-              <Text>
-                Chat with
-                {userInfo.name}
-!
-              </Text>
-            </Button>
+            <View style={profileStyles.chat}>
+              <TouchableOpacity
+                style={profileStyles.button}
+                onPress={() => {
+                  this.props.navigation.push('Chat', {
+                    currentUserID: currentUser.uid,
+                    currentUsername,
+                    selectedUserID: userId,
+                    selectedUserUsername: userInfo.username,
+                    selectedUsername: userInfo.name,
+                  });
+                }}
+              >
+                <Text>
+                  Chat with
+                  {userInfo.name}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </>
         </MenuWrapper>
       </View>
