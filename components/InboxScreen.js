@@ -17,7 +17,7 @@ export default class InboxScreen extends Component {
         }}
         width={50}
       >
-        <Icon type="FontAwesome" name="bars" />
+        <Icon type="FontAwesome" name="bars" style={{ color: colorSettings.iconColor }} />
       </Button>
     ),
     title: 'Inbox',

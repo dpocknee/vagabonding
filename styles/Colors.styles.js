@@ -31,6 +31,7 @@ const colorSettings = {
   // Inbox
   inboxMessageCard: tertiaryColor,
   inboxMessageText: this.lightText,
+  inboxBackground: this.tertiaryColor,
   // Map Screen
   mapPinColor: primaryColor,
   mapCircleFill: 'rgba(204, 210, 192, 0.5)',
