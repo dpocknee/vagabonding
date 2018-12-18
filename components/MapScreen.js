@@ -51,6 +51,7 @@ export default class MapScreen extends Component {
     button: false,
     dev: false,
     nearbyUsers: [],
+    userCity: null, // special dev variable for computer emulators
     userRadius: null,
     // city: null, // special dev variable for computer emulators
     // which can't use GPS.
@@ -88,9 +89,18 @@ export default class MapScreen extends Component {
                 filterUsersByDistance(this.state.currentUser, (err2, nearbyUsers) => {
                   const nearbyUsersArray = Object.entries(nearbyUsers);
                   this.setState({ nearbyUsers: nearbyUsersArray });
-                }).catch(() => {
-                  this.props.navigation.navigate('Error');
-                });
+                })
+                  .then(() => {
+                    Expo.Location.reverseGeocodeAsync(locationAndError.location).then((city) => {
+                      const userCity = city[0].city;
+                      this.setState({
+                        userCity,
+                      });
+                    });
+                  })
+                  .catch(() => {
+                    this.props.navigation.navigate('Error');
+                  });
               },
             );
           }).catch(() => {
@@ -99,12 +109,6 @@ export default class MapScreen extends Component {
         }
       }
     });
-    // this.state.locationAndError
-    //   && Expo.Location.reverseGeocodeAsync(this.state.locationAndError.location).then((city) => {
-    //     this.setState({
-    //       city,
-    //     });
-    //   });
   }
 
   buttonChange = () => {
@@ -116,7 +120,7 @@ export default class MapScreen extends Component {
 
   render() {
     const {
-      locationAndError, nearbyUsers, currentUser, userRadius, city,
+      locationAndError, nearbyUsers, currentUser, userRadius, userCity,
     } = this.state;
     const { navigation } = this.props;
     if (!locationAndError) {
@@ -151,8 +155,7 @@ export default class MapScreen extends Component {
           </View>
           <View style={MapStyle.users}>
             <Users
-              // style={MapStyle.users}
-              city={city}
+              city={userCity}
               currentUser={currentUser}
               users={nearbyUsers}
               navigation={navigation}
