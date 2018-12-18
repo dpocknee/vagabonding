@@ -65,18 +65,22 @@ export default class Profile extends Component {
       interests.length > 0 ? interests.join(" / ") : "No interests given!";
     return (
       <View style={profileStyles.wholePage}>
-        <LinearGradient
-          colors={["rgba(225,225,225,225)", "transparent"]}
-          style={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            top: 0,
-            height: 300
-          }}
+        <MenuWrapper
+          navigation={navigation}
+          currentPage="profile"
+          buttonState={this.state.button}
         >
-          <MenuWrapper navigation={navigation}>
-            <>
+          <>
+            <LinearGradient
+              colors={["rgba(225,225,225,225)", "transparent"]}
+              style={{
+                position: "absolute",
+                left: 0,
+                right: 0,
+                top: 0
+                // height: 300
+              }}
+            >
               <View style={profileStyles.profileBox}>
                 <Icon
                   type="FontAwesome"
