@@ -13,7 +13,7 @@ const theme = getTheme();
 
 const Users = (props) => {
   const {
-    users, onSelectUser, currentUser, location,
+    users, onSelectUser, currentUser, navigation,
   } = props;
    const _refresh = () => {
     const refreshPromise = new Promise((resolve) => {
