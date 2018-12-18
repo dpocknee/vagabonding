@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ScrollView, Text, TouchableOpacity } from 'react-native';
 import { getTheme } from 'react-native-material-kit';
 import firebase from 'firebase';
+import Loading from './Loading';
 
 const {
   getChatPartnerNames,
@@ -16,6 +17,7 @@ class Inbox extends Component {
     chats: [],
     currentUserID: null,
     currentUsername: null,
+    isLoading: true,
   };
 
   componentDidMount() {
@@ -52,6 +54,7 @@ class Inbox extends Component {
                         };
                         this.setState(previousState => ({
                           chats: [...previousState.chats, compObj],
+                          isLoading: false,
                         }));
                       },
                     );
@@ -75,6 +78,7 @@ class Inbox extends Component {
                         );
                         this.setState({
                           chats: [...oldChats, compObj],
+                          isLoading: false,
                         });
                       },
                     );
@@ -92,8 +96,11 @@ class Inbox extends Component {
   }
 
   render() {
-    const { chats, currentUserID, currentUsername } = this.state;
+    const { chats, currentUserID, currentUsername, isLoading } = this.state;
     const { allNav } = this.props;
+    if (isLoading) {
+      return <Loading />;
+    }
     return (
       <ScrollView>
         {chats.map(chat => (

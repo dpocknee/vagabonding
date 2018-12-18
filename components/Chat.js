@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Loading from './Loading';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 import colours from '../styles/Colours.styles';
 
@@ -12,6 +13,7 @@ class Chat extends Component {
   state = {
     messages: [],
     doc: '',
+    loading: true,
   };
 
   componentWillMount() {
@@ -23,6 +25,7 @@ class Chat extends Component {
           this.setState({
             doc: messageObj.doc,
             messages,
+            loading: false,
           });
         });
       })
@@ -58,6 +61,10 @@ class Chat extends Component {
 
   render() {
     const { currentUserID, currentUsername } = this.props;
+    const { loading } = this.state;
+    if (loading) {
+      return <Loading />;
+    }
     return (
       <GiftedChat
         messages={this.state.messages}

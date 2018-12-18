@@ -7,10 +7,10 @@ import * as firebase from "firebase";
 import Users from "./Users";
 import MenuWrapper from "./MenuWrapper";
 import MapScreenStyles from "../styles/MapScreen.styles";
-
+import Loading from './Loading';
 const {
   getUserLocation,
-
+  getCurrentUserInfo,
   filterUsersByDistance
 } = require("../Functionality/utilityFunctions");
 
@@ -60,6 +60,9 @@ export default class MapScreen extends Component {
         // This is just a dev thing if any computers are using emulators without GPS.
         // It sets a default GPS position somewhere near the middle of Manchester.
         // REMOVE FOR PRODUCTION:
+        getCurrentUserInfo(currentUser.uid).then((userInfo) => {
+          this.setState({ userRadius: userInfo.radius });
+        });
         if (this.state.dev) {
           this.setState({
             currentUser,
@@ -104,15 +107,12 @@ export default class MapScreen extends Component {
   };
 
   render() {
-    const { locationAndError, nearbyUsers, currentUser } = this.state;
+    const {
+      locationAndError, nearbyUsers, currentUser, userRadius,
+    } = this.state;
     const { navigation } = this.props;
-    if (!locationAndError || !nearbyUsers) {
-      return (
-        <View style={MapScreenStyles.container}>
-          <Text>Loading...</Text>
-          <ActivityIndicator size="large" />
-        </View>
-      );
+    if (!locationAndError) {
+      return <Loading />;
     }
     return (
       <View style={{ flex: 1 }}>
@@ -139,7 +139,7 @@ export default class MapScreen extends Component {
               />
               <Expo.MapView.Circle
                 center={locationAndError.location}
-                radius={1500}
+                radius={userRadius}
                 fillColor="rgba(204, 210, 192, 0.5)"
                 style={{ opacity: 0.5 }}
               />
@@ -149,6 +149,7 @@ export default class MapScreen extends Component {
               style={{ flex: 1 }}
               currentUser={currentUser}
               users={nearbyUsers}
+              navigation={navigation}
               onSelectUser={(user) => {
                 navigation.push('Profile', {
                   selectedUser: user,
