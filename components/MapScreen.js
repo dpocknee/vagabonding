@@ -8,6 +8,8 @@ import Users from './Users';
 import MenuWrapper from './MenuWrapper';
 import LoadingComponent from './LoadingComponent';
 
+import MapStyle from '../styles/MapScreen.styles';
+
 const {
   getUserLocation,
   getCurrentUserInfo,
@@ -114,9 +116,9 @@ export default class MapScreen extends Component {
     return (
       <View style={{ flex: 1 }}>
         <MenuWrapper navigation={navigation} currentPage="map" buttonState={this.state.button}>
-          <>
+          <View style={nearbyUsers.length >= 1 ? { flex: 1.8 } : { flex: 4 }}>
             <Expo.MapView
-              style={nearbyUsers.length >= 1 ? { flex: 1.8 } : { flex: 4 }}
+              style={{ flex: 1 }}
               provider={Expo.MapView.PROVIDER_GOOGLE}
               initialRegion={{
                 latitude: locationAndError.location.latitude,
@@ -137,9 +139,10 @@ export default class MapScreen extends Component {
                 style={{ opacity: 0.5 }}
               />
             </Expo.MapView>
-
+          </View>
+          <View style={MapStyle.users}>
             <Users
-              style={{ flex: 1 }}
+              // style={MapStyle.users}
               currentUser={currentUser}
               users={nearbyUsers}
               navigation={navigation}
@@ -151,7 +154,7 @@ export default class MapScreen extends Component {
                 });
               }}
             />
-          </>
+          </View>
         </MenuWrapper>
       </View>
     );
