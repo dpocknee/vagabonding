@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
 import { Button, Icon } from 'native-base';
 import * as Expo from 'expo';
 import PropTypes from 'prop-types';
@@ -37,6 +37,7 @@ export default class MapScreen extends Component {
           navigation.push('Map');
         }}
         width={50}
+        style={{ marginRight: Platform.select({ ios: 15, android: 0 }) }}
       >
         <Icon type="FontAwesome" name="refresh" />
       </Button>
