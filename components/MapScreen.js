@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import * as firebase from 'firebase';
 import Users from './Users';
 import MenuWrapper from './MenuWrapper';
-import Loading from './Loading';
+import LoadingComponent from './LoadingComponent';
 
 const {
   getUserLocation,
@@ -109,7 +109,7 @@ export default class MapScreen extends Component {
     } = this.state;
     const { navigation } = this.props;
     if (!locationAndError) {
-      return <Loading />;
+      return <LoadingComponent />;
     }
     return (
       <View style={{ flex: 1 }}>

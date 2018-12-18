@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
-import Loading from './Loading';
+import LoadingComponent from './LoadingComponent';
 import colours from '../styles/Colours.styles';
 
-const {
-  getPreviousMessages,
-  sendMessage,
-  chatsRef,
-} = require('../Functionality/chatFunctions');
+const { getPreviousMessages, sendMessage, chatsRef } = require('../Functionality/chatFunctions');
 
 class Chat extends Component {
   state = {
@@ -63,7 +59,7 @@ class Chat extends Component {
     const { currentUserID, currentUsername } = this.props;
     const { loading } = this.state;
     if (loading) {
-      return <Loading />;
+      return <LoadingComponent />;
     }
     return (
       <GiftedChat
