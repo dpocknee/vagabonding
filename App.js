@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  createSwitchNavigator,
-  createStackNavigator,
-  createAppContainer,
-} from 'react-navigation';
+import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 import 'firebase/firestore';
 import AuthLoading from './components/AuthLoading';
 import Loading from './components/Loading';
@@ -14,6 +10,8 @@ import MapScreen from './components/MapScreen';
 import InboxScreen from './components/InboxScreen';
 import ProfileScreen from './components/ProfileScreen';
 import ErrorComponent from './components/ErrorComponent';
+
+// console.disableYellowBox = true;
 
 const loginFlow = createSwitchNavigator(
   {
