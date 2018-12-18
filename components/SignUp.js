@@ -134,7 +134,7 @@ class SignUp extends Component {
               </Button>
             </View>
           </View>
-          <View style={{ ustifyContent: 'center', alignItems: 'center' }}>
+          <View style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center' }}>
             <Text style={generalStyling.normal}>Already Have an account?</Text>
             <View>
               <Button
