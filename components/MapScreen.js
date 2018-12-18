@@ -8,7 +8,6 @@ import Users from "./Users";
 import MenuWrapper from "./MenuWrapper";
 import MapScreenStyles from "../styles/MapScreen.styles";
 import Loading from './Loading';
-import Users from './Users';
 const {
   getUserLocation,
 
