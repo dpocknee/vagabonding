@@ -28,6 +28,22 @@ export default class Profile extends Component {
     },
     headerTintColor: colorSettings.headerTintColor,
   });
+      
+     state = {	
+     button: false,	
+   };	
+ 
+    componentDidMount() {	
+     const { navigation } = this.props;	
+     navigation.setParams({ buttonChange: this.buttonChange });	
+   }	
+ 
+    buttonChange = () => {	
+     this.setState((state) => {	
+       const buttonClick = !state.button;	
+       return { button: buttonClick };	
+     });	
+   };
 
   render() {
     const { navigation } = this.props;
