@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { View, KeyboardAvoidingView, Platform } from "react-native";
-import { Button, Icon } from "native-base";
-import PropTypes from "prop-types";
-import MenuWrapper from "./MenuWrapper";
-import Chat from "./Chat";
-import colours from "../styles/Colours.styles";
+import React, { Component } from 'react';
+import { View, KeyboardAvoidingView, Platform } from 'react-native';
+import { Button, Icon } from 'native-base';
+import PropTypes from 'prop-types';
+import MenuWrapper from './MenuWrapper';
+import Chat from './Chat';
+import colours from '../styles/Colours.styles';
 
 export default class ChatScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -14,7 +14,7 @@ export default class ChatScreen extends Component {
         iconLeft
         transparent
         onPress={() => {
-          navigation.getParam("buttonChange")();
+          navigation.getParam('buttonChange')();
         }}
         width={50}
       >
@@ -22,16 +22,16 @@ export default class ChatScreen extends Component {
       </Button>
     ),
     title: `Chat with ${navigation.getParam(
-      "selectedUsername"
-    )} (${navigation.getParam("selectedUserUsername")})`,
+      'selectedUsername',
+    )} (${navigation.getParam('selectedUserUsername')})`,
     headerStyle: {
-      backgroundColor: colours.header.backgroundColor
+      backgroundColor: colours.header.backgroundColor,
     },
-    headerTintColor: colours.header.color
+    headerTintColor: colours.header.color,
   });
 
   state = {
-    button: false
+    button: false,
   };
 
   componentDidMount() {
@@ -40,7 +40,7 @@ export default class ChatScreen extends Component {
   }
 
   buttonChange = () => {
-    this.setState(state => {
+    this.setState((state) => {
       const buttonClick = !state.button;
       return { button: buttonClick };
     });
@@ -48,9 +48,9 @@ export default class ChatScreen extends Component {
 
   render() {
     const { navigation } = this.props;
-    const currentUserID = navigation.getParam("currentUserID");
-    const currentUsername = navigation.getParam("currentUsername");
-    const selectedUserID = navigation.getParam("selectedUserID");
+    const currentUserID = navigation.getParam('currentUserID');
+    const currentUsername = navigation.getParam('currentUsername');
+    const selectedUserID = navigation.getParam('selectedUserID');
 
     return (
       <View style={{ flex: 1 }}>
@@ -61,7 +61,7 @@ export default class ChatScreen extends Component {
         >
           <>
             <KeyboardAvoidingView
-              behavior={Platform.select({ android: "padding", ios: undefined })}
+              behavior={Platform.select({ android: 'padding', ios: undefined })}
               style={{ flex: 1 }}
               keyboardVerticalOffset={75}
             >
@@ -80,5 +80,5 @@ export default class ChatScreen extends Component {
 }
 
 ChatScreen.propTypes = {
-  navigation: PropTypes.object.isRequired
+  navigation: PropTypes.object.isRequired,
 };
