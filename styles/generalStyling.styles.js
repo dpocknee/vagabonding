@@ -6,7 +6,6 @@ const {
   buttonBackground,
   textInputBackground,
   textInputText,
-  textInputPlaceholder,
   textInputBorder,
 } = colorSettings;
 const generalFont = 'Thasadith-Regular';

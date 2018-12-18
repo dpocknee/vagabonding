@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 import LoadingComponent from './LoadingComponent';
-import { colorSettings } from '../styles/Colors.styles';
+import { tertiaryColor, primaryColor } from '../styles/Colors.styles';
 
 const { getPreviousMessages, sendMessage, chatsRef } = require('../Functionality/chatFunctions');
 
@@ -46,10 +46,10 @@ class Chat extends Component {
       }}
       wrapperStyle={{
         left: {
-          backgroundColor: colorSettings.chatThemColor,
+          backgroundColor: tertiaryColor,
         },
         right: {
-          backgroundColor: colorSettings.chatYouColor,
+          backgroundColor: primaryColor,
         },
       }}
     />

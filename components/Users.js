@@ -1,12 +1,10 @@
 import React from 'react';
 import {
-  Text, View, ScrollView, TouchableOpacity, Image,
+  Text, View, ScrollView, TouchableOpacity,
 } from 'react-native';
 import { getTheme } from 'react-native-material-kit';
 import PropTypes from 'prop-types';
-
 import PTRView from 'react-native-pull-to-refresh';
-import travel from '../images/travel2.jpg';
 import LoadingComponent from './LoadingComponent';
 
 const theme = getTheme();
