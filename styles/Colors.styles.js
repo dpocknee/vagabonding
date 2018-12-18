@@ -3,6 +3,7 @@ const secondaryColor = '#16324F';
 const tertiaryColor = '#F56463';
 
 const colorSettings = {
+  // ----- General Colors ------
   mainBackground: primaryColor,
   // General Text
   mainText: secondaryColor,
@@ -11,6 +12,30 @@ const colorSettings = {
   // Buttons
   buttonText: 'white',
   buttonBackground: secondaryColor,
+  // Gradient
+  gradientColor1: primaryColor,
+  gradientColor2: ['rgba(225,225,225,225)', 'transparent'],
+  // Headers
+  headerColor: primaryColor,
+  headerTintColor: secondaryColor,
+
+  // ----- Menu -----
+  // Hamburger Menu
+  hamburgerText: primaryColor,
+  menuOverlay: primaryColor,
+  iconColor: primaryColor,
+
+  // ----- Loading Spinner ---
+  // Loading Spinner
+  loadingText: primaryColor,
+
+  // ----- Sign Up and Login -----
+  // Sign Up
+  signUpBackground: this.mainBackground,
+  signUpText: this.darkText,
+  // Login
+  loginBackground: this.mainBackground,
+  loginText: this.darkText,
   // Checkbox
   checkboxText: this.darkText,
   checkboxBackground: this.primaryColor,
@@ -19,28 +44,27 @@ const colorSettings = {
   textInputText: this.primaryColor,
   textInputPlaceholder: this.lightText,
   textInputBorder: this.secondaryColor,
-  // Gradient
-  gradientColor1: primaryColor,
-  gradientColor2: ['rgba(225,225,225,225)', 'transparent'],
-  // Headers
-  headerColor: primaryColor,
-  headerTintColor: secondaryColor,
-  // Chat Bubbles
-  chatYouColor: primaryColor,
-  chatThemColor: tertiaryColor,
-  // Inbox
+
+  // ------ Map Screen Components -----
+  // Map
+  mapPinColor: primaryColor,
+  mapCircleFill: 'rgba(204, 210, 192, 0.5)',
+  // Users
+  usersBackground: 'rgba(29, 159, 191, 0.5)',
+  usersTitleText: this.lightText,
+  usersTitleBorder: this.lightText,
+  usersCardBackground: primaryColor,
+  usersCardBorder: primaryColor,
+  usersCardAction: secondaryColor,
+  usersCardContent: 'rgba(255, 255, 255, 0.9)',
+  // ------ Inbox -----
   inboxMessageCard: tertiaryColor,
   inboxMessageText: this.lightText,
   inboxBackground: this.tertiaryColor,
-  // Map Screen
-  mapPinColor: primaryColor,
-  mapCircleFill: 'rgba(204, 210, 192, 0.5)',
-  // Hamburger Menu
-  hamburgerText: primaryColor,
-  menuOverlay: primaryColor,
-  iconColor: primaryColor,
-  // Loading Spinner
-  loadingText: primaryColor,
+  // --- Chat -----
+  // Chat Bubbles
+  chatYouColor: primaryColor,
+  chatThemColor: tertiaryColor,
 };
 
 export {
