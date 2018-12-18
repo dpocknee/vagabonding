@@ -49,7 +49,9 @@ export default class MapScreen extends Component {
     locationAndError: null,
     button: false,
     dev: false,
-    nearbyUsers: [], // special dev variable for computer emulators
+    nearbyUsers: [],
+    userRadius: null,
+    // city: null, // special dev variable for computer emulators
     // which can't use GPS.
   };
 
@@ -96,6 +98,12 @@ export default class MapScreen extends Component {
         }
       }
     });
+    // this.state.locationAndError
+    //   && Expo.Location.reverseGeocodeAsync(this.state.locationAndError.location).then((city) => {
+    //     this.setState({
+    //       city,
+    //     });
+    //   });
   }
 
   buttonChange = () => {
@@ -107,7 +115,7 @@ export default class MapScreen extends Component {
 
   render() {
     const {
-      locationAndError, nearbyUsers, currentUser, userRadius,
+      locationAndError, nearbyUsers, currentUser, userRadius, city,
     } = this.state;
     const { navigation } = this.props;
     if (!locationAndError) {
@@ -143,6 +151,7 @@ export default class MapScreen extends Component {
           <View style={MapStyle.users}>
             <Users
               // style={MapStyle.users}
+              city={city}
               currentUser={currentUser}
               users={nearbyUsers}
               navigation={navigation}
