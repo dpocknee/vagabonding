@@ -1,17 +1,18 @@
-import React, { Component } from "react";
-import { View, Text, ActivityIndicator } from "react-native";
-import { Button, Icon } from "native-base";
-import * as Expo from "expo";
-import PropTypes from "prop-types";
-import * as firebase from "firebase";
-import Users from "./Users";
-import MenuWrapper from "./MenuWrapper";
-import MapScreenStyles from "../styles/MapScreen.styles";
+import React, { Component } from 'react';
+import { View } from 'react-native';
+import { Button, Icon } from 'native-base';
+import * as Expo from 'expo';
+import PropTypes from 'prop-types';
+import * as firebase from 'firebase';
+import Users from './Users';
+import MenuWrapper from './MenuWrapper';
+import LoadingComponent from './LoadingComponent';
 
 const {
   getUserLocation,
-  filterUsersByDistance
-} = require("../Functionality/utilityFunctions");
+  getCurrentUserInfo,
+  filterUsersByDistance,
+} = require('../Functionality/utilityFunctions');
 
 export default class MapScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -21,7 +22,7 @@ export default class MapScreen extends Component {
         iconLeft
         transparent
         onPress={() => {
-          navigation.getParam("drawerStatus")();
+          navigation.getParam('buttonChange')();
         }}
         width={50}
       >
@@ -33,34 +34,42 @@ export default class MapScreen extends Component {
         iconRight
         transparent
         onPress={() => {
-          navigation.push("Map");
+          navigation.push('Map');
         }}
         width={50}
       >
         <Icon type="FontAwesome" name="refresh" />
       </Button>
-    )
+    ),
   });
 
   state = {
     locationAndError: null,
-    dev: false // special dev variable for computer emulators
+    button: false,
+    dev: false,
+    nearbyUsers: [], // special dev variable for computer emulators
     // which can't use GPS.
   };
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(currentUser => {
+    const { navigation } = this.props;
+    navigation.setParams({ buttonChange: this.buttonChange });
+
+    firebase.auth().onAuthStateChanged((currentUser) => {
       if (currentUser) {
         // This is just a dev thing if any computers are using emulators without GPS.
         // It sets a default GPS position somewhere near the middle of Manchester.
         // REMOVE FOR PRODUCTION:
+        getCurrentUserInfo(currentUser.uid).then((userInfo) => {
+          this.setState({ userRadius: userInfo.radius });
+        });
         if (this.state.dev) {
           this.setState({
             currentUser,
             locationAndError: {
-              location: { latitude: 53.4758302, longitude: -2.2465945 }
+              location: { latitude: 53.4758302, longitude: -2.2465945 },
             },
-            nearbyUsers: []
+            nearbyUsers: [],
           });
           // ---------------
         } else {
@@ -68,49 +77,52 @@ export default class MapScreen extends Component {
             this.setState(
               {
                 currentUser,
-                locationAndError
+                locationAndError,
               },
               () => {
-                filterUsersByDistance(
-                  this.state.currentUser,
-                  (err2, nearbyUsers) => {
-                    const nearbyUsersArray = Object.entries(nearbyUsers);
-                    this.setState({ nearbyUsers: nearbyUsersArray });
-                  }
-                );
-              }
+                filterUsersByDistance(this.state.currentUser, (err2, nearbyUsers) => {
+                  const nearbyUsersArray = Object.entries(nearbyUsers);
+                  this.setState({ nearbyUsers: nearbyUsersArray });
+                }).catch(() => {
+                  this.props.navigation.navigate('Error');
+                });
+              },
             );
+          }).catch(() => {
+            this.props.navigation.navigate('Error');
           });
         }
-      } else {
-        // presumably some type of error handling?
       }
     });
   }
 
+  buttonChange = () => {
+    this.setState((state) => {
+      const buttonClick = !state.button;
+      return { button: buttonClick };
+    });
+  };
+
   render() {
-    const { locationAndError, nearbyUsers, currentUser } = this.state;
+    const {
+      locationAndError, nearbyUsers, currentUser, userRadius,
+    } = this.state;
     const { navigation } = this.props;
-    if (!locationAndError || !nearbyUsers) {
-      return (
-        <View style={MapScreenStyles.container}>
-          <Text>Loading...</Text>
-          <ActivityIndicator size="large" />
-        </View>
-      );
+    if (!locationAndError) {
+      return <LoadingComponent />;
     }
     return (
       <View style={{ flex: 1 }}>
-        <MenuWrapper navigation={navigation}>
+        <MenuWrapper navigation={navigation} currentPage="map" buttonState={this.state.button}>
           <>
             <Expo.MapView
-              style={{ height: 500 }}
+              style={nearbyUsers.length >= 1 ? { flex: 1.8 } : { flex: 4 }}
               provider={Expo.MapView.PROVIDER_GOOGLE}
               initialRegion={{
                 latitude: locationAndError.location.latitude,
                 longitude: locationAndError.location.longitude,
                 latitudeDelta: 0.05,
-                longitudeDelta: 0.05
+                longitudeDelta: 0.05,
               }}
             >
               <Expo.MapView.Marker
@@ -120,7 +132,7 @@ export default class MapScreen extends Component {
               />
               <Expo.MapView.Circle
                 center={locationAndError.location}
-                radius={1500}
+                radius={userRadius}
                 fillColor="rgba(204, 210, 192, 0.5)"
                 style={{ opacity: 0.5 }}
               />
@@ -130,11 +142,12 @@ export default class MapScreen extends Component {
               style={{ flex: 1 }}
               currentUser={currentUser}
               users={nearbyUsers}
-              onSelectUser={user => {
-                navigation.push("Profile", {
+              navigation={navigation}
+              onSelectUser={(user) => {
+                navigation.push('Profile', {
                   selectedUser: user,
                   currentUser,
-                  nearbyUsers
+                  nearbyUsers,
                 });
               }}
             />
@@ -146,5 +159,5 @@ export default class MapScreen extends Component {
 }
 
 MapScreen.propTypes = {
-  navigation: PropTypes.object.isRequired
+  navigation: PropTypes.object.isRequired,
 };

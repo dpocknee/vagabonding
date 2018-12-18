@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet, Text, ActivityIndicator, View,
-} from 'react-native';
+import { View, Image } from 'react-native';
 import * as firebase from 'firebase';
+import Spinner from 'react-native-loading-spinner-overlay';
+import { LinearGradient } from 'expo';
+import LoadingStyles from '../styles/Loading.styles';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+const logo = require('../assets/Connections.png');
 
 class Loading extends Component {
   componentDidMount() {
@@ -21,9 +16,23 @@ class Loading extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Loading...</Text>
-        <ActivityIndicator size="large" />
+      <View style={{ flex: 1 }}>
+        <View style={{ backgroundColor: '#1D9FBF', flex: 1 }} />
+        <LinearGradient
+          colors={['rgba(225,225,225,225)', 'transparent']}
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            height: 300,
+          }}
+        >
+          <View style={LoadingStyles.container}>
+            <Image style={LoadingStyles.logo} source={logo} />
+            <Spinner visible textContent="Loading..." textStyle={LoadingStyles.spinner} />
+          </View>
+        </LinearGradient>
       </View>
     );
   }
