@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import MenuWrapper from './MenuWrapper';
 import profileStyles from '../styles/Profile.styles';
 import generalStyling from '../styles/generalStyling.styles';
-import colours from '../styles/Colours.styles';
+import { colorSettings } from '../styles/Colors.styles';
 
 export default class Profile extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -23,9 +23,9 @@ export default class Profile extends Component {
     ),
     title: 'Profile Page',
     headerStyle: {
-      backgroundColor: colours.header.backgroundColor,
+      backgroundColor: colorSettings.headerColor,
     },
-    headerTintColor: colours.header.color,
+    headerTintColor: colorSettings.headerTintColor,
   });
 
   state = {
@@ -50,9 +50,7 @@ export default class Profile extends Component {
     const userInfo = this.props.navigation.getParam('selectedUser')[1];
     const currentUser = this.props.navigation.getParam('currentUser');
     const nearbyUsers = this.props.navigation.getParam('nearbyUsers');
-    const currentUserInfo = nearbyUsers.filter(
-      user => user[0] === currentUser.uid,
-    );
+    const currentUserInfo = nearbyUsers.filter(user => user[0] === currentUser.uid);
 
     const currentUsername = currentUserInfo[0][1].username;
     const interests = userInfo.interests
@@ -75,7 +73,6 @@ export default class Profile extends Component {
               </Text>
               <Text style={profileStyles.info}>
                 Interests:
-                {' '}
                 {validInterests}
               </Text>
             </View>

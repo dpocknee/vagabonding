@@ -1,22 +1,14 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, Text, TextInput, View, Button,
+  StyleSheet, Text, TextInput, View,
 } from 'react-native';
+import { H1, H2, Button } from 'native-base';
 import * as firebase from 'firebase';
 import ErrorComponent from './ErrorComponent';
+import loginStyles from '../styles/Login.styles';
+import { generalStyling } from '../styles/generalStyling.styles';
 
 const { firestore } = require('../config');
-
-const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  textInput: {
-    height: 40,
-    width: '90%',
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginTop: 8,
-  },
-});
 
 class Login extends Component {
   state = {
@@ -51,15 +43,13 @@ class Login extends Component {
     const { errorMessage } = this.state;
     errorMessage && <ErrorComponent errorMessage={errorMessage} />;
     return (
-      <View style={styles.container}>
-        <Text>Login</Text>
-        {this.state.errorMessage && (
-          <Text style={{ color: 'red' }}>{this.state.errorMessage}</Text>
-        )}
+      <View style={loginStyles.container}>
+        <H1 styles={generalStyling.h1}>Login</H1>
+        {this.state.errorMessage && <Text style={{ color: 'red' }}>{this.state.errorMessage}</Text>}
         <TextInput
           placeholder="email"
           autoCapitalize="none"
-          style={styles.textInput}
+          style={generalStyling.textInput}
           onChangeText={email => this.setState({ email })}
           value={this.state.email}
         />
@@ -67,17 +57,29 @@ class Login extends Component {
           placeholder="password"
           autoCapitalize="none"
           secureTextEntry
-          style={styles.textInput}
+          style={generalStyling.textInput}
           onChangeText={password => this.setState({ password })}
           value={this.state.password}
         />
-        <Button title="Login" onPress={this.handleLogin} />
-        <Button
-          title="Don't have an account? Sign up"
-          onPress={() => {
-            this.props.navigation.navigate('SignUp');
-          }}
-        />
+        <View>
+          <View style={generalStyling.buttons}>
+            <Button title="Login" onPress={this.handleLogin} style={generalStyling.button}>
+              <Text style={generalStyling.buttonText}>Login</Text>
+            </Button>
+          </View>
+          <View>
+            <H2 style={generalStyling.h2}>Don't have an account?</H2>
+            <Button
+              title="Don't have an account? Sign up"
+              style={generalStyling.button}
+              onPress={() => {
+                this.props.navigation.navigate('SignUp');
+              }}
+            >
+              <Text style={generalStyling.buttonText}>Sign up</Text>
+            </Button>
+          </View>
+        </View>
       </View>
     );
   }

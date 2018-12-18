@@ -3,7 +3,7 @@ import { ScrollView, Text, TouchableOpacity } from 'react-native';
 import firebase from 'firebase';
 import { View } from 'native-base';
 import LoadingComponent from './LoadingComponent';
-import colours from '../styles/Colours.styles';
+import { colorSettings } from '../styles/Colors.styles';
 
 const { getChatPartnerNames, chatsRef } = require('../Functionality/chatFunctions');
 const { getCurrentUserInfo } = require('../Functionality/utilityFunctions');
@@ -98,18 +98,24 @@ class Inbox extends Component {
     }
     if (chats.length === 0) {
       return (
-        <View style={{ backgroundColor: colours.cards.color, flex: 1, justifyContent: 'center' }}>
-          <Text style={{
-            fontSize: 19, alignSelf: 'center', color: 'white', fontWeight: 'bold',
-          }}
+        <View
+          style={{ backgroundColor: colorSettings.inboxMessage, flex: 1, justifyContent: 'center' }}
+        >
+          <Text
+            style={{
+              fontSize: 19,
+              alignSelf: 'center',
+              color: 'white',
+              fontWeight: 'bold',
+            }}
           >
-There are no conversations to display
+            There are no conversations to display
           </Text>
         </View>
       );
     }
     return (
-      <ScrollView style={{ flex: 1, backgroundColor: colours.cards.color }}>
+      <ScrollView style={{ flex: 1, backgroundColor: colorSettings.inboxMessageText }}>
         {chats.map(chat => (
           <TouchableOpacity
             style={{
