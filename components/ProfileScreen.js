@@ -15,7 +15,7 @@ export default class Profile extends Component {
         iconLeft
         transparent
         onPress={() => {
-          navigation.getParam("drawerStatus")();
+          navigation.getParam('buttonChange')();
         }}
         width={50}
       >
