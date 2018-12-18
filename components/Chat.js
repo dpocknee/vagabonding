@@ -11,8 +11,9 @@ const {
 
 class Chat extends Component {
   state = {
-    messages: null,
+    messages: [],
     doc: '',
+    loading: true,
   };
 
   componentWillMount() {
@@ -24,6 +25,7 @@ class Chat extends Component {
           this.setState({
             doc: messageObj.doc,
             messages,
+            loading: false,
           });
         });
       })
@@ -59,8 +61,8 @@ class Chat extends Component {
 
   render() {
     const { currentUserID, currentUsername } = this.props;
-    const { messages } = this.state;
-    if (!messages) {
+    const { loading } = this.state;
+    if (loading) {
       return <Loading />;
     }
     return (
