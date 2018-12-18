@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
 import { Button, Icon } from 'native-base';
 import * as Expo from 'expo';
 import PropTypes from 'prop-types';
@@ -7,6 +7,8 @@ import * as firebase from 'firebase';
 import Users from './Users';
 import MenuWrapper from './MenuWrapper';
 import LoadingComponent from './LoadingComponent';
+
+import MapStyle from '../styles/MapScreen.styles';
 
 const {
   getUserLocation,
@@ -37,6 +39,7 @@ export default class MapScreen extends Component {
           navigation.push('Map');
         }}
         width={50}
+        style={{ marginRight: Platform.select({ ios: 15, android: 0 }) }}
       >
         <Icon type="FontAwesome" name="refresh" />
       </Button>
@@ -49,6 +52,8 @@ export default class MapScreen extends Component {
     dev: false,
     nearbyUsers: [],
     userCity: null, // special dev variable for computer emulators
+    userRadius: null,
+    // city: null, // special dev variable for computer emulators
     // which can't use GPS.
   };
 
@@ -124,9 +129,9 @@ export default class MapScreen extends Component {
     return (
       <View style={{ flex: 1 }}>
         <MenuWrapper navigation={navigation} currentPage="map" buttonState={this.state.button}>
-          <>
+          <View style={nearbyUsers.length >= 1 ? { flex: 1.8 } : { flex: 4 }}>
             <Expo.MapView
-              style={nearbyUsers.length >= 1 ? { flex: 1.8 } : { flex: 4 }}
+              style={{ flex: 1 }}
               provider={Expo.MapView.PROVIDER_GOOGLE}
               initialRegion={{
                 latitude: locationAndError.location.latitude,
@@ -147,7 +152,8 @@ export default class MapScreen extends Component {
                 style={{ opacity: 0.5 }}
               />
             </Expo.MapView>
-
+          </View>
+          <View style={MapStyle.users}>
             <Users
               style={{ flex: 1 }}
               city={userCity}
@@ -162,7 +168,7 @@ export default class MapScreen extends Component {
                 });
               }}
             />
-          </>
+          </View>
         </MenuWrapper>
       </View>
     );
