@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { LinearGradient } from "expo";
-import { View, Text, TouchableOpacity } from 'react-native';
-import { Button, Icon } from 'native-base';
-import PropTypes from 'prop-types';
-import MenuWrapper from './MenuWrapper';
-import profileStyles from '../styles/Profile.styles';
-import generalStyling from '../styles/generalStyling.styles';
-import { colorSettings } from '../styles/Colors.styles';
+import { View, Text, TouchableOpacity } from "react-native";
+import { Button, Icon } from "native-base";
+import PropTypes from "prop-types";
+import MenuWrapper from "./MenuWrapper";
+import profileStyles from "../styles/Profile.styles";
+import { generalStyling } from "../styles/generalStyling.styles";
+import { colorSettings } from "../styles/Colors.styles";
 
 export default class Profile extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -15,43 +15,45 @@ export default class Profile extends Component {
         iconLeft
         transparent
         onPress={() => {
-          navigation.getParam('buttonChange')();
+          navigation.getParam("buttonChange")();
         }}
         width={50}
       >
         <Icon type="FontAwesome" name="bars" />
       </Button>
     ),
-    title: 'Profile Page',
+    title: "Profile Page",
     headerStyle: {
-      backgroundColor: colorSettings.headerColor,
+      backgroundColor: colorSettings.headerColor
     },
-    headerTintColor: colorSettings.headerTintColor,
+    headerTintColor: colorSettings.headerTintColor
   });
-      
-     state = {	
-     button: false,	
-   };	
- 
-    componentDidMount() {	
-     const { navigation } = this.props;	
-     navigation.setParams({ buttonChange: this.buttonChange });	
-   }	
- 
-    buttonChange = () => {	
-     this.setState((state) => {	
-       const buttonClick = !state.button;	
-       return { button: buttonClick };	
-     });	
-   };
+
+  state = {
+    button: false
+  };
+
+  componentDidMount() {
+    const { navigation } = this.props;
+    navigation.setParams({ buttonChange: this.buttonChange });
+  }
+
+  buttonChange = () => {
+    this.setState(state => {
+      const buttonClick = !state.button;
+      return { button: buttonClick };
+    });
+  };
 
   render() {
     const { navigation } = this.props;
-    const userId = this.props.navigation.getParam('selectedUser')[0];
-    const userInfo = this.props.navigation.getParam('selectedUser')[1];
-    const currentUser = this.props.navigation.getParam('currentUser');
-    const nearbyUsers = this.props.navigation.getParam('nearbyUsers');
-    const currentUserInfo = nearbyUsers.filter(user => user[0] === currentUser.uid);
+    const userId = this.props.navigation.getParam("selectedUser")[0];
+    const userInfo = this.props.navigation.getParam("selectedUser")[1];
+    const currentUser = this.props.navigation.getParam("currentUser");
+    const nearbyUsers = this.props.navigation.getParam("nearbyUsers");
+    const currentUserInfo = nearbyUsers.filter(
+      user => user[0] === currentUser.uid
+    );
     const currentUsername = currentUserInfo[0][1].username;
     const interests = userInfo.interests
       ? Object.keys(userInfo.interests).reduce((outputArray, interest) => {
@@ -98,20 +100,24 @@ export default class Profile extends Component {
                 </Text>
               </View>
               {/* <View style={profileStyles.chat}> */}
-              <TouchableOpacity
-                style={profileStyles.button}
-                onPress={() => {
-                  this.props.navigation.push("Chat", {
-                    currentUserID: currentUser.uid,
-                    currentUsername,
-                    selectedUserID: userId,
-                    selectedUserUsername: userInfo.username,
-                    selectedUsername: userInfo.name
-                  });
-                }}
-              >
-                <Text>Chat with {userInfo.name}</Text>
-              </TouchableOpacity>
+              <View style={{ justifyContent: "center" }}>
+                <TouchableOpacity
+                  style={generalStyling.longButton}
+                  onPress={() => {
+                    this.props.navigation.push("Chat", {
+                      currentUserID: currentUser.uid,
+                      currentUsername,
+                      selectedUserID: userId,
+                      selectedUserUsername: userInfo.username,
+                      selectedUsername: userInfo.name
+                    });
+                  }}
+                >
+                  <Text style={generalStyling.buttonText}>
+                    {`Chat with ${userInfo.name}`}
+                  </Text>
+                </TouchableOpacity>
+              </View>
               {/* </View> */}
             </>
           </MenuWrapper>
