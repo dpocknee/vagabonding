@@ -44,13 +44,15 @@ const generalStyling = {
     marginTop: 8,
     backgroundColor: textInputBackground,
     color: textInputText,
+    paddingLeft: 5,
   },
   button: {
     marginTop: 5,
     backgroundColor: buttonBackground,
-    fontFamily: generalFont,
+    fontFamily: generalFontBold,
     padding: 10,
     width: 70,
+    justifyContent: 'center',
   },
   buttonText: {
     fontFamily: generalFontBold,

@@ -25,13 +25,7 @@ class SignUp extends Component {
 
   handleSignUp = () => {
     const {
-      name,
-      username,
-      email,
-      password,
-      museums,
-      bars,
-      restaurants,
+      name, username, email, password, museums, bars, restaurants,
     } = this.state;
 
     firebase
@@ -130,16 +124,22 @@ class SignUp extends Component {
         <View style={signUpStyles.buttons}>
           <View style={{ flex: 0.5, alignItems: 'center', justifyContent: 'center' }}>
             <View>
-              <Button title="Sign Up" onPress={this.handleSignUp} style={generalStyling.button}>
+              <Button
+                rounded
+                title="Sign Up"
+                onPress={this.handleSignUp}
+                style={generalStyling.button}
+              >
                 <Text style={generalStyling.buttonText}>Sign Up</Text>
               </Button>
             </View>
           </View>
-          <View style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{ ustifyContent: 'center', alignItems: 'center' }}>
             <Text style={generalStyling.normal}>Already Have an account?</Text>
             <View>
               <Button
                 title="Already have an account? Login"
+                rounded
                 style={generalStyling.button}
                 onPress={() => {
                   this.props.navigation.navigate('LogIn');
