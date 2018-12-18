@@ -10,13 +10,13 @@ const logo = require('../assets/Connections.png');
 
 class Loading extends Component {
   componentDidMount() {
-    Font.loadAsync({
+    return Promise.all([Font.loadAsync({
       'Thasadith-Regular': require('../assets/fonts/Thasadith/Thasadith-Regular.ttf'),
       'Thasadith-Bold': require('../assets/fonts/Thasadith/Thasadith-Bold.ttf'),
-    });
+    }),
     firebase.auth().onAuthStateChanged((user) => {
       this.props.navigation.navigate(user ? 'mainFlow' : 'SignUp');
-    });
+    })]);
   }
 
   render() {
