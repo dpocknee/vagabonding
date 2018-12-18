@@ -2,13 +2,18 @@ import React, { Component } from 'react';
 import { View, Image } from 'react-native';
 import * as firebase from 'firebase';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { LinearGradient } from 'expo';
+import { LinearGradient, Font } from 'expo';
 import LoadingStyles from '../styles/Loading.styles';
+import { colorSettings } from '../styles/Colors.styles';
 
 const logo = require('../assets/Connections.png');
 
 class Loading extends Component {
   componentDidMount() {
+    Font.loadAsync({
+      'Thasadith-Regular': require('../assets/fonts/Thasadith/Thasadith-Regular.ttf'),
+      'Thasadith-Bold': require('../assets/fonts/Thasadith/Thasadith-Bold.ttf'),
+    });
     firebase.auth().onAuthStateChanged((user) => {
       this.props.navigation.navigate(user ? 'mainFlow' : 'SignUp');
     });
@@ -17,9 +22,9 @@ class Loading extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ backgroundColor: '#1D9FBF', flex: 1 }} />
+        <View style={{ backgroundColor: colorSettings.gradientColor1, flex: 1 }} />
         <LinearGradient
-          colors={['rgba(225,225,225,225)', 'transparent']}
+          colors={colorSettings.gradientColor2}
           style={{
             position: 'absolute',
             left: 0,

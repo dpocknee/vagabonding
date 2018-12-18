@@ -1,10 +1,12 @@
-import React, { Component } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import React, { Component } from 'react';
 import { LinearGradient } from "expo";
-import { Button, Icon } from "native-base";
-import PropTypes from "prop-types";
-import MenuWrapper from "./MenuWrapper";
-import profileStyles from "../styles/Profile.styles";
+import { View, Text, TouchableOpacity } from 'react-native';
+import { Button, Icon } from 'native-base';
+import PropTypes from 'prop-types';
+import MenuWrapper from './MenuWrapper';
+import profileStyles from '../styles/Profile.styles';
+import generalStyling from '../styles/generalStyling.styles';
+import { colorSettings } from '../styles/Colors.styles';
 
 export default class Profile extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -20,19 +22,20 @@ export default class Profile extends Component {
         <Icon type="FontAwesome" name="bars" />
       </Button>
     ),
-    title: "Profile Page"
+    title: 'Profile Page',
+    headerStyle: {
+      backgroundColor: colorSettings.headerColor,
+    },
+    headerTintColor: colorSettings.headerTintColor,
   });
 
   render() {
     const { navigation } = this.props;
-    const userId = this.props.navigation.getParam("selectedUser")[0];
-    const userInfo = this.props.navigation.getParam("selectedUser")[1];
-    const currentUser = this.props.navigation.getParam("currentUser");
-    const nearbyUsers = this.props.navigation.getParam("nearbyUsers");
-    const currentUserInfo = nearbyUsers.filter(
-      user => user[0] === currentUser.uid
-    );
-
+    const userId = this.props.navigation.getParam('selectedUser')[0];
+    const userInfo = this.props.navigation.getParam('selectedUser')[1];
+    const currentUser = this.props.navigation.getParam('currentUser');
+    const nearbyUsers = this.props.navigation.getParam('nearbyUsers');
+    const currentUserInfo = nearbyUsers.filter(user => user[0] === currentUser.uid);
     const currentUsername = currentUserInfo[0][1].username;
     const interests = userInfo.interests
       ? Object.keys(userInfo.interests).reduce((outputArray, interest) => {

@@ -38,7 +38,6 @@ const sendMessage = async (message, doc) => {
   const chatRefDoc = chatsRef.doc(doc);
   const newMessage = { ...message };
   newMessage.createdAt = `${newMessage.createdAt}`;
-
   return chatRefDoc
     .update({
       messages: firebase.firestore.FieldValue.arrayUnion(newMessage),

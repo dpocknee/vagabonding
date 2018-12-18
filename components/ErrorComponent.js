@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { Button, Icon } from 'native-base';
-import colours from '../styles/Colours.styles';
+import { colorSettings } from '../styles/Colors.styles';
 import MenuWrapper from './MenuWrapper';
 
 class ErrorComponent extends Component {
@@ -20,9 +20,9 @@ class ErrorComponent extends Component {
     ),
     title: 'Error',
     headerStyle: {
-      backgroundColor: colours.header.backgroundColor,
+      backgroundColor: colorSettings.headerColor,
     },
-    headerTintColor: colours.header.color,
+    headerTintColor: colorSettings.headerTintColor,
   });
 
   state = {

@@ -4,7 +4,7 @@ import { Button, Icon } from 'native-base';
 import PropTypes from 'prop-types';
 import MenuWrapper from './MenuWrapper';
 import Chat from './Chat';
-import colours from '../styles/Colours.styles';
+import { colorSettings } from '../styles/Colors.styles';
 
 export default class ChatScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -21,13 +21,13 @@ export default class ChatScreen extends Component {
         <Icon type="FontAwesome" name="bars" />
       </Button>
     ),
-    title: `Chat with ${navigation.getParam(
-      'selectedUsername',
-    )} (${navigation.getParam('selectedUserUsername')})`,
+    title: `Chat with ${navigation.getParam('selectedUsername')} (${navigation.getParam(
+      'selectedUserUsername',
+    )})`,
     headerStyle: {
-      backgroundColor: colours.header.backgroundColor,
+      backgroundColor: colorSettings.headerColor,
     },
-    headerTintColor: colours.header.color,
+    headerTintColor: colorSettings.headerTintColor,
   });
 
   state = {
@@ -54,11 +54,7 @@ export default class ChatScreen extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <MenuWrapper
-          navigation={navigation}
-          currentPage="chat"
-          buttonState={this.state.button}
-        >
+        <MenuWrapper navigation={navigation} currentPage="chat" buttonState={this.state.button}>
           <>
             <KeyboardAvoidingView
               behavior={Platform.select({ android: 'padding', ios: undefined })}

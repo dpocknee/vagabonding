@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
 import { Button, Icon } from 'native-base';
 import * as Expo from 'expo';
 import PropTypes from 'prop-types';
@@ -7,6 +7,8 @@ import * as firebase from 'firebase';
 import Users from './Users';
 import MenuWrapper from './MenuWrapper';
 import LoadingComponent from './LoadingComponent';
+
+import MapStyle from '../styles/MapScreen.styles';
 
 const {
   getUserLocation,
@@ -37,6 +39,7 @@ export default class MapScreen extends Component {
           navigation.push('Map');
         }}
         width={50}
+        style={{ marginRight: Platform.select({ ios: 15, android: 0 }) }}
       >
         <Icon type="FontAwesome" name="refresh" />
       </Button>
@@ -47,7 +50,9 @@ export default class MapScreen extends Component {
     locationAndError: null,
     button: false,
     dev: false,
-    nearbyUsers: [], // special dev variable for computer emulators
+    nearbyUsers: [],
+    userRadius: null,
+    // city: null, // special dev variable for computer emulators
     // which can't use GPS.
   };
 
@@ -94,6 +99,12 @@ export default class MapScreen extends Component {
         }
       }
     });
+    // this.state.locationAndError
+    //   && Expo.Location.reverseGeocodeAsync(this.state.locationAndError.location).then((city) => {
+    //     this.setState({
+    //       city,
+    //     });
+    //   });
   }
 
   buttonChange = () => {
@@ -105,7 +116,7 @@ export default class MapScreen extends Component {
 
   render() {
     const {
-      locationAndError, nearbyUsers, currentUser, userRadius,
+      locationAndError, nearbyUsers, currentUser, userRadius, city,
     } = this.state;
     const { navigation } = this.props;
     if (!locationAndError) {
@@ -114,9 +125,9 @@ export default class MapScreen extends Component {
     return (
       <View style={{ flex: 1 }}>
         <MenuWrapper navigation={navigation} currentPage="map" buttonState={this.state.button}>
-          <>
+          <View style={nearbyUsers.length >= 1 ? { flex: 1.8 } : { flex: 4 }}>
             <Expo.MapView
-              style={nearbyUsers.length >= 1 ? { flex: 1.8 } : { flex: 4 }}
+              style={{ flex: 1 }}
               provider={Expo.MapView.PROVIDER_GOOGLE}
               initialRegion={{
                 latitude: locationAndError.location.latitude,
@@ -137,9 +148,11 @@ export default class MapScreen extends Component {
                 style={{ opacity: 0.5 }}
               />
             </Expo.MapView>
-
+          </View>
+          <View style={MapStyle.users}>
             <Users
-              style={{ flex: 1 }}
+              // style={MapStyle.users}
+              city={city}
               currentUser={currentUser}
               users={nearbyUsers}
               navigation={navigation}
@@ -151,7 +164,7 @@ export default class MapScreen extends Component {
                 });
               }}
             />
-          </>
+          </View>
         </MenuWrapper>
       </View>
     );
