@@ -116,7 +116,7 @@ export default class MapScreen extends Component {
         <MenuWrapper navigation={navigation} currentPage="map" buttonState={this.state.button}>
           <>
             <Expo.MapView
-              style={{ height: 500 }}
+              style={nearbyUsers.length >= 1 ? { flex: 1.8 } : { flex: 4 }}
               provider={Expo.MapView.PROVIDER_GOOGLE}
               initialRegion={{
                 latitude: locationAndError.location.latitude,
