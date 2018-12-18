@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { ScrollView, Text, TouchableOpacity } from 'react-native';
-import { getTheme } from 'react-native-material-kit';
 import firebase from 'firebase';
+import { View } from 'native-base';
 import LoadingComponent from './LoadingComponent';
+import colours from '../styles/Colours.styles';
 
 const { getChatPartnerNames, chatsRef } = require('../Functionality/chatFunctions');
 const { getCurrentUserInfo } = require('../Functionality/utilityFunctions');
-
-const theme = getTheme();
 
 class Inbox extends Component {
   state = {
@@ -31,6 +30,11 @@ class Inbox extends Component {
               const { currentUserID } = this.state;
               const allUserChats = chatsRef.where('usersArr', 'array-contains', `${currentUserID}`);
               allUserChats.onSnapshot((querySnapshot) => {
+                if (querySnapshot.empty === true) {
+                  this.setState({
+                    isLoading: false,
+                  });
+                }
                 querySnapshot.docChanges().forEach((change) => {
                   if (change.type === 'added') {
                     const chatObj = {};
@@ -92,11 +96,29 @@ class Inbox extends Component {
     if (isLoading) {
       return <LoadingComponent />;
     }
+    if (chats.length === 0) {
+      return (
+        <View style={{ backgroundColor: colours.cards.color, flex: 1, justifyContent: 'center' }}>
+          <Text style={{
+            fontSize: 19, alignSelf: 'center', color: 'white', fontWeight: 'bold',
+          }}
+          >
+There are no conversations to display
+          </Text>
+        </View>
+      );
+    }
     return (
-      <ScrollView>
+      <ScrollView style={{ flex: 1, backgroundColor: colours.cards.color }}>
         {chats.map(chat => (
           <TouchableOpacity
-            style={theme.cardStyle}
+            style={{
+              margin: 9,
+              borderColor: 'black',
+              borderWidth: 2,
+              backgroundColor: 'white',
+              padding: 10,
+            }}
             key={`inbox${chat.otherUser}`}
             onPress={() => allNav({
               currentUserID,
@@ -108,11 +130,11 @@ class Inbox extends Component {
             }
           >
             <>
-              <Text style={theme.cardActionStyle}>
-                {`Conversation with: ${chat.otherUserName} (${chat.otherUserUsername})`}
+              <Text style={{ fontSize: 19, margin: 3 }}>
+                {`Conversation with ${chat.otherUserName} (${chat.otherUserUsername})`}
                 {' '}
               </Text>
-              <Text style={theme.cardContentStyle}>{`${chat.messages.length} messages`}</Text>
+              <Text style={{ fontSize: 16, margin: 3 }}>{`${chat.messages.length} messages`}</Text>
             </>
           </TouchableOpacity>
         ))}

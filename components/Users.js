@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Text, View, ScrollView, Button, TouchableOpacity, Image,
+  Text, View, ScrollView, TouchableOpacity, Image,
 } from 'react-native';
 import { getTheme } from 'react-native-material-kit';
 import PropTypes from 'prop-types';
@@ -15,8 +15,6 @@ const Users = (props) => {
   const {
     users, onSelectUser, currentUser, navigation, city,
   } = props;
-  // console.log(city);
-
   const _refresh = () => {
     const refreshPromise = new Promise((resolve) => {
       setTimeout(() => {

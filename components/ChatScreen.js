@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, KeyboardAvoidingView } from 'react-native';
+import { View, KeyboardAvoidingView, Platform } from 'react-native';
 import { Button, Icon } from 'native-base';
 import PropTypes from 'prop-types';
 import MenuWrapper from './MenuWrapper';
@@ -61,9 +61,9 @@ export default class ChatScreen extends Component {
         >
           <>
             <KeyboardAvoidingView
-              behavior="padding"
+              behavior={Platform.select({ android: 'padding', ios: undefined })}
               style={{ flex: 1 }}
-              keyboardVerticalOffset={30}
+              keyboardVerticalOffset={75}
             >
               <Chat
                 currentUserID={currentUserID}

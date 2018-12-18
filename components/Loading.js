@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import { View, Image } from 'react-native';
 import * as firebase from 'firebase';
+import { Font } from 'expo';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { LinearGradient } from 'expo';
 import LoadingStyles from '../styles/Loading.styles';
-
 const logo = require('../assets/Connections.png');
 
 class Loading extends Component {
   componentDidMount() {
+    Font.loadAsync({
+      'Thasadith-Regular': require('../assets/fonts/Thasadith/Thasadith-Regular.ttf'),
+      'Thasadith-Bold': require('../assets/fonts/Thasadith/Thasadith-Bold.ttf'),
+    });
     firebase.auth().onAuthStateChanged((user) => {
       this.props.navigation.navigate(user ? 'mainFlow' : 'SignUp');
     });
