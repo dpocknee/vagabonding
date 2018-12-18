@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ScrollView, Text, TouchableOpacity } from 'react-native';
 import { getTheme } from 'react-native-material-kit';
 import firebase from 'firebase';
-import Loading from './Loading';
+import LoadingComponent from './LoadingComponent';
 
 const { getChatPartnerNames, chatsRef } = require('../Functionality/chatFunctions');
 const { getCurrentUserInfo } = require('../Functionality/utilityFunctions');
@@ -90,7 +90,7 @@ class Inbox extends Component {
     } = this.state;
     const { allNav } = this.props;
     if (isLoading) {
-      return <Loading />;
+      return <LoadingComponent />;
     }
     return (
       <ScrollView>
