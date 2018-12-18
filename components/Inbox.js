@@ -17,6 +17,7 @@ class Inbox extends Component {
     chats: [],
     currentUserID: null,
     currentUsername: null,
+    isLoading: true,
   };
 
   componentDidMount() {
@@ -53,6 +54,7 @@ class Inbox extends Component {
                         };
                         this.setState(previousState => ({
                           chats: [...previousState.chats, compObj],
+                          isLoading: false,
                         }));
                       },
                     );
@@ -76,6 +78,7 @@ class Inbox extends Component {
                         );
                         this.setState({
                           chats: [...oldChats, compObj],
+                          isLoading: false,
                         });
                       },
                     );
@@ -93,9 +96,9 @@ class Inbox extends Component {
   }
 
   render() {
-    const { chats, currentUserID, currentUsername } = this.state;
+    const { chats, currentUserID, currentUsername, isLoading } = this.state;
     const { allNav } = this.props;
-    if (!chats) {
+    if (isLoading) {
       return <Loading />;
     }
     return (
