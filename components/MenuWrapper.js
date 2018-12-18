@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Drawer, Button, Icon } from 'native-base';
-import PropTypes from 'prop-types';
+import { Drawer } from 'native-base';
 import Sidebar from './Sidebar';
-import drawerStyles from '../styles/Hamburger.styles';
+import { drawerStyles } from '../styles/Hamburger.styles';
 
 export default class MenuWrapper extends Component {
   state = {
@@ -14,6 +13,12 @@ export default class MenuWrapper extends Component {
     navigation.setParams({ drawerStatus: this.drawerStatus });
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.buttonState !== prevProps.buttonState) {
+      this.drawerStatus();
+    }
+  }
+
   drawerStatus = () => {
     this.setState((state) => {
       const inverseDrawer = !state.isDrawerOpen;
@@ -23,7 +28,7 @@ export default class MenuWrapper extends Component {
 
   allNav = (screen) => {
     const { navigation } = this.props;
-    navigation.navigate(screen);
+    navigation.push(screen);
   };
 
   render() {
@@ -31,34 +36,33 @@ export default class MenuWrapper extends Component {
       this.drawer._root.close();
     };
 
-    const openDrawer = () => {
-      this.drawer._root.open();
-    };
-
-    const { children } = this.props;
+    const { children, currentPage } = this.props;
     const { isDrawerOpen } = this.state;
 
     return (
-      <Drawer
-        type="overlay"
-        styles={drawerStyles}
-        side="top"
-        open={isDrawerOpen}
-        tapToClose
-        ref={(ref) => {
-          this.drawer = ref;
-        }}
-        acceptTap
-        content={(
-          <Sidebar
-            allNav={this.allNav}
-            closeDrawer={closeDrawer}
-            drawerStatus={this.drawerStatus}
-          />
+      <>
+        <Drawer
+          type="overlay"
+          styles={drawerStyles}
+          side="top"
+          open={isDrawerOpen}
+          tapToClose
+          ref={(ref) => {
+            this.drawer = ref;
+          }}
+          acceptTap
+          content={(
+            <Sidebar
+              allNav={this.allNav}
+              closeDrawer={closeDrawer}
+              drawerStatus={this.drawerStatus}
+              currentPage={currentPage}
+            />
 )}
-      >
-        {children}
-      </Drawer>
+        >
+          {children}
+        </Drawer>
+      </>
     );
   }
 }

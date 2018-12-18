@@ -6,6 +6,8 @@ import { getTheme } from 'react-native-material-kit';
 import PropTypes from 'prop-types';
 
 import travel from '../images/travel2.jpg';
+import PTRView from 'react-native-pull-to-refresh';
+import LoadingComponent from './LoadingComponent';
 
 const theme = getTheme();
 
@@ -13,8 +15,19 @@ const Users = (props) => {
   const {
     users, onSelectUser, currentUser, location,
   } = props;
-
+   const _refresh = () => {
+    const refreshPromise = new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 2000);
+    });
+    return refreshPromise.then(() => navigation.push('Map'));
+  };
+  if (!users) {
+    return <LoadingComponent />;
+  }
   return users.length >= 1 ? (
+    <PTRView onRefresh={_refresh}>
     <ScrollView style={[{ flex: 1 }, { backgroundColor: '#F56463' }, { borderRadius: 5 }]}>
       {/* welcome card start */}
       <Image source={travel} style={[{ resizeMode: 'contain' }]} />
@@ -52,7 +65,9 @@ m away
         ),
       )}
     </ScrollView>
+    </PTRView>
   ) : (
+        <PTRView onRefresh={_refresh}>
     <ScrollView style={[{ flex: 1 }, { backgroundColor: '#F56463' }, { borderColor: 'black' }]}>
       <View
         style={[
@@ -70,11 +85,11 @@ m away
         </Text>
       </View>
     </ScrollView>
+    </PTRView>
   );
 };
 
 Users.propTypes = {
-  navigation: { navigate: PropTypes.object.isRequired },
   users: PropTypes.array.isRequired,
   onSelectUser: PropTypes.func.isRequired,
   currentUser: PropTypes.object.isRequired,

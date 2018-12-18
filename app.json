@@ -11,7 +11,7 @@
     "splash": {
       "image": "./assets/Connections.png",
       "resizeMode": "contain",
-      "backgroundColor": "#9CB660"
+      "backgroundColor": "#1D9FBF"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

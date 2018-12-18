@@ -1,19 +1,19 @@
 import React from 'react';
-import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
+import {
+  createSwitchNavigator,
+  createStackNavigator,
+  createAppContainer,
+} from 'react-navigation';
 import 'firebase/firestore';
 import AuthLoading from './components/AuthLoading';
 import Loading from './components/Loading';
 import SignUp from './components/SignUp';
 import Login from './components/LogIn';
 import ChatScreen from './components/ChatScreen';
-//  *****FOR TEST PURPOSES ONLY*****
-// import HomePage from './components/HomePage';
-// import Chat from './components/Chat';
-//  *****FOR TEST PURPOSES ONLY*****
 import MapScreen from './components/MapScreen';
 import InboxScreen from './components/InboxScreen';
 import ProfileScreen from './components/ProfileScreen';
-// import MainWrapper from './components/MainWrapper';
+import ErrorComponent from './components/ErrorComponent';
 
 const loginFlow = createSwitchNavigator(
   {
@@ -47,6 +47,9 @@ const mainFlow = createStackNavigator(
     Profile: {
       screen: ProfileScreen,
     },
+    Error: {
+      screen: ErrorComponent,
+    },
   },
   {
     initialRouteName: 'Map',
@@ -67,9 +70,7 @@ const AppContainer = createAppContainer(appNavigation);
 // Note: Entire navigation is in this component
 // if navigation breaks may be to do with this component
 
-export default class App extends React.Component {
-  render() {
-    return <AppContainer />;
-  }
-}
+const App = () => <AppContainer />;
+
+export default App;
 // https://medium.com/@jan.hesters/building-a-react-native-app-with-complex-navigation-using-react-navigation-85a479308f52

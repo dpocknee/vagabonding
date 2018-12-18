@@ -20,5 +20,21 @@ const drawerStyles = {
   // Check here for native-base drawer styles: https://github.com/root-two/react-native-drawer
   // The native-base drawer component uses the same props as react-native-drawer.
 };
+const sidebarStyles = {
+  container: {
+    backgroundColor: 'white',
+    opacity: 0.8,
+    width: 150,
+    flex: 0.5,
+    paddingTop: 20,
+  },
+  content: {
+    paddingTop: 0,
+  },
+  contentMap: {
+    paddingTop: 50,
+  },
+  menuTextStyle: { left: 5, color: 'darkblue' },
+};
 
-export default drawerStyles;
+export { sidebarStyles, drawerStyles };
