@@ -8,7 +8,6 @@ import * as firebase from 'firebase';
 import Users from './Users';
 import MenuWrapper from './MenuWrapper';
 import MapScreenStyles from '../styles/MapScreen.styles';
-// import mockUsers from '../mockUsers';
 
 const { getUserLocation, filterUsersByDistance } = require('../Functionality/utilityFunctions');
 
@@ -116,6 +115,7 @@ export default class MapScreen extends Component {
               style={{ flex: 1 }}
               currentUser={currentUser}
               users={nearbyUsers}
+              location={locationAndError.location}
               onSelectUser={(user) => {
                 navigation.navigate('Profile', { selectedUser: user, currentUser, nearbyUsers });
               }}
