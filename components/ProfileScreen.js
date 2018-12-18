@@ -5,7 +5,7 @@ import { Button, Icon } from "native-base";
 import PropTypes from "prop-types";
 import MenuWrapper from "./MenuWrapper";
 import profileStyles from "../styles/Profile.styles";
-import generalStyling from "../styles/generalStyling.styles";
+import { generalStyling } from "../styles/generalStyling.styles";
 import { colorSettings } from "../styles/Colors.styles";
 
 export default class Profile extends Component {
@@ -103,24 +103,29 @@ export default class Profile extends Component {
                   </Text>
                 </Text>
               </View>
-
-              <TouchableOpacity
-                style={profileStyles.button}
-                onPress={() => {
-                  this.props.navigation.push("Chat", {
-                    currentUserID: currentUser.uid,
-                    currentUsername,
-                    selectedUserID: userId,
-                    selectedUserUsername: userInfo.username,
-                    selectedUsername: userInfo.name
-                  });
-                }}
-              >
-                <Text>{`Chat with ${userInfo.name}`}</Text>
-              </TouchableOpacity>
-            </LinearGradient>
-          </>
-        </MenuWrapper>
+              {/* <View style={profileStyles.chat}> */}
+              <View style={{ justifyContent: "center" }}>
+                <TouchableOpacity
+                  style={generalStyling.longButton}
+                  onPress={() => {
+                    this.props.navigation.push("Chat", {
+                      currentUserID: currentUser.uid,
+                      currentUsername,
+                      selectedUserID: userId,
+                      selectedUserUsername: userInfo.username,
+                      selectedUsername: userInfo.name
+                    });
+                  }}
+                >
+                  <Text style={generalStyling.buttonText}>
+                    {`Chat with ${userInfo.name}`}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              {/* </View> */}
+            </>
+          </MenuWrapper>
+        </LinearGradient>
       </View>
     );
   }
