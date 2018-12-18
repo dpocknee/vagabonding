@@ -3,7 +3,7 @@ import { ScrollView, Text, TouchableOpacity } from 'react-native';
 import firebase from 'firebase';
 import { View } from 'native-base';
 import LoadingComponent from './LoadingComponent';
-import { colorSettings } from '../styles/Colors.styles';
+import { tertiaryColor } from '../styles/Colors.styles';
 
 const { getChatPartnerNames, chatsRef } = require('../Functionality/chatFunctions');
 const { getCurrentUserInfo } = require('../Functionality/utilityFunctions');
@@ -98,9 +98,7 @@ class Inbox extends Component {
     }
     if (chats.length === 0) {
       return (
-        <View
-          style={{ backgroundColor: colorSettings.inboxMessage, flex: 1, justifyContent: 'center' }}
-        >
+        <View style={{ backgroundColor: tertiaryColor, flex: 1, justifyContent: 'center' }}>
           <Text
             style={{
               fontSize: 19,
@@ -115,7 +113,7 @@ class Inbox extends Component {
       );
     }
     return (
-      <ScrollView style={{ flex: 1, backgroundColor: colorSettings.inboxMessageText }}>
+      <ScrollView style={{ flex: 1, backgroundColor: tertiaryColor }}>
         {chats.map(chat => (
           <TouchableOpacity
             style={{

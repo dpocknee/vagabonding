@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { Button, Icon } from 'native-base';
-import { colorSettings } from '../styles/Colors.styles';
+import { colorSettings, tertiaryColor } from '../styles/Colors.styles';
 import MenuWrapper from './MenuWrapper';
 
 class ErrorComponent extends Component {
@@ -46,7 +46,7 @@ class ErrorComponent extends Component {
     return (
       <View
         style={{
-          backgroundColor: colours.cards.color,
+          backgroundColor: tertiaryColor,
           flex: 1,
           justifyContent: 'center',
           paddingTop: 100,

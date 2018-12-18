@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet, Text, TextInput, View,
-} from 'react-native';
+import { Text, TextInput, View } from 'react-native';
 import { H1, H2, Button } from 'native-base';
 import * as firebase from 'firebase';
 import ErrorComponent from './ErrorComponent';
