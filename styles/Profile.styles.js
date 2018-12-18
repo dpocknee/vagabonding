@@ -1,37 +1,51 @@
 const profileStyles = {
   wholePage: {
     flex: 1,
-    backgroundColor: "#1D9FBF"
+    backgroundColor: "#1D9FBF",
+    justifyContent: "center"
   },
   profileBox: {
     marginTop: 30,
     paddingTop: 50,
     paddingLeft: 50,
-    // backgroundColor: "#FFFFFF",
     width: "100%",
     padding: 30
   },
   username: {
     fontWeight: "bold",
+    alignSelf: "center",
     fontSize: 30,
     paddingTop: 10
   },
   info: {
-    fontWeight: "bold",
-    fontSize: 15,
-    paddingTop: 10
+    fontSize: 20,
+    alignSelf: "center",
+    width: "80%",
+    margin: 10,
+    height: 250,
+    padding: 10,
+    borderWidth: 4
   },
+
+  catInfo: {
+    fontWeight: "bold"
+  },
+
   chat: {
     flex: 1,
     width: 200,
-    // alignItems: "center",
     paddingLeft: 40,
-    paddingTop: 20
+    paddingTop: 50
   },
   button: {
-    // alignItems: "center",
     backgroundColor: "#F56463",
-    padding: 10
+    padding: 10,
+    marginTop: 60,
+    alignSelf: "center",
+    justifyContent: "center",
+    width: "50%",
+    borderRadius: 18,
+    textAlign: "center"
   }
 };
 
