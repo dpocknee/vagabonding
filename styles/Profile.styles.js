@@ -40,7 +40,7 @@ const profileStyles = {
   button: {
     backgroundColor: "#F56463",
     padding: 10,
-    marginTop: 60,
+    // marginTop: 60,
     alignSelf: "center",
     justifyContent: "center",
     width: "50%",
