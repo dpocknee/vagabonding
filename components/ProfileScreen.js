@@ -4,8 +4,8 @@ import { Button, Icon } from 'native-base';
 import PropTypes from 'prop-types';
 import MenuWrapper from './MenuWrapper';
 import profileStyles from '../styles/Profile.styles';
+import generalStyling from '../styles/generalStyling.styles';
 import colours from '../styles/Colours.styles';
-
 
 export default class Profile extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -66,12 +66,8 @@ export default class Profile extends Component {
       <View style={{ flex: 1 }}>
         <MenuWrapper navigation={navigation} currentPage="profile" buttonState={this.state.button}>
           <>
-            <View style={profileStyles.profileText}>
-              <Icon
-                type="FontAwesome"
-                name="user-circle"
-                style={{ fontSize: 40 }}
-              />
+            <View style={generalStyling}>
+              <Icon type="FontAwesome" name="user-circle" style={{ fontSize: 40 }} />
               <Text style={profileStyles.username}>{userInfo.username}</Text>
               <Text style={profileStyles.info}>
                 Real name:
