@@ -1,8 +1,6 @@
 import React from 'react';
-import * as Expo from 'expo';
 import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 import 'firebase/firestore';
-import { Button, Icon } from 'native-base';
 import AuthLoading from './components/AuthLoading';
 import Loading from './components/Loading';
 import SignUp from './components/SignUp';
