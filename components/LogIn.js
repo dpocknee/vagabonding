@@ -79,7 +79,7 @@ class Login extends Component {
               <Button
                 rounded
                 title="Don't have an account? Sign up"
-                style={generalStyling.button}
+                style={generalStyling.longButton}
                 onPress={() => {
                   this.props.navigation.navigate('SignUp');
                 }}

@@ -14,6 +14,7 @@ const LoadingStyles = StyleSheet.create({
     height: 175,
   },
   spinner: {
+    padding: 10,
     color: colorSettings.loadingText,
   },
 });

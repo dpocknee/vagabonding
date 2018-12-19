@@ -25,14 +25,14 @@ class Chat extends Component {
           });
         });
       })
-      .catch(() => {
-        this.props.navigation.navigate('Error');
+      .catch((err) => {
+        this.props.navigation.navigate('Error', { error: err });
       });
   }
 
   onSend(messages = []) {
-    sendMessage(messages[0], this.state.doc).catch(() => {
-      this.props.navigation.navigate('Error');
+    sendMessage(messages[0], this.state.doc).catch((err) => {
+      this.props.navigation.navigate('Error', { error: err });
     });
   }
 
@@ -41,15 +41,18 @@ class Chat extends Component {
       {...props}
       textStyle={{
         left: {
-          color: 'white',
+          color: colorSettings.chatThemText,
+        },
+        right: {
+          color: colorSettings.chatYouText,
         },
       }}
       wrapperStyle={{
         left: {
-          backgroundColor: colorSettings.chatThemColor,
+          backgroundColor: colorSettings.chatThemBubble,
         },
         right: {
-          backgroundColor: colorSettings.chatYouColor,
+          backgroundColor: colorSettings.chatYouBubble,
         },
       }}
     />

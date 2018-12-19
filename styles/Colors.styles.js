@@ -1,72 +1,90 @@
-const primaryColor = '#1D9FBF';
-const secondaryColor = '#16324F';
-const tertiaryColor = '#F56463';
+import hexRgb from 'hex-rgb';
+
+// // ORIGINAL
+// const primaryLight = '#1D9FBF';
+// const primaryDark = '#16324F';
+// const complementary = '#F56463';
+
+const primaryLightest = '#FFFFFF';
+const primaryLight = '#D2F6FE';
+const primaryMid = '#1D9FBF'; // '#39D9FF';
+const primaryDark = '#0183A2';
+const primaryDarkest = '#014555';
+
+const primaryLightHex = hexRgb(primaryLight, { format: 'array' });
+const primaryMidHex = hexRgb(primaryMid, { format: 'array' });
+
+const secondaryMid = '#F56463'; // '#F2C04E';
+const secondaryLight = 'FFF1D2';
 
 const colorSettings = {
   // ----- General Colors ------
-  mainBackground: primaryColor,
+  mainBackground: primaryLight,
   // General Text
-  mainText: secondaryColor,
-  darkText: secondaryColor,
-  lightText: 'white',
+  mainText: primaryDarkest,
+  lightText: primaryLightest,
   // Buttons
-  buttonText: 'white',
-  buttonBackground: secondaryColor,
+  buttonText: primaryLightest,
+  buttonBackground: primaryDarkest,
   // Gradient
-  gradientColor1: primaryColor,
+  gradientColor1: primaryMid,
   gradientColor2: ['rgba(225,225,225,225)', 'transparent'],
   // Headers
-  headerColor: primaryColor,
-  headerTintColor: secondaryColor,
-
+  headerColor: primaryLight,
+  headerTintColor: primaryDark,
   // ----- Menu -----
   // Hamburger Menu
-  hamburgerText: primaryColor,
-  menuOverlay: primaryColor,
-  iconColor: primaryColor,
-
+  hamburgerText: primaryMid,
+  menuOverlay: primaryMid,
+  iconColor: primaryMid,
   // ----- Loading Spinner ---
   // Loading Spinner
-  loadingText: primaryColor,
-
+  loadingText: primaryDarkest,
   // ----- Sign Up and Login -----
   // Sign Up
-  signUpBackground: this.mainBackground,
-  signUpText: this.darkText,
+  signUpBackground: primaryLight,
+  signUpText: primaryDarkest,
   // Login
-  loginBackground: this.mainBackground,
-  loginText: this.darkText,
+  loginBackground: primaryLight,
+  loginText: primaryDarkest,
   // Checkbox
-  checkboxText: this.darkText,
-  checkboxBackground: this.primaryColor,
+  checkboxText: primaryDarkest,
+  checkboxBackground: primaryLight,
   // Text Input
-  textInputBackground: 'white',
-  textInputText: this.primaryColor,
-  textInputPlaceholder: this.lightText,
-  textInputBorder: this.secondaryColor,
-
+  textInputBackground: primaryLightest,
+  textInputText: primaryDarkest,
+  textInputPlaceholder: primaryLight,
+  textInputBorder: primaryDark,
   // ------ Map Screen Components -----
   // Map
-  mapPinColor: primaryColor,
-  mapCircleFill: 'rgba(204, 210, 192, 0.5)',
+  mapPinColor: primaryMid,
+  mapCircleFill: `rgba(${primaryLightHex[0]}, ${primaryLightHex[1]}, ${primaryLightHex[2]}, 0.5)`,
+
   // Users
-  usersBackground: 'rgba(29, 159, 191, 0.5)',
-  usersTitleText: this.lightText,
-  usersTitleBorder: this.lightText,
-  usersCardBackground: primaryColor,
-  usersCardBorder: primaryColor,
-  usersCardAction: secondaryColor,
-  usersCardContent: 'rgba(255, 255, 255, 0.9)',
+  usersBackground: primaryLightest,
+  usersTitleText: primaryDarkest,
+  usersTitleBorder: primaryMid,
+  usersCardBackground: `rgba(${primaryMidHex[0]}, ${primaryMidHex[1]}, ${primaryMidHex[2]}, 0.5)`,
+  usersCardBorder: primaryLightest,
+  usersCardAction: primaryDarkest,
+  usersCardContent: primaryDark,
   // ------ Inbox -----
-  inboxMessageCard: tertiaryColor,
-  inboxMessageText: this.lightText,
-  inboxBackground: this.tertiaryColor,
+  inboxMessageCard: primaryLightest,
+  inboxMessageText: primaryLight,
+  inboxBackground: secondaryLight,
+  inboxCardText: primaryDarkest,
+  inboxCardBorder: primaryMid,
+  inboxCardBackground: primaryLightest,
+  inboxNoMessages: primaryDarkest,
   // --- Chat -----
   // Chat Bubbles
-  chatYouColor: primaryColor,
-  chatThemColor: tertiaryColor,
+  chatYouBubble: primaryDark,
+  chatYouText: primaryLightest,
+  chatThemBubble: secondaryMid,
+  chatThemText: primaryLightest,
+  // --- Errors ---
+  errorBackground: secondaryMid,
+  errorText: secondaryMid,
 };
 
-export {
-  primaryColor, secondaryColor, tertiaryColor, colorSettings,
-};
+export { colorSettings, primaryMid };
