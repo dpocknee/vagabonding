@@ -13,6 +13,8 @@ const profileStyles = {
     flex: 2,
   },
   name: {
+  },
+  username: {
     fontWeight: 'bold',
     alignSelf: 'center',
     fontSize: 30,
@@ -34,6 +36,7 @@ const profileStyles = {
 
   catInfo: {
     fontWeight: 'bold',
+
     padding: 5,
   },
 
@@ -46,7 +49,6 @@ const profileStyles = {
   button: {
     backgroundColor: '#F56463',
     padding: 10,
-    // marginTop: 60,
     alignSelf: 'center',
     justifyContent: 'center',
     width: '50%',

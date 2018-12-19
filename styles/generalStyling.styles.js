@@ -114,7 +114,7 @@ const generalStyling = {
   },
 };
 
-export { generalFont, generalStyling };
+export { generalFont, generalFontBold, generalStyling };
 
 // Valid keys: [
 //   "display",

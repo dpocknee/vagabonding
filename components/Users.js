@@ -6,6 +6,8 @@ import { getTheme } from 'react-native-material-kit';
 import PropTypes from 'prop-types';
 import PTRView from 'react-native-pull-to-refresh';
 import LoadingComponent from './LoadingComponent';
+import { colorSettings } from '../styles/Colors.styles';
+import cardStyles from '../styles/Users.styles';
 
 const theme = getTheme();
 
@@ -26,48 +28,20 @@ const Users = (props) => {
   }
   return users.length >= 2 ? (
     <PTRView onRefresh={_refresh}>
-      <ScrollView
-        style={[{ flex: 1 }, { backgroundColor: 'rgba(225, 225, 225)' }, { borderRadius: 5 }]}
-        // rgba(245, 100, 99, 0.3)'
-      >
-        {/* welcome card start */}
-        {/* <Image source={travel} style={[{ resizeMode: 'contain' }]} /> */}
-        <Text
-          style={[
-            { fontSize: 15 },
-            { textAlign: 'center' },
-            { backgroundColor: 'transparent' },
-            { margin: 0 },
-            { borderColor: '#FFFFFF' },
-            { color: 'black' },
-            { padding: 5 },
-            { paddingBottom: 10 },
-            { marginTop: 2.5 },
-          ]}
-        >
-          {`Scroll down to see users nearby in ${city}`}
-        </Text>
+      <ScrollView style={cardStyles.scrollView}>
+        <Text style={cardStyles.header}>{`Scroll down to see users nearby in ${city}`}</Text>
         {users.map(
           user => user[0] !== currentUser.uid && (
           <TouchableOpacity
             onPress={() => onSelectUser(user)}
-            style={[
-              theme.cardStyle,
-              { backgroundColor: 'rgba(29, 159, 191, 0.7)' },
-              { marginRight: 5 },
-              { marginLeft: 5 },
-              { marginTop: 5 },
-              { marginBottom: 5 },
-              { borderRadius: 5 },
-              { borderColor: 'rgba(29, 159, 191, 0.7)' },
-            ]}
+            style={cardStyles.opacity}
             key={user[0]}
           >
-            <Text style={[theme.cardActionStyle, { color: '#16324F' }, { fontSize: 22 }]}>
+            <Text style={[theme.cardActionStyle, ...cardStyles.cardActionStyle]}>
               {user[1].name}
               {' '}
             </Text>
-            <Text style={[theme.cardContentStyle, { color: 'rgba(255, 255, 255, 0.9)' }]}>
+            <Text style={[theme.cardContentStyle, ...cardStyles.cardContentStyle]}>
               {user[1].distance === 0 ? 'Less than 100' : user[1].distance}
 m away
             </Text>
@@ -77,19 +51,21 @@ m away
       </ScrollView>
     </PTRView>
   ) : (
-    <PTRView onRefresh={_refresh} style={{ backgroundColor: '#1D9FBF' }}>
-      <View style={[{ flex: 1 }, { backgroundColor: '#1D9FBF' }]}>
+    <PTRView onRefresh={_refresh} style={{ backgroundColor: colorSettings.usersBackground }}>
+      <View style={[{ flex: 1 }, { backgroundColor: colorSettings.usersBackground }]}>
         <View
           style={[
             theme.cardStyle,
             { padding: 30 },
-            { backgroundColor: '#1D9FBF' },
-            { borderColor: '#1D9FBF' },
+            { backgroundColor: colorSettings.usersTitleText },
+            { borderColor: colorSettings.usersTitleBorder },
             { borderRadius: 2 },
             { paddingTop: 50 },
           ]}
         >
-          <Text style={[{ textAlign: 'center' }, { color: 'white' }, { fontSize: 18 }]}>
+          <Text
+            style={[{ textAlign: 'center' }, { color: colorSettings.lightText }, { fontSize: 18 }]}
+          >
             There are no nearby users
           </Text>
         </View>

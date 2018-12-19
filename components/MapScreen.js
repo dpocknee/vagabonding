@@ -8,7 +8,10 @@ import Users from './Users';
 import MenuWrapper from './MenuWrapper';
 import LoadingComponent from './LoadingComponent';
 
+
 import MapStyle from '../styles/MapScreen.styles';
+import { colorSettings } from '../styles/Colors.styles';
+import { iconStyles } from '../styles/Hamburger.styles';
 
 const {
   getUserLocation,
@@ -28,7 +31,7 @@ export default class MapScreen extends Component {
         }}
         width={50}
       >
-        <Icon type="FontAwesome" name="bars" />
+        <Icon type="FontAwesome" name="bars" style={iconStyles} />
       </Button>
     ),
     headerRight: (
@@ -41,7 +44,7 @@ export default class MapScreen extends Component {
         width={50}
         style={{ marginRight: Platform.select({ ios: 15, android: 0 }) }}
       >
-        <Icon type="FontAwesome" name="refresh" />
+        <Icon type="FontAwesome" name="refresh" style={iconStyles} />
       </Button>
     ),
   });
@@ -98,13 +101,13 @@ export default class MapScreen extends Component {
                       });
                     });
                   })
-                  .catch(() => {
-                    this.props.navigation.navigate('Error');
+                  .catch((err) => {
+                    this.props.navigation.navigate('Error', { error: err });
                   });
               },
             );
-          }).catch(() => {
-            this.props.navigation.navigate('Error');
+          }).catch((err) => {
+            this.props.navigation.navigate('Error', { error: err });
           });
         }
       }
@@ -143,13 +146,12 @@ export default class MapScreen extends Component {
               <Expo.MapView.Marker
                 coordinate={locationAndError.location}
                 title="you are here: "
-                pinColor="blue"
+                pinColor={colorSettings.mapPinColor}
               />
               <Expo.MapView.Circle
                 center={locationAndError.location}
                 radius={userRadius}
-                fillColor="rgba(204, 210, 192, 0.5)"
-                style={{ opacity: 0.5 }}
+                fillColor={colorSettings.mapCircleFill}
               />
             </Expo.MapView>
           </View>
