@@ -10,6 +10,10 @@ import MapScreen from './components/MapScreen';
 import InboxScreen from './components/InboxScreen';
 import ProfileScreen from './components/ProfileScreen';
 import ErrorComponent from './components/ErrorComponent';
+import NearbyEvents from './components/NearbyEvents';
+import EventInfo from './components/EventInfo';
+import CreateEvent from './components/CreateEvent';
+// import { getEventCoords, addEvent } from './Functionality/eventFunctions';
 
 // console.disableYellowBox = true;
 
@@ -47,6 +51,15 @@ const mainFlow = createStackNavigator(
     },
     Error: {
       screen: ErrorComponent,
+    },
+    CreateEvent: {
+      screen: CreateEvent,
+    },
+    NearbyEvents: {
+      screen: NearbyEvents,
+    },
+    EventInfo: {
+      screen: EventInfo,
     },
   },
   {

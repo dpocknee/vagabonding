@@ -48,6 +48,32 @@ const Sidebar = (props) => {
           iconLeft
           transparent
           primary
+          title="Create Event"
+          onPress={() => {
+            closeDrawer();
+            allNav('CreateEvent');
+          }}
+        >
+          <Icon type="FontAwesome" name="envelope" style={{ color: iconColor }} />
+          <Text style={sidebarStyles.menuTextStyle}>Create Event</Text>
+        </Button>
+        <Button
+          iconLeft
+          transparent
+          primary
+          title="Nearby Events"
+          onPress={() => {
+            closeDrawer();
+            allNav('NearbyEvents');
+          }}
+        >
+          <Icon type="FontAwesome" name="envelope" style={{ color: iconColor }} />
+          <Text style={sidebarStyles.menuTextStyle}>Nearby Events</Text>
+        </Button>
+        <Button
+          iconLeft
+          transparent
+          primary
           title="Logout"
           onPress={() => {
             closeDrawer();
