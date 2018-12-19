@@ -111,12 +111,14 @@ class SignUp extends Component {
           <CheckBox
             title="Bars and clubs"
             checked={bars}
+            fontFamily={generalFont}
             style={generalStyling.checkbox}
             onPress={() => this.setState({ bars: !bars })}
           />
           <CheckBox
             title="Local restaurants"
             checked={restaurants}
+            fontFamily={generalFont}
             style={generalStyling.checkbox}
             onPress={() => this.setState({ restaurants: !restaurants })}
           />

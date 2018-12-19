@@ -1,13 +1,18 @@
+import hexRgb from 'hex-rgb';
+
 // // ORIGINAL
 // const primaryLight = '#1D9FBF';
 // const primaryDark = '#16324F';
 // const complementary = '#F56463';
 
-const primaryMid = '#39D9FF';
 const primaryLightest = '#FFFFFF';
 const primaryLight = '#D2F6FE';
+const primaryMid = '#1D9FBF'; // '#39D9FF';
 const primaryDark = '#0183A2';
 const primaryDarkest = '#014555';
+
+const primaryLightHex = hexRgb(primaryLight, { format: 'array' });
+const primaryMidHex = hexRgb(primaryMid, { format: 'array' });
 
 const secondaryMid = '#F2C04E';
 const secondaryLight = 'FFF1D2';
@@ -19,7 +24,7 @@ const colorSettings = {
   mainText: primaryDarkest,
   lightText: primaryLightest,
   // Buttons
-  buttonText: 'white',
+  buttonText: primaryLightest,
   buttonBackground: primaryDarkest,
   // Gradient
   gradientColor1: primaryMid,
@@ -29,19 +34,19 @@ const colorSettings = {
   headerTintColor: primaryDark,
   // ----- Menu -----
   // Hamburger Menu
-  hamburgerText: primaryDark,
-  menuOverlay: primaryDarkest,
-  iconColor: primaryDark,
+  hamburgerText: primaryMid,
+  menuOverlay: primaryMid,
+  iconColor: primaryMid,
   // ----- Loading Spinner ---
   // Loading Spinner
   loadingText: primaryDarkest,
   // ----- Sign Up and Login -----
   // Sign Up
-  signUpBackground: this.mainBackground,
-  signUpText: this.mainText,
+  signUpBackground: primaryLight,
+  signUpText: primaryDarkest,
   // Login
-  loginBackground: this.mainBackground,
-  loginText: this.mainText,
+  loginBackground: primaryLight,
+  loginText: primaryDarkest,
   // Checkbox
   checkboxText: primaryDarkest,
   checkboxBackground: primaryLight,
@@ -53,21 +58,22 @@ const colorSettings = {
   // ------ Map Screen Components -----
   // Map
   mapPinColor: primaryMid,
-  mapCircleFill: 'rgba(204, 210, 192, 0.5)',
+  mapCircleFill: `rgba(${primaryLightHex[0]}, ${primaryLightHex[1]}, ${primaryLightHex[2]}, 0.5)`,
+
   // Users
-  usersBackground: 'rgba(29, 159, 191, 0.5)',
+  usersBackground: primaryLightest,
   usersTitleText: primaryDarkest,
-  usersTitleBorder: primaryDarkest,
-  usersCardBackground: primaryLight,
-  usersCardBorder: primaryDark,
+  usersTitleBorder: primaryMid,
+  usersCardBackground: `rgba(${primaryMidHex[0]}, ${primaryMidHex[1]}, ${primaryMidHex[2]}, 0.5)`,
+  usersCardBorder: primaryLightest,
   usersCardAction: primaryDarkest,
-  usersCardContent: 'rgba(255, 255, 255, 0.9)',
+  usersCardContent: primaryDark,
   // ------ Inbox -----
   inboxMessageCard: primaryLightest,
   inboxMessageText: primaryLight,
   inboxBackground: secondaryLight,
   inboxCardText: primaryDarkest,
-  inboxCardBorder: primaryDark,
+  inboxCardBorder: primaryMid,
   inboxCardBackground: primaryLightest,
   inboxNoMessages: primaryDarkest,
   // --- Chat -----
