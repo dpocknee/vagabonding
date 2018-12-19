@@ -13,8 +13,6 @@ const profileStyles = {
     flex: 2,
   },
   name: {
-  },
-  username: {
     fontWeight: 'bold',
     alignSelf: 'center',
     fontSize: 30,
