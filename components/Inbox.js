@@ -3,7 +3,7 @@ import { ScrollView, Text, TouchableOpacity } from 'react-native';
 import firebase from 'firebase';
 import { View } from 'native-base';
 import LoadingComponent from './LoadingComponent';
-import { tertiaryColor } from '../styles/Colors.styles';
+import { colorSettings } from '../styles/Colors.styles';
 
 const { getChatPartnerNames, chatsRef } = require('../Functionality/chatFunctions');
 const { getCurrentUserInfo } = require('../Functionality/utilityFunctions');
@@ -98,12 +98,12 @@ class Inbox extends Component {
     }
     if (chats.length === 0) {
       return (
-        <View style={{ backgroundColor: tertiaryColor, flex: 1, justifyContent: 'center' }}>
+        <View style={{ backgroundColor: colorSettings.inboxBackground, flex: 1, justifyContent: 'center' }}>
           <Text
             style={{
               fontSize: 19,
               alignSelf: 'center',
-              color: 'white',
+              color: colorSettings.lightText,
               fontWeight: 'bold',
             }}
           >
@@ -113,7 +113,7 @@ class Inbox extends Component {
       );
     }
     return (
-      <ScrollView style={{ flex: 1, backgroundColor: tertiaryColor }}>
+      <ScrollView style={{ flex: 1, backgroundColor: colorSettings.inboxBackground }}>
         {chats.map(chat => (
           <TouchableOpacity
             style={{
@@ -134,10 +134,7 @@ class Inbox extends Component {
             }
           >
             <>
-              <Text style={{ fontSize: 19, margin: 3 }}>
-                {`Conversation with ${chat.otherUserName} (${chat.otherUserUsername})`}
-                {' '}
-              </Text>
+              <Text style={{ fontSize: 19, margin: 3 }}>{`Conversation with ${chat.otherUserName} (${chat.otherUserUsername})`}</Text>
               <Text style={{ fontSize: 16, margin: 3 }}>{`${chat.messages.length} messages`}</Text>
             </>
           </TouchableOpacity>

@@ -1,14 +1,14 @@
 import { colorSettings } from './Colors.styles';
 
-const { mainBackground, mainText } = colorSettings;
+const { loginBackground, loginText } = colorSettings;
 
 const loginStyles = {
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: mainBackground,
-    color: mainText,
+    backgroundColor: loginBackground,
+    color: loginText,
   },
   buttons: {
     flexDirection: 'column',
