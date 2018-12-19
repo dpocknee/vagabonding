@@ -32,7 +32,7 @@ const addEvent = async (eventObj) => {
   });
 };
 
-const getNearbyEvents = async () => firebase.auth().onAuthStateChanged((currentUser) => {
+const getNearbyEvents = async cb => firebase.auth().onAuthStateChanged((currentUser) => {
   const { uid } = currentUser;
   return usersRef
     .doc(uid)
@@ -50,7 +50,7 @@ const getNearbyEvents = async () => firebase.auth().onAuthStateChanged((currentU
           }
         }),
       ]).then(([nearbyEvents]) => {
-        console.log(nearbyEvents);
+        cb(nearbyEvents);
       });
     }));
 });
@@ -58,4 +58,6 @@ const getNearbyEvents = async () => firebase.auth().onAuthStateChanged((currentU
 // filter events - check if event.location = isPointinCircle
 // return filtered events (promise)
 
-export { addEvent, getEventCoords, getNearbyEvents };
+export {
+  addEvent, getEventCoords, getNearbyEvents, eventsRef,
+};

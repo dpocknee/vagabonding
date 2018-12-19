@@ -40,32 +40,28 @@ class CreateEvent extends Component {
           placeholder="Event Name"
           autoCapitalize="words"
           style={generalStyling.textInput}
-          onChangeText={newEventName => this.setState({ eventName: newEventName })
-          }
+          onChangeText={newEventName => this.setState({ eventName: newEventName })}
           value={eventName}
         />
         <TextInput
           placeholder="Event Location"
           autoCapitalize="words"
           style={generalStyling.textInput}
-          onChangeText={newEventLocation => this.setState({ eventLocation: newEventLocation })
-          }
+          onChangeText={newEventLocation => this.setState({ eventLocation: newEventLocation })}
           value={eventLocation}
         />
         <TextInput
           placeholder="Event City"
           autoCapitalize="words"
           style={generalStyling.textInput}
-          onChangeText={newEventCity => this.setState({ eventCity: newEventCity })
-          }
+          onChangeText={newEventCity => this.setState({ eventCity: newEventCity })}
           value={eventCity}
         />
         <TextInput
           placeholder="Description"
-          autoCapitalize="words"
+          autoCapitalize="sentences"
           style={generalStyling.textInput}
-          onChangeText={newDescription => this.setState({ eventDescription: newDescription })
-          }
+          onChangeText={newDescription => this.setState({ eventDescription: newDescription })}
           value={eventDescription}
         />
         <DatePicker
@@ -87,8 +83,8 @@ class CreateEvent extends Component {
               marginLeft: 36,
             },
           }}
-          onDateChange={(datetime) => {
-            this.setState({ datetime });
+          onDateChange={(newDatetime) => {
+            this.setState({ datetime: newDatetime });
           }}
         />
         <Button
@@ -98,12 +94,12 @@ class CreateEvent extends Component {
           onPress={() => {
             const eventObj = {
               eventName,
-              eventLocation: `${eventLocation} ${eventCity}`,
+              eventLocation: `${eventLocation}, ${eventCity}`,
               eventDescription,
               datetime: Date.parse(datetime),
               currentUserUID,
             };
-            addEvent(eventObj).catch((err) => {
+            addEvent(eventObj).catch(() => {
               this.props.navigation.push('Error');
             });
             this.props.navigation.navigate('NearbyEvents');
