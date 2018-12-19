@@ -107,7 +107,7 @@ class Inbox extends Component {
             style={{
               fontSize: 19,
               alignSelf: 'center',
-              color: colorSettings.colorSettings.inboxNoMessages,
+              color: colorSettings.inboxNoMessages,
               fontWeight: 'bold',
             }}
           >
