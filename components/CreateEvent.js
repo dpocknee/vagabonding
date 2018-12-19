@@ -5,6 +5,7 @@ import {
 import DatePicker from 'react-native-datepicker';
 import * as firebase from 'firebase';
 import { generalStyling } from '../styles/generalStyling.styles';
+import createEventStyles from '../styles/CreateEvent.styles';
 import { addEvent } from '../Functionality/eventFunctions';
 
 class CreateEvent extends Component {
@@ -36,34 +37,37 @@ class CreateEvent extends Component {
     } = this.state;
     return (
       <View>
-        <TextInput
-          placeholder="Event Name"
-          autoCapitalize="words"
-          style={generalStyling.textInput}
-          onChangeText={newEventName => this.setState({ eventName: newEventName })}
-          value={eventName}
-        />
-        <TextInput
-          placeholder="Event Location"
-          autoCapitalize="words"
-          style={generalStyling.textInput}
-          onChangeText={newEventLocation => this.setState({ eventLocation: newEventLocation })}
-          value={eventLocation}
-        />
-        <TextInput
-          placeholder="Event City"
-          autoCapitalize="words"
-          style={generalStyling.textInput}
-          onChangeText={newEventCity => this.setState({ eventCity: newEventCity })}
-          value={eventCity}
-        />
-        <TextInput
-          placeholder="Description"
-          autoCapitalize="sentences"
-          style={generalStyling.textInput}
-          onChangeText={newDescription => this.setState({ eventDescription: newDescription })}
-          value={eventDescription}
-        />
+        <Text style={createEventStyles.title}>Create A New Event</Text>
+        <View style={createEventStyles.inputBoxes}>
+          <TextInput
+            placeholder="Event Name"
+            autoCapitalize="words"
+            style={createEventStyles.textInput}
+            onChangeText={newEventName => this.setState({ eventName: newEventName })}
+            value={eventName}
+          />
+          <TextInput
+            placeholder="Event Location"
+            autoCapitalize="words"
+            style={createEventStyles.textInput}
+            onChangeText={newEventLocation => this.setState({ eventLocation: newEventLocation })}
+            value={eventLocation}
+          />
+          <TextInput
+            placeholder="Event City"
+            autoCapitalize="words"
+            style={createEventStyles.textInput}
+            onChangeText={newEventCity => this.setState({ eventCity: newEventCity })}
+            value={eventCity}
+          />
+          <TextInput
+            placeholder="Description"
+            autoCapitalize="sentences"
+            style={createEventStyles.textInput}
+            onChangeText={newDescription => this.setState({ eventDescription: newDescription })}
+            value={eventDescription}
+          />
+        </View>
         <DatePicker
           style={{ width: 200 }}
           date={this.state.datetime}
@@ -90,7 +94,7 @@ class CreateEvent extends Component {
         <Button
           title="Create Event"
           rounded
-          style={generalStyling.button}
+          style={createEventStyles.longButton}
           onPress={() => {
             const eventObj = {
               eventName,
@@ -105,7 +109,7 @@ class CreateEvent extends Component {
             this.props.navigation.navigate('NearbyEvents');
           }}
         >
-          <Text style={generalStyling.buttonText}>Create Event</Text>
+          <Text style={createEventStyles.buttonText}>Create Event</Text>
         </Button>
       </View>
     );

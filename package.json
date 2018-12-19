@@ -12,6 +12,7 @@
     "expo": "^31.0.2",
     "firebase": "^5.7.0",
     "geolib": "^2.0.24",
+    "hex-rgb": "^3.0.0",
     "native-base": "^2.8.1",
     "prop-types": "^15.6.2",
     "react": "16.5.0",
