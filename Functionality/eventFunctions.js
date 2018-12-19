@@ -13,7 +13,13 @@ const eventsRef = firestore.collection('events');
 const getEventCoords = async locationString => Expo.Location.geocodeAsync(locationString);
 
 const addEvent = async (eventObj) => {
-  const { eventLocation, eventName, eventDescription } = eventObj;
+  const {
+    eventLocation,
+    eventName,
+    eventDescription,
+    datetime,
+    currentUserUID,
+  } = eventObj;
   return getEventCoords(eventLocation).then((locationObj) => {
     const { latitude, longitude } = locationObj[0];
     const newEvent = {
@@ -21,7 +27,8 @@ const addEvent = async (eventObj) => {
       eventName,
       eventDescription,
       eventLocation,
-      guests: [],
+      datetime,
+      guests: [currentUserUID],
     };
     return eventsRef.doc().set(newEvent);
   });
