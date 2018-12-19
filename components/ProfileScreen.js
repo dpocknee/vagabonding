@@ -81,26 +81,44 @@ export default class Profile extends Component {
                   style={{ fontSize: 50, alignSelf: 'center' }}
                 />
 
-                <Text style={profileStyles.username}>{userInfo.username}</Text>
+                <Text style={profileStyles.name}>{userInfo.name}</Text>
               </View>
               <View>
                 <Text style={profileStyles.info}>
                   <Text>
-                    <Text style={profileStyles.catInfo}>Real name:</Text>
+                    <Text style={profileStyles.catInfo}>Gender:</Text>
                     {' '}
-                    {userInfo.name}
+                    {userInfo.gender}
+                    {'\n'}
+                  </Text>
+                  <Text>
+                    <Text style={profileStyles.catInfo}>Age:</Text>
+                    {' '}
+                    {userInfo.age}
+                    {'\n'}
+                  </Text>
+                  <Text>
+                    <Text style={profileStyles.catInfo}>Username:</Text>
+                    {' '}
+                    {userInfo.username}
                     {'\n'}
                   </Text>
                   <Text>
                     <Text style={profileStyles.catInfo}>Interests:</Text>
                     {' '}
                     {validInterests}
+                    {'\n'}
+                  </Text>
+                  <Text>
+                    <Text style={profileStyles.catInfo}>Bio:</Text>
+                    {' '}
+                    {userInfo.bio}
                   </Text>
                 </Text>
               </View>
               {/* <View style={profileStyles.chat}> */}
-              <View style={{ justifyContent: 'center' }}>
-                <TouchableOpacity
+              <View style={{ justifyContent: 'center', alignSelf: 'center' }}>
+                <Button
                   style={generalStyling.longButton}
                   onPress={() => {
                     this.props.navigation.push('Chat', {
@@ -113,7 +131,7 @@ export default class Profile extends Component {
                   }}
                 >
                   <Text style={generalStyling.buttonText}>{`Chat with ${userInfo.name}`}</Text>
-                </TouchableOpacity>
+                </Button>
               </View>
               {/* </View> */}
             </LinearGradient>

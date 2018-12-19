@@ -26,7 +26,7 @@ const Users = (props) => {
   if (!users) {
     return <LoadingComponent />;
   }
-  return users.length >= 1 ? (
+  return users.length >= 2 ? (
     <PTRView onRefresh={_refresh}>
       <ScrollView style={cardStyles.scrollView}>
         <Text style={cardStyles.header}>{`Scroll down to see users nearby in ${city}`}</Text>
@@ -35,7 +35,7 @@ const Users = (props) => {
           <TouchableOpacity
             onPress={() => onSelectUser(user)}
             style={cardStyles.opacity}
-            key={user[1].name}
+            key={user[0]}
           >
             <Text style={[theme.cardActionStyle, ...cardStyles.cardActionStyle]}>
               {user[1].name}

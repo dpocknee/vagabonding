@@ -10,6 +10,9 @@ const profileStyles = {
     paddingLeft: 50,
     width: '100%',
     padding: 30,
+    flex: 2,
+  },
+  name: {
   },
   username: {
     fontWeight: 'bold',
@@ -20,15 +23,21 @@ const profileStyles = {
   info: {
     fontSize: 20,
     alignSelf: 'center',
-    width: '80%',
+    width: '90%',
     margin: 10,
-    height: 250,
+    // height: 250,
     padding: 10,
-    borderWidth: 4,
+    borderWidth: 0,
+    // color: 'white',
+    flex: 3,
+    backgroundColor: 'rgba(225, 225, 225, 1)',
+    borderRadius: 7,
   },
 
   catInfo: {
     fontWeight: 'bold',
+
+    padding: 5,
   },
 
   chat: {
@@ -40,12 +49,12 @@ const profileStyles = {
   button: {
     backgroundColor: '#F56463',
     padding: 10,
-    marginTop: 60,
     alignSelf: 'center',
     justifyContent: 'center',
     width: '50%',
     borderRadius: 18,
     textAlign: 'center',
+    flex: 5,
   },
 };
 
