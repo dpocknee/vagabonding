@@ -61,7 +61,7 @@ const Users = (props) => {
               { borderRadius: 5 },
               { borderColor: 'rgba(29, 159, 191, 0.7)' },
             ]}
-            key={user[1].name}
+            key={user[0]}
           >
             <Text style={[theme.cardActionStyle, { color: '#16324F' }, { fontSize: 22 }]}>
               {user[1].name}
