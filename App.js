@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 import 'firebase/firestore';
@@ -106,7 +105,7 @@ export default class App extends Component {
         <AppLoading
           startAsync={this._loadAssetsAsync}
           onFinish={() => this.setState({ isReady: true })}
-          onError={console.warn}
+          // onError={console.warn}
         />
       );
     }

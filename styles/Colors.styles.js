@@ -6,13 +6,15 @@ import hexRgb from 'hex-rgb';
 // const complementary = '#F56463';
 
 const primaryLightest = '#FFFFFF';
-const primaryLight = '#D2F6FE';
+const primaryLight = '#8ecfdf'; // '#D2F6FE';
 const primaryMid = '#1D9FBF'; // '#39D9FF';
 const primaryDark = '#0183A2';
 const primaryDarkest = '#014555';
 
 const primaryLightHex = hexRgb(primaryLight, { format: 'array' });
 const primaryMidHex = hexRgb(primaryMid, { format: 'array' });
+
+// console.log('COOL COLOR: ', primaryMidHex);
 
 const secondaryMid = '#F56463'; // '#F2C04E';
 const secondaryLight = 'FFF1D2';
@@ -34,9 +36,10 @@ const colorSettings = {
   headerTintColor: primaryDark,
   // ----- Menu -----
   // Hamburger Menu
-  hamburgerText: primaryMid,
+  hamburgerText: primaryDark,
+  sidebarBackground: primaryLightest,
   menuOverlay: primaryMid,
-  iconColor: primaryMid,
+  iconColor: primaryDark,
   // ----- Loading Spinner ---
   // Loading Spinner
   loadingText: primaryDarkest,

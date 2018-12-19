@@ -25,11 +25,12 @@ const drawerStyles = {
 };
 const sidebarStyles = {
   container: {
-    backgroundColor: 'white',
+    backgroundColor: colorSettings.sidebarBackground,
     opacity: 0.8,
-    width: 150,
-    flex: 0.5,
+    width: '60%',
+    flex: 0.9,
     paddingTop: 20,
+    borderRadius: 10,
   },
   content: {
     paddingTop: 0,
@@ -37,7 +38,7 @@ const sidebarStyles = {
   contentMap: {
     paddingTop: 50,
   },
-  menuTextStyle: { left: 5, color: colorSettings.primaryColor },
+  menuTextStyle: { left: 5, color: colorSettings.hamburgerText, fontFamily: generalFontBold },
 };
 
 const titleStyles = {
