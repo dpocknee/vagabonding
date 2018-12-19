@@ -103,7 +103,7 @@ class Inbox extends Component {
             style={{
               fontSize: 19,
               alignSelf: 'center',
-              color: colorSettings.lightText,
+              color: colorSettings.colorSettings.inboxNoMessages,
               fontWeight: 'bold',
             }}
           >
@@ -118,9 +118,9 @@ class Inbox extends Component {
           <TouchableOpacity
             style={{
               margin: 9,
-              borderColor: 'black',
+              borderColor: colorSettings.inboxCardBorder,
               borderWidth: 2,
-              backgroundColor: 'white',
+              backgroundColor: colorSettings.inboxCardBackground,
               padding: 10,
             }}
             key={`inbox${chat.otherUser}`}
@@ -134,8 +134,8 @@ class Inbox extends Component {
             }
           >
             <>
-              <Text style={{ fontSize: 19, margin: 3 }}>{`Conversation with ${chat.otherUserName} (${chat.otherUserUsername})`}</Text>
-              <Text style={{ fontSize: 16, margin: 3 }}>{`${chat.messages.length} messages`}</Text>
+              <Text style={{ fontSize: 19, margin: 3, color: colorSettings.inboxCardText }}>{`Conversation with ${chat.otherUserName} (${chat.otherUserUsername})`}</Text>
+              <Text style={{ fontSize: 16, margin: 3, color: colorSettings.inboxCardText }}>{`${chat.messages.length} messages`}</Text>
             </>
           </TouchableOpacity>
         ))}

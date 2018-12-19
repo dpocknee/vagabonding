@@ -18,7 +18,7 @@ export default class ChatScreen extends Component {
         }}
         width={50}
       >
-        <Icon type="FontAwesome" name="bars" />
+        <Icon type="FontAwesome" name="bars" style={{ color: colorSettings.iconColor }} />
       </Button>
     ),
     title: `Chat with ${navigation.getParam('selectedUsername')} (${navigation.getParam(
