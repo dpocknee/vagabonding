@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 import 'firebase/firestore';
+import { Font, AppLoading } from 'expo';
 import AuthLoading from './components/AuthLoading';
 import Loading from './components/Loading';
 import SignUp from './components/SignUp';
@@ -68,7 +69,34 @@ const AppContainer = createAppContainer(appNavigation);
 // Note: Entire navigation is in this component
 // if navigation breaks may be to do with this component
 
-const App = () => <AppContainer />;
+function cacheFonts() {
+  return Font.loadAsync({
+    'Thasadith-Regular': require('./assets/fonts/Thasadith/Thasadith-Regular.ttf'),
+    'Thasadith-Bold': require('./assets/fonts/Thasadith/Thasadith-Bold.ttf'),
+  });
+}
 
-export default App;
+export default class App extends Component {
+  state = {
+    isReady: false,
+  };
+
+  async _loadAssetsAsync() {
+    const fontAssets = cacheFonts();
+    await Promise.all(fontAssets);
+  }
+
+  render() {
+    if (!this.state.isReady) {
+      return (
+        <AppLoading
+          startAsync={this._loadAssetsAsync}
+          onFinish={() => this.setState({ isReady: true })}
+          onError={console.warn}
+        />
+      );
+    }
+    return <AppContainer />;
+  }
+}
 // https://medium.com/@jan.hesters/building-a-react-native-app-with-complex-navigation-using-react-navigation-85a479308f52
