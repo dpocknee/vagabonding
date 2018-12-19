@@ -101,13 +101,13 @@ export default class MapScreen extends Component {
                       });
                     });
                   })
-                  .catch(() => {
-                    this.props.navigation.navigate('Error');
+                  .catch((err) => {
+                    this.props.navigation.navigate('Error', {error: err});
                   });
               },
             );
-          }).catch(() => {
-            this.props.navigation.navigate('Error');
+          }).catch((err) => {
+            this.props.navigation.navigate('Error', {error: err});
           });
         }
       }

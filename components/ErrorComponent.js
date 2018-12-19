@@ -43,6 +43,8 @@ class ErrorComponent extends Component {
 
   render() {
     const { navigation } = this.props;
+    const error = navigation.getParam('error');
+    console.log(error);
     return (
       <View
         style={{
