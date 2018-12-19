@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 import LoadingComponent from './LoadingComponent';
-import { tertiaryColor, primaryColor } from '../styles/Colors.styles';
+import { colorSettings } from '../styles/Colors.styles';
 
 const { getPreviousMessages, sendMessage, chatsRef } = require('../Functionality/chatFunctions');
 
@@ -25,14 +25,14 @@ class Chat extends Component {
           });
         });
       })
-      .catch(() => {
-        this.props.navigation.navigate('Error');
+      .catch((err) => {
+        this.props.navigation.navigate('Error', { error: err });
       });
   }
 
   onSend(messages = []) {
-    sendMessage(messages[0], this.state.doc).catch(() => {
-      this.props.navigation.navigate('Error');
+    sendMessage(messages[0], this.state.doc).catch((err) => {
+      this.props.navigation.navigate('Error', { error: err });
     });
   }
 
@@ -41,15 +41,18 @@ class Chat extends Component {
       {...props}
       textStyle={{
         left: {
-          color: 'white',
+          color: colorSettings.chatThemText,
+        },
+        right: {
+          color: colorSettings.chatYouText,
         },
       }}
       wrapperStyle={{
         left: {
-          backgroundColor: tertiaryColor,
+          backgroundColor: colorSettings.chatThemBubble,
         },
         right: {
-          backgroundColor: primaryColor,
+          backgroundColor: colorSettings.chatYouBubble,
         },
       }}
     />

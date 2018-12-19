@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { ScrollView, Text, TouchableOpacity } from 'react-native';
+import { getTheme } from 'react-native-material-kit';
 import firebase from 'firebase';
 import { View } from 'native-base';
 import LoadingComponent from './LoadingComponent';
-import { tertiaryColor } from '../styles/Colors.styles';
+import { colorSettings } from '../styles/Colors.styles';
+import cardStyles from '../styles/Users.styles';
 
 const { getChatPartnerNames, chatsRef } = require('../Functionality/chatFunctions');
 const { getCurrentUserInfo } = require('../Functionality/utilityFunctions');
+
+const theme = getTheme();
 
 class Inbox extends Component {
   state = {
@@ -81,8 +85,8 @@ class Inbox extends Component {
             },
           );
         })
-        .catch(() => {
-          this.props.navigation.navigate('Error');
+        .catch((err) => {
+          this.props.navigation.navigate('Error', { error: err });
         });
       unsubscribe();
     });
@@ -98,12 +102,12 @@ class Inbox extends Component {
     }
     if (chats.length === 0) {
       return (
-        <View style={{ backgroundColor: tertiaryColor, flex: 1, justifyContent: 'center' }}>
+        <View style={{ backgroundColor: colorSettings.inboxBackground, flex: 1, justifyContent: 'center' }}>
           <Text
             style={{
               fontSize: 19,
               alignSelf: 'center',
-              color: 'white',
+              color: colorSettings.colorSettings.inboxNoMessages,
               fontWeight: 'bold',
             }}
           >
@@ -113,16 +117,10 @@ class Inbox extends Component {
       );
     }
     return (
-      <ScrollView style={{ flex: 1, backgroundColor: tertiaryColor }}>
+      <ScrollView style={{ flex: 1, backgroundColor: colorSettings.inboxBackground }}>
         {chats.map(chat => (
           <TouchableOpacity
-            style={{
-              margin: 9,
-              borderColor: 'black',
-              borderWidth: 2,
-              backgroundColor: 'white',
-              padding: 10,
-            }}
+            style={cardStyles.opacity}
             key={`inbox${chat.otherUser}`}
             onPress={() => allNav({
               currentUserID,
@@ -134,11 +132,17 @@ class Inbox extends Component {
             }
           >
             <>
-              <Text style={{ fontSize: 19, margin: 3 }}>
+              <Text
+                style={[theme.cardActionStyle, ...cardStyles.cardActionStyle]}
+              >
                 {`Conversation with ${chat.otherUserName} (${chat.otherUserUsername})`}
-                {' '}
               </Text>
-              <Text style={{ fontSize: 16, margin: 3 }}>{`${chat.messages.length} messages`}</Text>
+
+              <Text
+                style={[theme.cardContentStyle, ...cardStyles.cardContentStyle]}
+              >
+                {`${chat.messages.length} messages`}
+              </Text>
             </>
           </TouchableOpacity>
         ))}

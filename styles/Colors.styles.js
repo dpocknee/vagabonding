@@ -1,38 +1,90 @@
-const primaryColor = '#1D9FBF';
-const secondaryColor = '#16324F';
-const tertiaryColor = '#F56463';
+import hexRgb from 'hex-rgb';
+
+// // ORIGINAL
+// const primaryLight = '#1D9FBF';
+// const primaryDark = '#16324F';
+// const complementary = '#F56463';
+
+const primaryLightest = '#FFFFFF';
+const primaryLight = '#D2F6FE';
+const primaryMid = '#1D9FBF'; // '#39D9FF';
+const primaryDark = '#0183A2';
+const primaryDarkest = '#014555';
+
+const primaryLightHex = hexRgb(primaryLight, { format: 'array' });
+const primaryMidHex = hexRgb(primaryMid, { format: 'array' });
+
+const secondaryMid = '#F56463'; // '#F2C04E';
+const secondaryLight = 'FFF1D2';
 
 const colorSettings = {
-  mainBackground: primaryColor,
+  // ----- General Colors ------
+  mainBackground: primaryLight,
   // General Text
-  mainText: secondaryColor,
-  darkText: secondaryColor,
-  lightText: 'white',
+  mainText: primaryDarkest,
+  lightText: primaryLightest,
   // Buttons
-  buttonText: 'white',
-  buttonBackground: secondaryColor,
-  // Checkbox
-  checkboxText: this.darkText,
-  checkboxBackground: this.primaryColor,
-  // Text Input
-  textInputBackground: 'white',
-  textInputText: this.primaryColor,
-  textInputPlaceholder: this.lightText,
-  textInputBorder: this.secondaryColor,
+  buttonText: primaryLightest,
+  buttonBackground: primaryDarkest,
   // Gradient
-  gradientColor1: '#1D9FBF',
+  gradientColor1: primaryMid,
   gradientColor2: ['rgba(225,225,225,225)', 'transparent'],
   // Headers
-  headerColor: primaryColor,
-  headerTintColor: secondaryColor,
+  headerColor: primaryLight,
+  headerTintColor: primaryDark,
+  // ----- Menu -----
+  // Hamburger Menu
+  hamburgerText: primaryMid,
+  menuOverlay: primaryMid,
+  iconColor: primaryMid,
+  // ----- Loading Spinner ---
+  // Loading Spinner
+  loadingText: primaryDarkest,
+  // ----- Sign Up and Login -----
+  // Sign Up
+  signUpBackground: primaryLight,
+  signUpText: primaryDarkest,
+  // Login
+  loginBackground: primaryLight,
+  loginText: primaryDarkest,
+  // Checkbox
+  checkboxText: primaryDarkest,
+  checkboxBackground: primaryLight,
+  // Text Input
+  textInputBackground: primaryLightest,
+  textInputText: primaryDarkest,
+  textInputPlaceholder: primaryLight,
+  textInputBorder: primaryDark,
+  // ------ Map Screen Components -----
+  // Map
+  mapPinColor: primaryMid,
+  mapCircleFill: `rgba(${primaryLightHex[0]}, ${primaryLightHex[1]}, ${primaryLightHex[2]}, 0.5)`,
+
+  // Users
+  usersBackground: primaryLightest,
+  usersTitleText: primaryDarkest,
+  usersTitleBorder: primaryMid,
+  usersCardBackground: `rgba(${primaryMidHex[0]}, ${primaryMidHex[1]}, ${primaryMidHex[2]}, 0.5)`,
+  usersCardBorder: primaryLightest,
+  usersCardAction: primaryDarkest,
+  usersCardContent: primaryDark,
+  // ------ Inbox -----
+  inboxMessageCard: primaryLightest,
+  inboxMessageText: primaryLight,
+  inboxBackground: secondaryLight,
+  inboxCardText: primaryDarkest,
+  inboxCardBorder: primaryMid,
+  inboxCardBackground: primaryLightest,
+  inboxNoMessages: primaryDarkest,
+  // --- Chat -----
   // Chat Bubbles
-  chatYouColor: secondaryColor,
-  chatThemColor: tertiaryColor,
-  // Inbox
-  inboxMessageCard: tertiaryColor,
-  inboxMessageText: this.lightText,
+  chatYouBubble: primaryDark,
+  chatYouText: primaryLightest,
+  chatThemBubble: secondaryMid,
+  chatThemText: primaryLightest,
+  // --- Errors ---
+  errorBackground: secondaryMid,
+  errorText: secondaryMid,
 };
 
-export {
-  primaryColor, secondaryColor, tertiaryColor, colorSettings,
-};
+export { colorSettings, primaryMid };

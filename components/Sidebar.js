@@ -6,6 +6,9 @@ import {
 import propTypes from 'prop-types';
 import { logOut } from '../Functionality/utilityFunctions';
 import { sidebarStyles } from '../styles/Hamburger.styles';
+import { colorSettings } from '../styles/Colors.styles';
+
+const { iconColor } = colorSettings;
 
 const Sidebar = (props) => {
   const {
@@ -24,7 +27,7 @@ const Sidebar = (props) => {
             allNav('Map');
           }}
         >
-          <Icon type="FontAwesome" name="map" />
+          <Icon type="FontAwesome" name="map" style={{ color: iconColor }} />
           <Text style={sidebarStyles.menuTextStyle}>Map</Text>
         </Button>
         <Button
@@ -38,7 +41,7 @@ const Sidebar = (props) => {
             allNav('Inbox');
           }}
         >
-          <Icon type="FontAwesome" name="envelope" />
+          <Icon type="FontAwesome" name="envelope" style={{ color: iconColor }} />
           <Text style={sidebarStyles.menuTextStyle}>Inbox</Text>
         </Button>
         <Button
@@ -53,7 +56,7 @@ const Sidebar = (props) => {
             allNav('loginFlow');
           }}
         >
-          <Icon type="FontAwesome" name="hand-o-left" />
+          <Icon type="FontAwesome" name="hand-o-left" style={{ color: iconColor }} />
           <Text style={sidebarStyles.menuTextStyle}>Logout</Text>
         </Button>
         <Button
@@ -66,7 +69,7 @@ const Sidebar = (props) => {
             closeDrawer();
           }}
         >
-          <Icon type="FontAwesome" name="times" />
+          <Icon type="FontAwesome" name="times" style={{ color: iconColor }} />
           <Text style={sidebarStyles.menuTextStyle}>Close Menu</Text>
         </Button>
       </Content>

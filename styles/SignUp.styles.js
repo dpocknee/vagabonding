@@ -1,19 +1,19 @@
 import { colorSettings } from './Colors.styles';
 
-const { mainBackground } = colorSettings;
+const { signUpBackground } = colorSettings;
 
 const signUpStyles = {
   container: {
     flex: 1,
-    backgroundColor: mainBackground,
+    backgroundColor: signUpBackground,
     // padding: 30,
   },
   mainView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: mainBackground,
     padding: 20,
+    backgroundColor: signUpBackground,
   },
   interests: {
     marginTop: 20,

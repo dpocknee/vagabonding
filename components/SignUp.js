@@ -103,6 +103,7 @@ class SignUp extends Component {
             onChangeText={newName => this.setState({ name: newName })}
             value={name}
           />
+
           <TextInput
             placeholder="username"
             autoCapitalize="words"
