@@ -62,7 +62,12 @@ class Login extends Component {
         />
         <View style={loginStyles.buttons}>
           <View>
-            <Button rounded title="Login" onPress={this.handleLogin} style={generalStyling.button}>
+            <Button
+              rounded
+              title="Login"
+              onPress={this.handleLogin}
+              style={generalStyling.longButton}
+            >
               <Text style={generalStyling.buttonText}>Login</Text>
             </Button>
           </View>
