@@ -48,6 +48,9 @@ class NearbyEvents extends Component {
                 padding: 10,
               }}
               key={eventObj.id}
+              onPress={() => {
+                this.props.navigation.push('EventInfo', { eventObj });
+              }}
             >
               <>
                 <Text>{eventObj.info.eventName}</Text>
