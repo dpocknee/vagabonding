@@ -5,7 +5,7 @@ import firebase from 'firebase';
 import { View } from 'native-base';
 import LoadingComponent from './LoadingComponent';
 import { colorSettings } from '../styles/Colors.styles';
-import cardStyles from '../styles/Users.styles'
+import cardStyles from '../styles/Users.styles';
 
 const { getChatPartnerNames, chatsRef } = require('../Functionality/chatFunctions');
 const { getCurrentUserInfo } = require('../Functionality/utilityFunctions');
@@ -139,16 +139,19 @@ class Inbox extends Component {
             }
           >
             <>
-              <Text 
+              <Text
               // style={{ fontSize: 19, margin: 3, color: colorSettings.inboxCardText }}>
-              style={[theme.cardActionStyle, ...cardStyles.cardActionStyle]}>
-              {`Conversation with ${chat.otherUserName} (${chat.otherUserUsername})`}
+                style={[theme.cardActionStyle, ...cardStyles.cardActionStyle]}
+              >
+                {`Conversation with ${chat.otherUserName} (${chat.otherUserUsername})`}
               </Text>
 
-              <Text 
+              <Text
               // style={{ fontSize: 16, margin: 3, color: colorSettings.inboxCardText }}
-              style={[theme.cardContentStyle, ...cardStyles.cardContentStyle]}>
-              {`${chat.messages.length} messages`}</Text>
+                style={[theme.cardContentStyle, ...cardStyles.cardContentStyle]}
+              >
+                {`${chat.messages.length} messages`}
+              </Text>
             </>
           </TouchableOpacity>
         ))}
