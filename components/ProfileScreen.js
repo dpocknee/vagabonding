@@ -96,6 +96,10 @@ export default class Profile extends Component {
                     {' '}
                     {validInterests}
                   </Text>
+                  <Text style={profileStyles.catInfo}>
+                    {' '}
+                    {userInfo.bio}
+                  </Text>
                 </Text>
               </View>
               {/* <View style={profileStyles.chat}> */}

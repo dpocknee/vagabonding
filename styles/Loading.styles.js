@@ -12,6 +12,9 @@ const LoadingStyles = StyleSheet.create({
     width: 175,
     height: 175,
   },
+  spinner: {
+    padding: 10,
+  },
 });
 
 export default LoadingStyles;

@@ -24,10 +24,10 @@ const Users = (props) => {
   if (!users) {
     return <LoadingComponent />;
   }
-  return users.length >= 1 ? (
+  return users.length >= 2 ? (
     <PTRView onRefresh={_refresh}>
       <ScrollView
-        style={[{ flex: 1 }, { backgroundColor: 'rgba(29, 159, 191, 0.5)' }, { borderRadius: 5 }]}
+        style={[{ flex: 1 }, { backgroundColor: 'rgba(225, 225, 225)' }, { borderRadius: 5 }]}
         // rgba(245, 100, 99, 0.3)'
       >
         {/* welcome card start */}
@@ -39,9 +39,10 @@ const Users = (props) => {
             { backgroundColor: 'transparent' },
             { margin: 0 },
             { borderColor: '#FFFFFF' },
-            { color: '#FFFFFF' },
+            { color: 'black' },
             { padding: 5 },
             { paddingBottom: 10 },
+            { marginTop: 2.5 },
           ]}
         >
           {`Scroll down to see users nearby in ${city}`}
@@ -52,17 +53,17 @@ const Users = (props) => {
             onPress={() => onSelectUser(user)}
             style={[
               theme.cardStyle,
-              { backgroundColor: '#1D9FBF' },
-              { marginRight: 10 },
-              { marginLeft: 10 },
+              { backgroundColor: 'rgba(29, 159, 191, 0.7)' },
+              { marginRight: 5 },
+              { marginLeft: 5 },
               { marginTop: 5 },
               { marginBottom: 5 },
               { borderRadius: 5 },
-              { borderColor: '#1D9FBF' },
+              { borderColor: 'rgba(29, 159, 191, 0.7)' },
             ]}
             key={user[1].name}
           >
-            <Text style={[theme.cardActionStyle, { color: '#16324F' }, { fontSize: 17 }]}>
+            <Text style={[theme.cardActionStyle, { color: '#16324F' }, { fontSize: 22 }]}>
               {user[1].name}
               {' '}
             </Text>

@@ -5,10 +5,15 @@ const { mainBackground } = colorSettings;
 const signUpStyles = {
   container: {
     flex: 1,
+    backgroundColor: mainBackground,
+    // padding: 30,
+  },
+  mainView: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: mainBackground,
-    paddingTop: 30,
+    padding: 20,
   },
   interests: {
     marginTop: 20,

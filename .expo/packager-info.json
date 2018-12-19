@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerNgrokUrl": "https://w3-xwa.anonymous.nc-project.exp.direct",
+  "packagerNgrokUrl": "https://packager.w3-xwa.anonymous.nc-project.exp.direct",
+  "ngrokPid": 2242
 }
