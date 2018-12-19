@@ -54,9 +54,13 @@ const getNearbyEvents = async cb => firebase.auth().onAuthStateChanged((currentU
       });
     }));
 });
-// get all events
-// filter events - check if event.location = isPointinCircle
-// return filtered events (promise)
+
+const getGuestNames = async (guestIDs) => {
+  // newArray
+  // forEach guestID, get.doc(guestID)
+  // .push(doc.data().name)
+  // return newAray
+};
 
 export {
   addEvent, getEventCoords, getNearbyEvents, eventsRef,

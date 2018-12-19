@@ -16,6 +16,8 @@ class EventInfo extends Component {
     eventInfo.date = [...dateArray].splice(0, 4).join(' ');
     eventInfo.time = [...dateArray].splice(4, 1)[0].slice(0, 5);
 
+    // funcGetGuestNames
+
     this.setState({
       event: eventInfo,
     });
@@ -26,9 +28,18 @@ class EventInfo extends Component {
     return (
       <View>
         <Text>{event.info.eventName}</Text>
-        <Text>{event.info.eventLocation}</Text>
-        <Text>{`${event.date} at ${event.time}`}</Text>
-        <Text>{event.info.eventDescription}</Text>
+        <Text>
+Where:
+          {event.info.eventLocation}
+        </Text>
+        <Text>
+When:
+          {`${event.date} at ${event.time}`}
+        </Text>
+        <Text>
+What:
+          {event.info.eventDescription}
+        </Text>
         <View>
           <Text>Going:</Text>
           {event.info.guests.map(guest => (
