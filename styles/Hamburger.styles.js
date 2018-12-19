@@ -1,4 +1,5 @@
 import { colorSettings } from './Colors.styles';
+import { generalFont, generalFontBold } from './generalStyling.styles';
 
 const drawerStyles = {
   drawer: {
@@ -39,4 +40,20 @@ const sidebarStyles = {
   menuTextStyle: { left: 5, color: colorSettings.primaryColor },
 };
 
-export { sidebarStyles, drawerStyles };
+const titleStyles = {
+  headerStyle: {
+    backgroundColor: colorSettings.headerColor,
+  },
+  headerTintColor: colorSettings.headerTintColor,
+  headerTitleStyle: {
+    fontFamily: generalFontBold,
+  },
+};
+
+const iconStyles = {
+  color: colorSettings.iconColor,
+};
+
+export {
+  sidebarStyles, drawerStyles, titleStyles, iconStyles,
+};
