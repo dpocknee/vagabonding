@@ -82,7 +82,7 @@ class Inbox extends Component {
           );
         })
         .catch((err) => {
-          this.props.navigation.navigate('Error', {error: err});
+          this.props.navigation.navigate('Error', { error: err });
         });
       unsubscribe();
     });
