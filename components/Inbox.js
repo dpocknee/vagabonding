@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { ScrollView, Text, TouchableOpacity } from 'react-native';
+import { getTheme } from 'react-native-material-kit';
 import firebase from 'firebase';
 import { View } from 'native-base';
 import LoadingComponent from './LoadingComponent';
 import { colorSettings } from '../styles/Colors.styles';
+import cardStyles from '../styles/Users.styles'
 
 const { getChatPartnerNames, chatsRef } = require('../Functionality/chatFunctions');
 const { getCurrentUserInfo } = require('../Functionality/utilityFunctions');
+
+const theme = getTheme();
 
 class Inbox extends Component {
   state = {
@@ -116,13 +120,14 @@ class Inbox extends Component {
       <ScrollView style={{ flex: 1, backgroundColor: colorSettings.inboxBackground }}>
         {chats.map(chat => (
           <TouchableOpacity
-            style={{
-              margin: 9,
-              borderColor: colorSettings.inboxCardBorder,
-              borderWidth: 2,
-              backgroundColor: colorSettings.inboxCardBackground,
-              padding: 10,
-            }}
+            // style={{
+            //   margin: 9,
+            //   borderColor: colorSettings.inboxCardBorder,
+            //   borderWidth: 2,
+            //   backgroundColor: colorSettings.inboxCardBackground,
+            //   padding: 10,
+            // }}
+            style={cardStyles.opacity}
             key={`inbox${chat.otherUser}`}
             onPress={() => allNav({
               currentUserID,
@@ -134,8 +139,16 @@ class Inbox extends Component {
             }
           >
             <>
-              <Text style={{ fontSize: 19, margin: 3, color: colorSettings.inboxCardText }}>{`Conversation with ${chat.otherUserName} (${chat.otherUserUsername})`}</Text>
-              <Text style={{ fontSize: 16, margin: 3, color: colorSettings.inboxCardText }}>{`${chat.messages.length} messages`}</Text>
+              <Text 
+              // style={{ fontSize: 19, margin: 3, color: colorSettings.inboxCardText }}>
+              style={[theme.cardActionStyle, ...cardStyles.cardActionStyle]}>
+              {`Conversation with ${chat.otherUserName} (${chat.otherUserUsername})`}
+              </Text>
+
+              <Text 
+              // style={{ fontSize: 16, margin: 3, color: colorSettings.inboxCardText }}
+              style={[theme.cardContentStyle, ...cardStyles.cardContentStyle]}>
+              {`${chat.messages.length} messages`}</Text>
             </>
           </TouchableOpacity>
         ))}

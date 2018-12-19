@@ -14,7 +14,7 @@ const primaryDarkest = '#014555';
 const primaryLightHex = hexRgb(primaryLight, { format: 'array' });
 const primaryMidHex = hexRgb(primaryMid, { format: 'array' });
 
-const secondaryMid = '#F2C04E';
+const secondaryMid = '#F56463'; // '#F2C04E';
 const secondaryLight = 'FFF1D2';
 
 const colorSettings = {
@@ -78,8 +78,13 @@ const colorSettings = {
   inboxNoMessages: primaryDarkest,
   // --- Chat -----
   // Chat Bubbles
-  chatYouColor: primaryDarkest,
-  chatThemColor: secondaryMid,
+  chatYouBubble: primaryDark,
+  chatYouText: primaryLightest,
+  chatThemBubble: secondaryMid,
+  chatThemText: primaryLightest,
+  // --- Errors ---
+  errorBackground: secondaryMid,
+  errorText: secondaryMid,
 };
 
 export { colorSettings, primaryMid };

@@ -41,15 +41,18 @@ class Chat extends Component {
       {...props}
       textStyle={{
         left: {
-          color: 'white',
+          color: colorSettings.chatThemText,
+        },
+        right: {
+          color: colorSettings.chatYouText,
         },
       }}
       wrapperStyle={{
         left: {
-          backgroundColor: colorSettings.chatThemColor,
+          backgroundColor: colorSettings.chatThemBubble,
         },
         right: {
-          backgroundColor: colorSettings.chatYouColor,
+          backgroundColor: colorSettings.chatYouBubble,
         },
       }}
     />

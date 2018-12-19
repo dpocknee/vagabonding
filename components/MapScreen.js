@@ -8,10 +8,10 @@ import Users from './Users';
 import MenuWrapper from './MenuWrapper';
 import LoadingComponent from './LoadingComponent';
 
+
 import MapStyle from '../styles/MapScreen.styles';
 import { colorSettings } from '../styles/Colors.styles';
-
-const { iconColor } = colorSettings;
+import { iconStyles } from '../styles/Hamburger.styles';
 
 const {
   getUserLocation,
@@ -31,7 +31,7 @@ export default class MapScreen extends Component {
         }}
         width={50}
       >
-        <Icon type="FontAwesome" name="bars" style={{ color: iconColor }} />
+        <Icon type="FontAwesome" name="bars" style={iconStyles} />
       </Button>
     ),
     headerRight: (
@@ -44,7 +44,7 @@ export default class MapScreen extends Component {
         width={50}
         style={{ marginRight: Platform.select({ ios: 15, android: 0 }) }}
       >
-        <Icon type="FontAwesome" name="refresh" style={{ color: iconColor }} />
+        <Icon type="FontAwesome" name="refresh" style={iconStyles} />
       </Button>
     ),
   });

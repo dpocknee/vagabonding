@@ -4,7 +4,7 @@ import { Button, Icon } from 'native-base';
 import PropTypes from 'prop-types';
 import MenuWrapper from './MenuWrapper';
 import Chat from './Chat';
-import { colorSettings } from '../styles/Colors.styles';
+import { titleStyles, iconStyles } from '../styles/Hamburger.styles';
 
 export default class ChatScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -18,16 +18,13 @@ export default class ChatScreen extends Component {
         }}
         width={50}
       >
-        <Icon type="FontAwesome" name="bars" style={{ color: colorSettings.iconColor }} />
+        <Icon type="FontAwesome" name="bars" style={iconStyles} />
       </Button>
     ),
     title: `Chat with ${navigation.getParam('selectedUsername')} (${navigation.getParam(
       'selectedUserUsername',
     )})`,
-    headerStyle: {
-      backgroundColor: colorSettings.headerColor,
-    },
-    headerTintColor: colorSettings.headerTintColor,
+    ...titleStyles,
   });
 
   state = {

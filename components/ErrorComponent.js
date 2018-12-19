@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { Button, Icon } from 'native-base';
-import { colorSettings, tertiaryColor } from '../styles/Colors.styles';
+import { colorSettings } from '../styles/Colors.styles';
 import MenuWrapper from './MenuWrapper';
+import { titleStyles, iconStyles } from '../styles/Hamburger.styles';
 
 class ErrorComponent extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -15,14 +16,11 @@ class ErrorComponent extends Component {
         }}
         width={50}
       >
-        <Icon type="FontAwesome" name="bars" />
+        <Icon type="FontAwesome" name="bars" style={iconStyles} />
       </Button>
     ),
     title: 'Error',
-    headerStyle: {
-      backgroundColor: colorSettings.headerColor,
-    },
-    headerTintColor: colorSettings.headerTintColor,
+    ...titleStyles,
   });
 
   state = {
@@ -46,7 +44,7 @@ class ErrorComponent extends Component {
     return (
       <View
         style={{
-          backgroundColor: tertiaryColor,
+          backgroundColor: colorSettings.errorBackground,
           flex: 1,
           justifyContent: 'center',
           paddingTop: 100,
@@ -56,7 +54,7 @@ class ErrorComponent extends Component {
           <>
             <Text
               style={{
-                color: 'white',
+                color: colorSettings.errorText,
                 margin: 8,
                 alignSelf: 'center',
                 fontSize: 19,
@@ -66,7 +64,7 @@ class ErrorComponent extends Component {
             </Text>
             <Text
               style={{
-                color: 'white',
+                color: colorSettings.errorText,
                 margin: 8,
                 alignSelf: 'center',
                 fontSize: 19,
