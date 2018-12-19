@@ -120,13 +120,6 @@ class Inbox extends Component {
       <ScrollView style={{ flex: 1, backgroundColor: colorSettings.inboxBackground }}>
         {chats.map(chat => (
           <TouchableOpacity
-            // style={{
-            //   margin: 9,
-            //   borderColor: colorSettings.inboxCardBorder,
-            //   borderWidth: 2,
-            //   backgroundColor: colorSettings.inboxCardBackground,
-            //   padding: 10,
-            // }}
             style={cardStyles.opacity}
             key={`inbox${chat.otherUser}`}
             onPress={() => allNav({
@@ -140,14 +133,12 @@ class Inbox extends Component {
           >
             <>
               <Text
-              // style={{ fontSize: 19, margin: 3, color: colorSettings.inboxCardText }}>
                 style={[theme.cardActionStyle, ...cardStyles.cardActionStyle]}
               >
                 {`Conversation with ${chat.otherUserName} (${chat.otherUserUsername})`}
               </Text>
 
               <Text
-              // style={{ fontSize: 16, margin: 3, color: colorSettings.inboxCardText }}
                 style={[theme.cardContentStyle, ...cardStyles.cardContentStyle]}
               >
                 {`${chat.messages.length} messages`}

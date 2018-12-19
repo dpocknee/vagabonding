@@ -88,23 +88,3 @@ const colorSettings = {
 };
 
 export { colorSettings, primaryMid };
-
-/* As hex codes */
-
-// .color-primary-0 { color: #39D9FF }	/* Main Primary color */
-// .color-primary-1 { color: #FFFFFF }
-// .color-primary-2 { color: #D2F6FE }
-// .color-primary-3 { color: #0183A2 }
-// .color-primary-4 { color: #014555 }
-
-// .color-secondary-1-0 { color: #FFC133 }	/* Main Secondary color (1) */
-// .color-secondary-1-1 { color: #FFFFFF }
-// .color-secondary-1-2 { color: #FFF1D2 }
-// .color-secondary-1-3 { color: #FFB100 }
-// .color-secondary-1-4 { color: #895F00 }
-
-// .color-secondary-2-0 { color: #FF4A33 }	/* Main Secondary color (2) */
-// .color-secondary-2-1 { color: #FFFFFF }
-// .color-secondary-2-2 { color: #FFD7D2 }
-// .color-secondary-2-3 { color: #FF1E00 }
-// .color-secondary-2-4 { color: #891000 }
