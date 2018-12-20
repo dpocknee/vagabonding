@@ -76,7 +76,7 @@ class EventInfo extends Component {
           </View>
           <View style={profileStyles.info}>
             <Text style={profileStyles.catInfo}>Going:</Text>
-            {event.info.guests.map((guest, index) => (
+            {event.guestNames.map((guest, index) => (
               <Text key={event.info.guests[index] || Math.random() * 100}>{guest}</Text>
             ))}
           </View>
