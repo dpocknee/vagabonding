@@ -17,28 +17,34 @@ const getUserLocation = async (user, cb) => {
       errorMessage,
     };
   }
-  await Location.getCurrentPositionAsync({}).then((location) => {
-    const { latitude, longitude } = location.coords;
-    firestore
-      .collection('users')
-      .doc(user.uid)
-      .update({
+  return Location.getCurrentPositionAsync({})
+    .then((location) => {
+      const { latitude, longitude } = location.coords;
+      return Promise.all([
+        firestore
+          .collection('users')
+          .doc(user.uid)
+          .update({
+            location: {
+              latitude,
+              longitude,
+            },
+          }),
+        latitude,
+        longitude,
+      ]);
+    })
+    .then(([firestoreplaceholder, latitude, longitude]) => {
+      const newObj = {
         location: {
           latitude,
           longitude,
         },
-      })
-      .then(() => {
-        const newObj = {
-          location: {
-            latitude,
-            longitude,
-          },
-          errorMessage: null,
-        };
-        cb(null, newObj);
-      });
-  });
+        errorMessage: null,
+      };
+      console.log('Loaded current user location');
+      return cb(null, newObj);
+    });
 };
 
 const getLoggedInUsers = () => firestore
@@ -58,9 +64,6 @@ const getLoggedInUsers = () => firestore
 
 const filterUsersByDistance = async (user, cb) => {
   const userDocs = await getLoggedInUsers();
-  // if (!userDocs.length) {
-  //   console.log('No users nearby');
-  // } else {
   let radius;
   let currentUserLocation;
   userDocs.forEach((doc) => {
@@ -83,8 +86,8 @@ const filterUsersByDistance = async (user, cb) => {
     }
     return nearbyUsers;
   }, {});
-  cb(null, nearbyUsersObj);
-  // }
+  console.log('Loaded nearby users');
+  return cb(null, nearbyUsersObj);
 };
 
 const logOut = () => {
@@ -104,7 +107,10 @@ const getCurrentUserInfo = uid => firestore
   .collection('users')
   .doc(uid)
   .get()
-  .then(snapshot => snapshot.data());
+  .then((snapshot) => {
+    console.log('Loaded current user data.');
+    return snapshot.data();
+  });
 
 export {
   getUserLocation, getLoggedInUsers, filterUsersByDistance, logOut, getCurrentUserInfo,

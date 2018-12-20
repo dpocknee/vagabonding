@@ -8,7 +8,6 @@ import Users from './Users';
 import MenuWrapper from './MenuWrapper';
 import LoadingComponent from './LoadingComponent';
 
-
 import MapStyle from '../styles/MapScreen.styles';
 import { colorSettings } from '../styles/Colors.styles';
 import { iconStyles } from '../styles/Hamburger.styles';
@@ -50,9 +49,9 @@ export default class MapScreen extends Component {
   });
 
   state = {
+    mapLoading: true,
     locationAndError: null,
     button: false,
-    dev: false,
     nearbyUsers: [],
     userCity: null, // special dev variable for computer emulators
     userRadius: null,
@@ -66,51 +65,38 @@ export default class MapScreen extends Component {
 
     firebase.auth().onAuthStateChanged((currentUser) => {
       if (currentUser) {
-        // This is just a dev thing if any computers are using emulators without GPS.
-        // It sets a default GPS position somewhere near the middle of Manchester.
-        // REMOVE FOR PRODUCTION:
-        getCurrentUserInfo(currentUser.uid).then((userInfo) => {
-          this.setState({ userRadius: userInfo.radius });
-        });
-        if (this.state.dev) {
-          this.setState({
-            currentUser,
-            locationAndError: {
-              location: { latitude: 53.4758302, longitude: -2.2465945 },
-            },
-            nearbyUsers: [],
-          });
-          // ---------------
-        } else {
-          getUserLocation(currentUser, (err1, locationAndError) => {
-            this.setState(
-              {
-                currentUser,
-                locationAndError,
-              },
-              () => {
-                filterUsersByDistance(this.state.currentUser, (err2, nearbyUsers) => {
-                  const nearbyUsersArray = Object.entries(nearbyUsers);
-                  this.setState({ nearbyUsers: nearbyUsersArray });
-                })
-                  .then(() => {
-                    Expo.Location.reverseGeocodeAsync(locationAndError.location).then((city) => {
-                      const userCity = city[0].city;
-                      this.setState({
-                        userCity,
-                      });
-                    });
-                  })
-                  .catch((err) => {
-                    this.props.navigation.navigate('Error', { error: err });
-                  });
-              },
-            );
-          }).catch((err) => {
+        return Promise.all([
+          getCurrentUserInfo(currentUser.uid),
+          getUserLocation(currentUser, (err, locationAndError) => locationAndError),
+          filterUsersByDistance(currentUser, (err, nearbyUsers) => Object.entries(nearbyUsers)),
+        ])
+          .then(([userInfo, locationAndError, nearbyUsersArray]) => {
+            this.setState({
+              currentUser,
+              userRadius: userInfo.radius,
+              locationAndError,
+              nearbyUsers: nearbyUsersArray,
+            });
+            return Expo.Location.reverseGeocodeAsync(locationAndError.location);
+          })
+          .then((city) => {
+            console.log('Loaded address information');
+            this.setState({
+              userCity: city[0].city,
+              mapLoading: false,
+            });
+          })
+          .catch((err) => {
+            this.setState({
+              mapLoading: false,
+            });
             this.props.navigation.navigate('Error', { error: err });
           });
-        }
       }
+      this.setState({
+        mapLoading: false,
+      });
+      this.props.navigation.navigate('Error', { error: 'No current user!' });
     });
   }
 
@@ -123,10 +109,15 @@ export default class MapScreen extends Component {
 
   render() {
     const {
-      locationAndError, nearbyUsers, currentUser, userRadius, userCity,
+      locationAndError,
+      nearbyUsers,
+      currentUser,
+      userRadius,
+      userCity,
+      mapLoading,
     } = this.state;
     const { navigation } = this.props;
-    if (!locationAndError) {
+    if (mapLoading) {
       return <LoadingComponent />;
     }
     return (
