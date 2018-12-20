@@ -1,6 +1,6 @@
 # NC-Project
 
-## Northcoders Final Project - (Name TBC)
+## Northcoders Final Project - Nomad Network
 
 ### Note
 
@@ -93,11 +93,8 @@ This will open up a browser window and allow you to either scan the QR code or o
 - Expo
 - Firebase Auth
 - Firebase Firestore
-- React
 - React Navigation
 - React Native
-- React Native Material Kit
-- React Native Elements
 - Gifted Chat
 - GeoLib
 
