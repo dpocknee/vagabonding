@@ -45,6 +45,38 @@ const Sidebar = (props) => {
             <Text style={sidebarStyles.menuTextStyle}>Inbox</Text>
           </Button>
         </View>
+        <View style={[{ marginTop: '8%' }]}>
+          <Button
+            iconLeft
+            transparent
+            primary
+            title="CreateEvent"
+            onPress={() => {
+              drawerStatus();
+              closeDrawer();
+              allNav('CreateEvent');
+            }}
+          >
+            <Icon type="FontAwesome" name="times" style={iconStyles} />
+            <Text style={sidebarStyles.menuTextStyle}>Create Event</Text>
+          </Button>
+        </View>
+        <View style={[{ marginTop: '8%' }]}>
+          <Button
+            iconLeft
+            transparent
+            primary
+            title="NearbyEvents"
+            onPress={() => {
+              closeDrawer();
+              drawerStatus();
+              allNav('NearbyEvents');
+            }}
+          >
+            <Icon type="FontAwesome" name="times" style={iconStyles} />
+            <Text style={sidebarStyles.menuTextStyle}>Nearby Events</Text>
+          </Button>
+        </View>
         <View style={{ marginTop: '8%' }}>
           <Button
             iconLeft
@@ -60,51 +92,6 @@ const Sidebar = (props) => {
           >
             <Icon type="FontAwesome" name="hand-o-left" style={iconStyles} />
             <Text style={sidebarStyles.menuTextStyle}>Logout</Text>
-          </Button>
-        </View>
-        <View style={[{ marginTop: '8%' }]}>
-          <Button
-            iconLeft
-            transparent
-            primary
-            title="Close"
-            onPress={() => {
-              drawerStatus();
-              closeDrawer();
-            }}
-          >
-            <Icon type="FontAwesome" name="times" style={iconStyles} />
-            <Text style={sidebarStyles.menuTextStyle}>create event</Text>
-          </Button>
-        </View>
-        <View style={[{ marginTop: '8%' }]}>
-          <Button
-            iconLeft
-            transparent
-            primary
-            title="Close"
-            onPress={() => {
-              drawerStatus();
-              closeDrawer();
-            }}
-          >
-            <Icon type="FontAwesome" name="times" style={iconStyles} />
-            <Text style={sidebarStyles.menuTextStyle}>nearby events</Text>
-          </Button>
-        </View>
-        <View style={[{ marginTop: '8%' }]}>
-          <Button
-            iconLeft
-            transparent
-            primary
-            title="Close"
-            onPress={() => {
-              drawerStatus();
-              closeDrawer();
-            }}
-          >
-            <Icon type="FontAwesome" name="times" style={iconStyles} />
-            <Text style={sidebarStyles.menuTextStyle}>new</Text>
           </Button>
         </View>
       </Content>
