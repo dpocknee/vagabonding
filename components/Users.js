@@ -6,7 +6,7 @@ import { getTheme } from 'react-native-material-kit';
 import PropTypes from 'prop-types';
 import PTRView from 'react-native-pull-to-refresh';
 import LoadingComponent from './LoadingComponent';
-import { colorSettings, primaryMid } from '../styles/Colors.styles';
+import { colorSettings } from '../styles/Colors.styles';
 import cardStyles from '../styles/Users.styles';
 
 const theme = getTheme();

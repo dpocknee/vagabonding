@@ -21,9 +21,9 @@ class SignUp extends Component {
     email: '',
     password: '',
     bio: '',
-    age: '',
+    // age: '',
     gender: '',
-    hometown: '',
+    // hometown: '',
     errorMessage: null,
     museums: false,
     bars: false,
@@ -40,37 +40,34 @@ class SignUp extends Component {
       bars,
       restaurants,
       bio,
-      age,
-      hometown,
+      // age,
+      // hometown,
       gender,
     } = this.state;
 
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
+      .then(currentUser => firestore
+        .collection('users')
+        .doc(currentUser.user.uid)
+        .set({
+          location: { latitude: null, longitude: null },
+          loggedIn: true,
+          interests: { museums, bars, restaurants },
+          name,
+          username,
+          bio,
+          // age,
+          gender,
+          // hometown,
+          radius: 1000,
+        }))
       .then(() => {
-        const { currentUser } = firebase.auth();
-        firestore
-          .collection('users')
-          .doc(currentUser.uid)
-          .set({
-            location: { latitude: null, longitude: null },
-            loggedIn: true,
-            interests: { museums, bars, restaurants },
-            name,
-            username,
-            bio,
-            age,
-            gender,
-            hometown,
-            radius: 1000,
-          });
         this.props.navigation.navigate('mainFlow');
       })
-      .catch((err) => {
-        this.setState({
-          errorMessage: err.message,
-        });
+      .catch(() => {
+        this.props.navigation.navigate('Error');
       });
   };
 
@@ -82,9 +79,9 @@ class SignUp extends Component {
       email,
       password,
       bio,
-      age,
+      // age,
       gender,
-      hometown,
+      // hometown,
       museums,
       bars,
       restaurants,
@@ -128,23 +125,31 @@ class SignUp extends Component {
             autoCapitalize="none"
             secureTextEntry
             style={generalStyling.textInput}
-            onChangeText={newPassword => this.setState({ password: newPassword })}
+            onChangeText={(newPassword) => {
+              this.setState({ password: newPassword });
+            }}
             value={password}
           />
-          <TextInput
+          {/* <TextInput
             placeholder="age"
             keyboardType="numeric"
             style={generalStyling.textInput}
             maxLength={3}
-            onChange={newAge => this.setState({ age: newAge })}
+            onChange={(newAge) => {
+              console.log('age');
+              this.setState({ age: newAge });
+            }}
             value={age}
-          />
-          <TextInput
+          /> */}
+          {/* <TextInput
             placeholder="hometown"
             style={generalStyling.textInput}
-            onChange={newHometown => this.setState({ hometown: newHometown })}
+            onChange={(newHometown) => {
+              console.log('hometown');
+              this.setState({ hometown: newHometown });
+            }}
             value={hometown}
-          />
+          /> */}
           <View style={generalStyling.dropDownChoice}>
             <Picker
               mode="dropdown"

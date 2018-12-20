@@ -14,7 +14,6 @@ import ErrorComponent from './components/ErrorComponent';
 import NearbyEvents from './components/NearbyEvents';
 import EventInfo from './components/EventInfo';
 import CreateEvent from './components/CreateEvent';
-// import { getEventCoords, addEvent } from './Functionality/eventFunctions';
 
 console.disableYellowBox = true;
 

@@ -24,23 +24,24 @@ class EventInfo extends Component {
     eventInfo.time = [...dateArray].splice(4, 1)[0].slice(0, 5);
 
     firebase.auth().onAuthStateChanged((currentUser) => {
-      const { uid } = currentUser;
-
-      if (eventInfo.info.guests.includes(uid)) {
-        getGuestNames(eventInfo.info.guests, (err, guestNames) => {
-          eventInfo.guestNames = guestNames;
-          this.setState({
-            event: eventInfo,
+      if (currentUser) {
+        const { uid } = currentUser;
+        if (eventInfo.info.guests.includes(uid)) {
+          getGuestNames(eventInfo.info.guests, (err, guestNames) => {
+            eventInfo.guestNames = guestNames;
+            this.setState({
+              event: eventInfo,
+            });
           });
-        });
-      } else {
-        getGuestNames(eventInfo.info.guests, (err, guestNames) => {
-          eventInfo.guestNames = guestNames;
-          this.setState({
-            event: eventInfo,
-            user: false,
+        } else {
+          getGuestNames(eventInfo.info.guests, (err, guestNames) => {
+            eventInfo.guestNames = guestNames;
+            this.setState({
+              event: eventInfo,
+              user: false,
+            });
           });
-        });
+        }
       }
     });
   }

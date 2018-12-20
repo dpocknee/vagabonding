@@ -79,19 +79,21 @@ const getGuestNames = async (guestIDs, cb) => {
 
 const joinEvent = async (eventID, cb) => {
   firebase.auth().onAuthStateChanged((currentUser) => {
-    eventsRef
-      .doc(eventID)
-      .update({
-        guests: firebase.firestore.FieldValue.arrayUnion(currentUser.uid),
-      })
-      .then(() => {
-        usersRef
-          .doc(currentUser.uid)
-          .get()
-          .then((querySnapshot) => {
-            cb(null, querySnapshot.data().name);
-          });
-      });
+    if (currentUser) {
+      eventsRef
+        .doc(eventID)
+        .update({
+          guests: firebase.firestore.FieldValue.arrayUnion(currentUser.uid),
+        })
+        .then(() => {
+          usersRef
+            .doc(currentUser.uid)
+            .get()
+            .then((querySnapshot) => {
+              cb(null, querySnapshot.data().name);
+            });
+        });
+    }
   });
 };
 

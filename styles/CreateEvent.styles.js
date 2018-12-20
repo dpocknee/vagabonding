@@ -9,7 +9,7 @@ const {
   textInputBorder,
   mainBackground,
 } = colorSettings;
-const generalFont = 'Thasadith-Regular';
+// const generalFont = 'Thasadith-Regular';
 const generalFontBold = 'Thasadith-Bold';
 
 const createEventStyles = {
