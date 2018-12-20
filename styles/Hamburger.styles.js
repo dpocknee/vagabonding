@@ -45,6 +45,7 @@ const titleStyles = {
   headerStyle: {
     // backgroundColor: colorSettings.headerColor,
     // headerTransparent: true,
+    //THIS MAY BREAK THE HEADER STYLING
   },
   headerTintColor: colorSettings.headerTintColor,
   headerTitleStyle: {
