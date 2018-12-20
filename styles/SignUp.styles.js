@@ -1,7 +1,8 @@
 import { colorSettings } from './Colors.styles';
+import { generalFontBold } from './generalStyling.styles';
 
 const { signUpBackground, darkText } = colorSettings;
-const generalFontBold = 'Thasadith-Bold';
+
 
 const signUpStyles = {
   container: {
