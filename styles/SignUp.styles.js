@@ -30,7 +30,7 @@ const signUpStyles = {
   },
   title: {
     fontFamily: generalFontBold,
-    fontSize: 20,
+    fontSize: 40,
     color: darkText,
     fontWeight: 'bold',
     padding: 30,
