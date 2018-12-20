@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo';
-import profileStyles from '../styles/Profile.styles';
 import { Button } from 'react-native-elements';
 import * as firebase from 'firebase';
+import profileStyles from '../styles/Profile.styles';
 import { getGuestNames, joinEvent } from '../Functionality/eventFunctions';
 
 class EventInfo extends Component {
@@ -24,23 +24,24 @@ class EventInfo extends Component {
     eventInfo.time = [...dateArray].splice(4, 1)[0].slice(0, 5);
 
     firebase.auth().onAuthStateChanged((currentUser) => {
-      const { uid } = currentUser;
-
-      if (eventInfo.info.guests.includes(uid)) {
-        getGuestNames(eventInfo.info.guests, (err, guestNames) => {
-          eventInfo.guestNames = guestNames;
-          this.setState({
-            event: eventInfo,
+      if (currentUser) {
+        const { uid } = currentUser;
+        if (eventInfo.info.guests.includes(uid)) {
+          getGuestNames(eventInfo.info.guests, (err, guestNames) => {
+            eventInfo.guestNames = guestNames;
+            this.setState({
+              event: eventInfo,
+            });
           });
-        });
-      } else {
-        getGuestNames(eventInfo.info.guests, (err, guestNames) => {
-          eventInfo.guestNames = guestNames;
-          this.setState({
-            event: eventInfo,
-            user: false,
+        } else {
+          getGuestNames(eventInfo.info.guests, (err, guestNames) => {
+            eventInfo.guestNames = guestNames;
+            this.setState({
+              event: eventInfo,
+              user: false,
+            });
           });
-        });
+        }
       }
     });
   }
@@ -76,24 +77,24 @@ class EventInfo extends Component {
           </View>
           <View style={profileStyles.info}>
             <Text style={profileStyles.catInfo}>Going:</Text>
-            {event.info.guests.map(guest => (
+            {event.guestNames.map((guest, index) => (
               <Text key={event.info.guests[index] || Math.random() * 100}>{guest}</Text>
             ))}
           </View>
-        {!user && (
-          <Button
-            title="Join event"
-            onPress={() => {
-              joinEvent(event.id, (err, newName) => {
-                const array = [...event.guestNames, newName];
-                this.setState(prevState => ({
-                  event: { ...prevState.event, guestNames: array },
-                  user: true,
-                }));
-              });
-            }}
-          />
-        )}
+          {!user && (
+            <Button
+              title="Join event"
+              onPress={() => {
+                joinEvent(event.id, (err, newName) => {
+                  const array = [...event.guestNames, newName];
+                  this.setState(prevState => ({
+                    event: { ...prevState.event, guestNames: array },
+                    user: true,
+                  }));
+                });
+              }}
+            />
+          )}
         </LinearGradient>
       </View>
     );

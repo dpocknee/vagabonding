@@ -48,26 +48,22 @@ class SignUp extends Component {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then((currentUser) => {
-        console.log(currentUser, '<<<<current User', currentUser.user.uid, '<<<<<currentUser.uid');
-        return firestore
-          .collection('users')
-          .doc(currentUser.user.uid)
-          .set({
-            location: { latitude: null, longitude: null },
-            loggedIn: true,
-            interests: { museums, bars, restaurants },
-            name,
-            username,
-            bio,
-            // age,
-            gender,
-            // hometown,
-            radius: 1000,
-          });
-      })
+      .then(currentUser => firestore
+        .collection('users')
+        .doc(currentUser.user.uid)
+        .set({
+          location: { latitude: null, longitude: null },
+          loggedIn: true,
+          interests: { museums, bars, restaurants },
+          name,
+          username,
+          bio,
+          // age,
+          gender,
+          // hometown,
+          radius: 1000,
+        }))
       .then(() => {
-        console.log('HELPPPPP!!!!');
         this.props.navigation.navigate('mainFlow');
       })
       .catch(() => {
