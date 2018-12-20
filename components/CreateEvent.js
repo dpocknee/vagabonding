@@ -3,9 +3,10 @@ import { View, TextInput, Text } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import * as firebase from 'firebase';
 import { Button } from 'native-base';
-import { generalStyling } from '../styles/generalStyling.styles';
+import Textarea from 'react-native-textarea';
 import createEventStyles from '../styles/CreateEvent.styles';
 import { addEvent } from '../Functionality/eventFunctions';
+import { generalStyling } from '../styles/generalStyling.styles';
 
 class CreateEvent extends Component {
   state = {
@@ -59,10 +60,12 @@ class CreateEvent extends Component {
             onChangeText={newEventCity => this.setState({ eventCity: newEventCity })}
             value={eventCity}
           />
-          <TextInput
+          <Textarea
             placeholder="Description"
             autoCapitalize="sentences"
-            style={createEventStyles.textInput}
+            maxLength={200}
+            containerStyle={generalStyling.textareaContainer}
+            style={generalStyling.textarea}
             onChangeText={newDescription => this.setState({ eventDescription: newDescription })}
             value={eventDescription}
           />
