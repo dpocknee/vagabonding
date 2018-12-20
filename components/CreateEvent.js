@@ -43,9 +43,11 @@ class CreateEvent extends Component {
     navigation.setParams({ buttonChange: this.buttonChange });
 
     firebase.auth().onAuthStateChanged((currentUser) => {
-      this.setState({
-        currentUserUID: currentUser.uid,
-      });
+      if (currentUser) {
+        this.setState({
+          currentUserUID: currentUser.uid,
+        });
+      }
     });
   }
 
@@ -72,96 +74,98 @@ class CreateEvent extends Component {
           currentPage="createEvent"
           buttonState={this.state.button}
         >
-      <KeyboardAvoidingView
-        behavior={Platform.select({ android: 'padding', ios: undefined })}
-        style={{ flex: 1 }}
-        keyboardVerticalOffset={0}
-      >
-        <View style={createEventStyles.container}>
-          <Text style={createEventStyles.title}>Create A New Event</Text>
-          <View style={createEventStyles.inputBoxes}>
-            <TextInput
-              placeholder="Event Name"
-              autoCapitalize="words"
-              style={createEventStyles.textInput}
-              onChangeText={newEventName => this.setState({ eventName: newEventName })}
-              value={eventName}
-            />
-            <TextInput
-              placeholder="Event Location"
-              autoCapitalize="words"
-              style={createEventStyles.textInput}
-              onChangeText={newEventLocation => this.setState({ eventLocation: newEventLocation })}
-              value={eventLocation}
-            />
-            <TextInput
-              placeholder="Event City"
-              autoCapitalize="words"
-              style={createEventStyles.textInput}
-              onChangeText={newEventCity => this.setState({ eventCity: newEventCity })}
-              value={eventCity}
-            />
-            <Textarea
-              placeholder="Description"
-              autoCapitalize="sentences"
-              maxLength={200}
-              containerStyle={generalStyling.textareaContainer}
-              style={generalStyling.textarea}
-              onChangeText={newDescription => this.setState({ eventDescription: newDescription })}
-              value={eventDescription}
-            />
+          <KeyboardAvoidingView
+            behavior={Platform.select({ android: 'padding', ios: undefined })}
+            style={{ flex: 1 }}
+            keyboardVerticalOffset={0}
+          >
+            <View style={createEventStyles.container}>
+              <Text style={createEventStyles.title}>Create A New Event</Text>
+              <View style={createEventStyles.inputBoxes}>
+                <TextInput
+                  placeholder="Event Name"
+                  autoCapitalize="words"
+                  style={createEventStyles.textInput}
+                  onChangeText={newEventName => this.setState({ eventName: newEventName })}
+                  value={eventName}
+                />
+                <TextInput
+                  placeholder="Event Location"
+                  autoCapitalize="words"
+                  style={createEventStyles.textInput}
+                  onChangeText={newEventLocation => this.setState({ eventLocation: newEventLocation })
+                  }
+                  value={eventLocation}
+                />
+                <TextInput
+                  placeholder="Event City"
+                  autoCapitalize="words"
+                  style={createEventStyles.textInput}
+                  onChangeText={newEventCity => this.setState({ eventCity: newEventCity })}
+                  value={eventCity}
+                />
+                <Textarea
+                  placeholder="Description"
+                  autoCapitalize="sentences"
+                  maxLength={200}
+                  containerStyle={generalStyling.textareaContainer}
+                  style={generalStyling.textarea}
+                  onChangeText={newDescription => this.setState({ eventDescription: newDescription })
+                  }
+                  value={eventDescription}
+                />
 
-            <View style={createEventStyles.buttonBox}>
-              <DatePicker
-                style={createEventStyles.dateInput}
-                date={this.state.datetime}
-                mode="datetime"
-                placeholder="Select date and time"
-                format="LLLL"
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-                customStyles={{
-                  dateIcon: {
-                    position: 'absolute',
-                    left: 0,
-                    top: 4,
-                    marginLeft: 0,
-                  },
-                  dateInput: {
-                    marginLeft: 36,
-                  },
-                }}
-                onDateChange={(newDatetime) => {
-                  this.setState({ datetime: newDatetime });
-                }}
-              />
-              <Button
-                title="Create Event"
-                rounded
-                style={createEventStyles.longButton}
-                onPress={() => {
-                  const eventObj = {
-                    eventName,
-                    eventLocation: `${eventLocation}, ${eventCity}`,
-                    eventDescription,
-                    datetime: Date.parse(datetime),
-                    currentUserUID,
-                  };
-                  addEvent(eventObj).catch(() => {
-                    this.props.navigation.push('Error');
-                  });
-                  this.props.navigation.navigate('NearbyEvents');
-                }}
-              >
-                <Text style={createEventStyles.buttonText}>Create Event</Text>
-              </Button>
+                <View style={createEventStyles.buttonBox}>
+                  <DatePicker
+                    style={createEventStyles.dateInput}
+                    date={this.state.datetime}
+                    mode="datetime"
+                    placeholder="Select date and time"
+                    format="LLLL"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                      dateIcon: {
+                        position: 'absolute',
+                        left: 0,
+                        top: 4,
+                        marginLeft: 0,
+                      },
+                      dateInput: {
+                        marginLeft: 36,
+                      },
+                    }}
+                    onDateChange={(newDatetime) => {
+                      this.setState({ datetime: newDatetime });
+                    }}
+                  />
+                  <Button
+                    title="Create Event"
+                    rounded
+                    style={createEventStyles.longButton}
+                    onPress={() => {
+                      const eventObj = {
+                        eventName,
+                        eventLocation: `${eventLocation}, ${eventCity}`,
+                        eventDescription,
+                        datetime: Date.parse(datetime),
+                        currentUserUID,
+                      };
+                      addEvent(eventObj).catch(() => {
+                        this.props.navigation.push('Error');
+                      });
+                      this.props.navigation.navigate('NearbyEvents');
+                    }}
+                  >
+                    <Text style={createEventStyles.buttonText}>Create Event</Text>
+                  </Button>
+                </View>
+              </View>
             </View>
-          </View>
-        </View>
-      </KeyboardAvoidingView>
+          </KeyboardAvoidingView>
         </MenuWrapper>
       </View>
-//Possible Issues with whether or not keyboardWrapper is inside menuwrapper and also how many closing view tags there are
+      // Possible Issues with whether or not keyboardWrapper is inside menuwrapper and also how many closing view tags there are
     );
   }
 }
