@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
+import * as firebase from 'firebase';
 import 'firebase/firestore';
 import { Font, AppLoading } from 'expo';
 import AuthLoading from './components/AuthLoading';
@@ -15,6 +16,24 @@ import NearbyEvents from './components/NearbyEvents';
 import EventInfo from './components/EventInfo';
 import CreateEvent from './components/CreateEvent';
 // import { getEventCoords, addEvent } from './Functionality/eventFunctions';
+const { firestore } = require('./config');
+
+// firestore
+//   .collection('users')
+//   .doc('1111111222222')
+//   .set({
+//     location: { latitude: null, longitude: null },
+//     loggedIn: true,
+//     // interests: { museums, bars, restaurants },
+//     // name,
+//     // username,
+//     // bio,
+//     // age,
+//     // gender,
+//     // hometown,
+//     radius: 1000,
+//   });
+console.log('APP');
 
 console.disableYellowBox = true;
 

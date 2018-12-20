@@ -68,9 +68,13 @@ export default class MapScreen extends Component {
         // This is just a dev thing if any computers are using emulators without GPS.
         // It sets a default GPS position somewhere near the middle of Manchester.
         // REMOVE FOR PRODUCTION:
-        getCurrentUserInfo(currentUser.uid).then((userInfo) => {
-          this.setState({ userRadius: userInfo.radius });
-        });
+        getCurrentUserInfo(currentUser.uid)
+          .then((userInfo) => {
+            this.setState({ userRadius: userInfo.radius });
+          })
+          .catch(() => {
+            this.props.navigation.navigate('Error');
+          });
         if (this.state.dev) {
           this.setState({
             currentUser,
