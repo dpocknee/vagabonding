@@ -51,22 +51,22 @@ m away
       </ScrollView>
     </PTRView>
   ) : (
-    <PTRView onRefresh={_refresh} style={{ backgroundColor: colorSettings.usersBackground }}>
-      <View style={[{ flex: 1 }, { backgroundColor: colorSettings.usersBackground }]}>
+    <PTRView onRefresh={_refresh} style={{ backgroundColor: colorSettings.usersTitleText }}>
+      <View style={{ backgroundColor: 'blue' }}>
         <View
           style={[
             theme.cardStyle,
             { padding: 30 },
             { backgroundColor: colorSettings.usersTitleText },
-            { borderColor: colorSettings.usersTitleBorder },
+            { borderColor: colorSettings.usersTitleText },
             { borderRadius: 2 },
-            { paddingTop: 50 },
+            { paddingTop: 125 },
           ]}
         >
-          <Text
-            style={[{ textAlign: 'center' }, { color: colorSettings.lightText }, { fontSize: 18 }]}
-          >
+          <Text style={[{ textAlign: 'center' }, { color: 'white' }, { fontSize: 18 }]}>
             There are no nearby users
+            {'\n'}
+            Pull Down To Refresh
           </Text>
         </View>
       </View>
