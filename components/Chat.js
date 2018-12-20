@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { GiftedChat, Bubble } from 'react-native-gifted-chat';
+import { GiftedChat, Bubble, Avatar } from 'react-native-gifted-chat';
 import LoadingComponent from './LoadingComponent';
 import { colorSettings } from '../styles/Colors.styles';
 
@@ -58,6 +58,16 @@ class Chat extends Component {
     />
   );
 
+  renderAvatar = props => (
+    <Avatar
+      {...props}
+      imageStyle={{
+        left: { backgroundColor: colorSettings.chatThemBubble },
+        right: { backgroundColor: colorSettings.chatThemBubble },
+      }}
+    />
+  );
+
   render() {
     const { currentUserID, currentUsername } = this.props;
     const { loading } = this.state;
@@ -70,6 +80,7 @@ class Chat extends Component {
         onSend={messages => this.onSend(messages)}
         user={{ _id: currentUserID, name: currentUsername }}
         renderBubble={this.renderBubble}
+        renderAvatar={this.renderAvatar}
       />
     );
   }

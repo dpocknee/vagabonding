@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, TextInput, View } from 'react-native';
-import { H1, H2, Button } from 'native-base';
+import { H1, Button } from 'native-base';
 import * as firebase from 'firebase';
 import ErrorComponent from './ErrorComponent';
 import loginStyles from '../styles/Login.styles';

@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 import 'firebase/firestore';
