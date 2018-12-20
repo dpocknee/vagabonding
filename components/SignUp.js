@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  TextInput, View, Text, ScrollView,
+  TextInput, View, Text, ScrollView, KeyboardAvoidingView, Platform
 } from 'react-native';
 import * as firebase from 'firebase';
 import { CheckBox } from 'react-native-elements';
@@ -91,8 +91,13 @@ class SignUp extends Component {
     } = this.state;
 
     return (
-      <ScrollView style={signUpStyles.container}>
-        <View style={signUpStyles.mainView}>
+      <KeyboardAvoidingView
+        behavior={Platform.select({ android: 'padding', ios: undefined })}
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={0}
+      >
+        <ScrollView style={signUpStyles.container}>
+          <View style={signUpStyles.mainView}>
           <H1 style={signUpStyles.title}>Vagabonding</H1>
           <H2 style={generalStyling.h2}>Sign Up</H2>
           {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
@@ -214,6 +219,7 @@ class SignUp extends Component {
           </View>
         </View>
       </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }
