@@ -71,6 +71,7 @@ const colorSettings = {
   usersCardBorder: primaryLightest,
   usersCardAction: primaryDarkest,
   usersCardContent: primaryDark,
+  usersNoNearbyUsers: primaryLight,
   // ------ Inbox -----
   inboxMessageCard: primaryLightest,
   inboxMessageText: primaryLight,

@@ -4,13 +4,30 @@ import {
 } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import * as firebase from 'firebase';
-import { Button } from 'native-base';
+import { Button, Icon } from 'native-base';
 import Textarea from 'react-native-textarea';
 import createEventStyles from '../styles/CreateEvent.styles';
 import { addEvent } from '../Functionality/eventFunctions';
 import { generalStyling } from '../styles/generalStyling.styles';
+import MenuWrapper from './MenuWrapper';
+import { iconStyles } from '../styles/Hamburger.styles';
 
 class CreateEvent extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    headerLeft: (
+      <Button
+        iconLeft
+        transparent
+        onPress={() => {
+          navigation.getParam('buttonChange')();
+        }}
+        width={50}
+      >
+        <Icon type="FontAwesome" name="bars" style={iconStyles} />
+      </Button>
+    ),
+  });
+
   state = {
     eventName: '',
     eventLocation: '',
@@ -18,15 +35,26 @@ class CreateEvent extends Component {
     eventDescription: '',
     datetime: '',
     currentUserUID: '',
+    button: false,
   };
 
   componentDidMount() {
+    const { navigation } = this.props;
+    navigation.setParams({ buttonChange: this.buttonChange });
+
     firebase.auth().onAuthStateChanged((currentUser) => {
       this.setState({
         currentUserUID: currentUser.uid,
       });
     });
   }
+
+  buttonChange = () => {
+    this.setState((state) => {
+      const buttonClick = !state.button;
+      return { button: buttonClick };
+    });
+  };
 
   render() {
     const {
@@ -38,6 +66,12 @@ class CreateEvent extends Component {
       currentUserUID,
     } = this.state;
     return (
+      <View style={createEventStyles.container}>
+        <MenuWrapper
+          navigation={this.props.navigation}
+          currentPage="createEvent"
+          buttonState={this.state.button}
+        >
       <KeyboardAvoidingView
         behavior={Platform.select({ android: 'padding', ios: undefined })}
         style={{ flex: 1 }}
@@ -125,6 +159,9 @@ class CreateEvent extends Component {
           </View>
         </View>
       </KeyboardAvoidingView>
+        </MenuWrapper>
+      </View>
+//Possible Issues with whether or not keyboardWrapper is inside menuwrapper and also how many closing view tags there are
     );
   }
 }
