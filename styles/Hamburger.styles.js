@@ -43,7 +43,8 @@ const sidebarStyles = {
 
 const titleStyles = {
   headerStyle: {
-    backgroundColor: colorSettings.headerColor,
+    // backgroundColor: colorSettings.headerColor,
+    // headerTransparent: true,
   },
   headerTintColor: colorSettings.headerTintColor,
   headerTitleStyle: {
