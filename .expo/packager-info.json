@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": "https://2u-jic.anonymous.nc-project.exp.direct",
-  "packagerNgrokUrl": "https://packager.2u-jic.anonymous.nc-project.exp.direct",
-  "ngrokPid": 20382
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }
