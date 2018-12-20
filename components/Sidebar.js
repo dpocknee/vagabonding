@@ -58,7 +58,7 @@ const Sidebar = (props) => {
             }}
           >
             <Icon type="FontAwesome" name="times" style={iconStyles} />
-            <Text style={sidebarStyles.menuTextStyle}>create event</Text>
+            <Text style={sidebarStyles.menuTextStyle}>Create Event</Text>
           </Button>
         </View>
         <View style={[{ marginTop: '8%' }]}>
@@ -74,7 +74,7 @@ const Sidebar = (props) => {
             }}
           >
             <Icon type="FontAwesome" name="times" style={iconStyles} />
-            <Text style={sidebarStyles.menuTextStyle}>nearby events</Text>
+            <Text style={sidebarStyles.menuTextStyle}>Nearby Events</Text>
           </Button>
         </View>
         <View style={{ marginTop: '8%' }}>
