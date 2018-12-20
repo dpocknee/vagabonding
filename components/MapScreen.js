@@ -8,7 +8,6 @@ import Users from './Users';
 import MenuWrapper from './MenuWrapper';
 import LoadingComponent from './LoadingComponent';
 
-
 import MapStyle from '../styles/MapScreen.styles';
 import { colorSettings } from '../styles/Colors.styles';
 import { iconStyles } from '../styles/Hamburger.styles';
@@ -132,7 +131,7 @@ export default class MapScreen extends Component {
     return (
       <View style={{ flex: 1 }}>
         <MenuWrapper navigation={navigation} currentPage="map" buttonState={this.state.button}>
-          <View style={nearbyUsers.length >= 1 ? { flex: 1.8 } : { flex: 4 }}>
+          <View style={nearbyUsers.length >= 2 ? { flex: 1.8 } : { flex: 3.6 }}>
             <Expo.MapView
               style={{ flex: 1 }}
               provider={Expo.MapView.PROVIDER_GOOGLE}
