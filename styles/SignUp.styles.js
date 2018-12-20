@@ -1,6 +1,8 @@
 import { colorSettings } from './Colors.styles';
+import { generalFontBold } from './generalStyling.styles';
 
-const { signUpBackground } = colorSettings;
+const { signUpBackground, darkText } = colorSettings;
+
 
 const signUpStyles = {
   container: {
@@ -26,6 +28,13 @@ const signUpStyles = {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'flex-end',
+  },
+  title: {
+    fontFamily: generalFontBold,
+    fontSize: 40,
+    color: darkText,
+    fontWeight: 'bold',
+    padding: 30,
   },
 };
 
