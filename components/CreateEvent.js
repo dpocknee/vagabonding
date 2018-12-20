@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { View, TextInput, Text } from 'react-native';
+import {
+  View, TextInput, Text, KeyboardAvoidingView, Platform, ScrollView,
+} from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import * as firebase from 'firebase';
 import { Button, Icon } from 'native-base';
@@ -70,6 +72,12 @@ class CreateEvent extends Component {
           currentPage="createEvent"
           buttonState={this.state.button}
         >
+      <KeyboardAvoidingView
+        behavior={Platform.select({ android: 'padding', ios: undefined })}
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={0}
+      >
+        <View style={createEventStyles.container}>
           <Text style={createEventStyles.title}>Create A New Event</Text>
           <View style={createEventStyles.inputBoxes}>
             <TextInput
@@ -149,8 +157,11 @@ class CreateEvent extends Component {
               </Button>
             </View>
           </View>
+        </View>
+      </KeyboardAvoidingView>
         </MenuWrapper>
       </View>
+//Possible Issues with whether or not keyboardWrapper is inside menuwrapper and also how many closing view tags there are
     );
   }
 }
