@@ -117,10 +117,10 @@ class Inbox extends Component {
       );
     }
     return (
-      <ScrollView style={{ flex: 1, backgroundColor: colorSettings.inboxBackground }}>
+      <ScrollView style={{ flex: 1, backgroundColor: colorSettings.headerTintColor }}>
         {chats.map(chat => (
           <TouchableOpacity
-            style={cardStyles.opacity}
+            style={cardStyles.inbox}
             key={`inbox${chat.otherUser}`}
             onPress={() => allNav({
               currentUserID,

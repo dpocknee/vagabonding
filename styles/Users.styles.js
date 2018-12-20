@@ -28,6 +28,16 @@ const cardStyles = {
     { borderColor: colorSettings.usersCardBorder },
     { fontFamily: generalFont },
   ],
+  inbox: [
+    { backgroundColor: 'white' },
+    { marginRight: 5 },
+    { marginLeft: 5 },
+    { marginTop: 2.5 },
+    { marginBottom: 2.5 },
+    { borderRadius: 5 },
+    { borderColor: 'none' },
+    { fontFamily: generalFont },
+  ],
   cardActionStyle: [{ color: colorSettings.usersCardAction, paddingBottom: 2 }, { fontSize: 17 }],
   cardContentStyle: [{ color: colorSettings.usersCardContent }, { paddingTop: 2 }],
 };
