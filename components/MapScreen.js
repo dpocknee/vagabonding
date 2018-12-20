@@ -63,40 +63,43 @@ export default class MapScreen extends Component {
     const { navigation } = this.props;
     navigation.setParams({ buttonChange: this.buttonChange });
 
-    firebase.auth().onAuthStateChanged((currentUser) => {
-      if (currentUser) {
-        return Promise.all([
-          getCurrentUserInfo(currentUser.uid),
-          getUserLocation(currentUser, (err, locationAndError) => locationAndError),
-          filterUsersByDistance(currentUser, (err, nearbyUsers) => Object.entries(nearbyUsers)),
-        ])
-          .then(([userInfo, locationAndError, nearbyUsersArray]) => {
-            this.setState({
-              currentUser,
-              userRadius: userInfo.radius,
-              locationAndError,
-              nearbyUsers: nearbyUsersArray,
-            });
-            return Expo.Location.reverseGeocodeAsync(locationAndError.location);
-          })
-          .then((city) => {
-            console.log('Loaded address information');
-            this.setState({
-              userCity: city[0].city,
-              mapLoading: false,
-            });
-          })
-          .catch((err) => {
-            this.setState({
-              mapLoading: false,
-            });
-            this.props.navigation.navigate('Error', { error: err });
-          });
+    return firebase.auth().onAuthStateChanged((currentUser) => {
+      if (!currentUser) {
+        return this.setState({ mapLoading: false }, () => navigation.navigate('Error', { error: 'No current user!' }));
       }
-      this.setState({
-        mapLoading: false,
-      });
-      this.props.navigation.navigate('Error', { error: 'No current user!' });
+      return Promise.all([
+        getCurrentUserInfo(currentUser.uid),
+        getUserLocation(currentUser, (err, locationAndError) => {
+          if (err) return Promise.reject(err);
+          return locationAndError;
+        }),
+        filterUsersByDistance(currentUser, (err, nearbyUsers) => {
+          if (err) return Promise.reject(err);
+          return Object.entries(nearbyUsers);
+        }),
+      ])
+        .then(([userInfo, locationAndError, nearbyUsersArray]) => {
+          this.setState({
+            currentUser,
+            userRadius: userInfo.radius,
+            locationAndError,
+            nearbyUsers: nearbyUsersArray,
+          });
+          return Expo.Location.reverseGeocodeAsync(locationAndError.location);
+        })
+        .then((city) => {
+          console.log('Loaded address information');
+          return this.setState({
+            userCity: city[0].city,
+            mapLoading: false,
+          });
+        })
+        .catch(err => this.setState(
+          {
+            mapLoading: false,
+          },
+          () => navigation.navigate('Error', { error: err }),
+        ));
     });
   }
 

@@ -9,13 +9,13 @@ const getUserLocation = async (user, cb) => {
   const { status } = await Permissions.askAsync(Permissions.LOCATION);
   const errorMessage = 'Permission to access location was denied.';
   if (status !== 'granted') {
-    return {
+    return cb(errorMessage, {
       location: {
         latitude: null,
         longitude: null,
       },
       errorMessage,
-    };
+    });
   }
   return Location.getCurrentPositionAsync({})
     .then((location) => {
@@ -60,10 +60,12 @@ const getLoggedInUsers = () => firestore
       userDocs.push([doc.data(), doc.id]);
     });
     return userDocs;
-  });
+  })
+  .catch(error => 'error');
 
 const filterUsersByDistance = async (user, cb) => {
   const userDocs = await getLoggedInUsers();
+  if (userDocs === 'error') return cb('Error getting other logged in users.', { error: 'error' });
   let radius;
   let currentUserLocation;
   userDocs.forEach((doc) => {
@@ -72,6 +74,8 @@ const filterUsersByDistance = async (user, cb) => {
       currentUserLocation = doc[0].location;
     }
   });
+  if (!radius || !currentUserLocation) return cb('Error getting other logged in users.', { error: 'error' });
+
   const nearbyUsersObj = userDocs.reduce((nearbyUsers, cur) => {
     if (cur[0].location.latitude || cur[0].location.longitude) {
       const distance = getDistance(currentUserLocation, cur[0].location, 100);
