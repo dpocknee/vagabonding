@@ -1,29 +1,31 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo';
-// import { Button } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import * as firebase from 'firebase';
-import { Button, Icon } from 'native-base';
+import { Icon } from 'native-base';
 import profileStyles from '../styles/Profile.styles';
 import { getGuestNames, joinEvent } from '../Functionality/eventFunctions';
 import MenuWrapper from './MenuWrapper';
 import { titleStyles, iconStyles } from '../styles/Hamburger.styles';
+import { generalStyling } from '../styles/generalStyling.styles';
+import createEventStyles from '../styles/CreateEvent.styles';
 
 class EventInfo extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: (
-      <Button
-        iconLeft
-        transparent
-        onPress={() => {
-          navigation.getParam('buttonChange')();
-        }}
-        width={50}
-      >
-        <Icon type="FontAwesome" name="bars" style={iconStyles} />
-      </Button>
-    ),
-    title: 'eventInfo',
+    // headerLeft: (
+    //   <Button
+    //     iconLeft
+    //     transparent
+    //     onPress={() => {
+    //       navigation.getParam('buttonChange')();
+    //     }}
+    //     width={50}
+    //   >
+    //     <Icon type="FontAwesome" name="bars" style={iconStyles} />
+    //   </Button>
+    // ),
+    title: 'Event Info',
     ...titleStyles,
   });
 
@@ -119,6 +121,7 @@ class EventInfo extends Component {
             </View>
             {!user && (
               <Button
+                style={createEventStyles.longButton}
                 title="Join event"
                 onPress={() => {
                   joinEvent(event.id, (err, newName) => {
