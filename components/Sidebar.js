@@ -57,7 +57,7 @@ const Sidebar = (props) => {
               allNav('CreateEvent');
             }}
           >
-            <Icon type="FontAwesome" name="times" style={iconStyles} />
+            <Icon type="FontAwesome" name="calendar" style={iconStyles} />
             <Text style={sidebarStyles.menuTextStyle}>Create Event</Text>
           </Button>
         </View>
@@ -73,7 +73,7 @@ const Sidebar = (props) => {
               allNav('NearbyEvents');
             }}
           >
-            <Icon type="FontAwesome" name="times" style={iconStyles} />
+            <Icon type="FontAwesome" name="users" style={iconStyles} />
             <Text style={sidebarStyles.menuTextStyle}>Nearby Events</Text>
           </Button>
         </View>
