@@ -49,9 +49,9 @@ export default class MapScreen extends Component {
   });
 
   state = {
+    mapLoading: true,
     locationAndError: null,
     button: false,
-    dev: false,
     nearbyUsers: [],
     userCity: null, // special dev variable for computer emulators
     userRadius: null,
@@ -63,53 +63,43 @@ export default class MapScreen extends Component {
     const { navigation } = this.props;
     navigation.setParams({ buttonChange: this.buttonChange });
 
-    firebase.auth().onAuthStateChanged((currentUser) => {
-      if (currentUser) {
-        // This is just a dev thing if any computers are using emulators without GPS.
-        // It sets a default GPS position somewhere near the middle of Manchester.
-        // REMOVE FOR PRODUCTION:
-        getCurrentUserInfo(currentUser.uid).then((userInfo) => {
-          this.setState({ userRadius: userInfo.radius });
-        });
-        if (this.state.dev) {
+    return firebase.auth().onAuthStateChanged((currentUser) => {
+      if (!currentUser) {
+        return this.setState({ mapLoading: false }, () => navigation.navigate('Error', { error: 'No current user!' }));
+      }
+      return Promise.all([
+        getCurrentUserInfo(currentUser.uid),
+        getUserLocation(currentUser, (err, locationAndError) => {
+          if (err) return Promise.reject(err);
+          return locationAndError;
+        }),
+        filterUsersByDistance(currentUser, (err, nearbyUsers) => {
+          if (err) return Promise.reject(err);
+          return Object.entries(nearbyUsers);
+        }),
+      ])
+        .then(([userInfo, locationAndError, nearbyUsersArray]) => {
           this.setState({
             currentUser,
-            locationAndError: {
-              location: { latitude: 53.4758302, longitude: -2.2465945 },
-            },
-            nearbyUsers: [],
+            userRadius: userInfo.radius,
+            locationAndError,
+            nearbyUsers: nearbyUsersArray,
           });
-          // ---------------
-        } else {
-          getUserLocation(currentUser, (err1, locationAndError) => {
-            this.setState(
-              {
-                currentUser,
-                locationAndError,
-              },
-              () => {
-                filterUsersByDistance(this.state.currentUser, (err2, nearbyUsers) => {
-                  const nearbyUsersArray = Object.entries(nearbyUsers);
-                  this.setState({ nearbyUsers: nearbyUsersArray });
-                })
-                  .then(() => {
-                    Expo.Location.reverseGeocodeAsync(locationAndError.location).then((city) => {
-                      const userCity = city[0].city;
-                      this.setState({
-                        userCity,
-                      });
-                    });
-                  })
-                  .catch((err) => {
-                    this.props.navigation.navigate('Error', { error: err });
-                  });
-              },
-            );
-          }).catch((err) => {
-            this.props.navigation.navigate('Error', { error: err });
+          return Expo.Location.reverseGeocodeAsync(locationAndError.location);
+        })
+        .then((city) => {
+          console.log('Loaded address information');
+          return this.setState({
+            userCity: city[0].city,
+            mapLoading: false,
           });
-        }
-      }
+        })
+        .catch(err => this.setState(
+          {
+            mapLoading: false,
+          },
+          () => navigation.navigate('Error', { error: err }),
+        ));
     });
   }
 
@@ -122,10 +112,15 @@ export default class MapScreen extends Component {
 
   render() {
     const {
-      locationAndError, nearbyUsers, currentUser, userRadius, userCity,
+      locationAndError,
+      nearbyUsers,
+      currentUser,
+      userRadius,
+      userCity,
+      mapLoading,
     } = this.state;
     const { navigation } = this.props;
-    if (!locationAndError) {
+    if (mapLoading) {
       return <LoadingComponent />;
     }
     return (
