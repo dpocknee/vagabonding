@@ -16,11 +16,7 @@ const getEventCoords = async locationString => Expo.Location.geocodeAsync(locati
 
 const addEvent = async (eventObj) => {
   const {
-    eventLocation,
-    eventName,
-    eventDescription,
-    datetime,
-    currentUserUID,
+    eventLocation, eventName, eventDescription, datetime, currentUserUID,
   } = eventObj;
   return getEventCoords(eventLocation).then((locationObj) => {
     const { latitude, longitude } = locationObj[0];
@@ -37,40 +33,43 @@ const addEvent = async (eventObj) => {
 };
 
 const getNearbyEvents = async cb => firebase.auth().onAuthStateChanged((currentUser) => {
-  const { uid } = currentUser;
-  return usersRef
-    .doc(uid)
-    .get()
-    .then(snapshot => Promise.all([eventsRef.get(), snapshot.data()]).then(
-      ([querySnapshot, userObj]) => {
-        const eventsData = [];
-        querySnapshot.forEach((doc) => {
-          eventsData.push({ id: doc.id, info: doc.data() });
-        });
-        const { location, radius } = userObj;
-        return Promise.all([
-          eventsData.filter((eventObj) => {
-            if (isPointInCircle(eventObj.info.location, location, radius)) {
-              return eventObj;
-            }
-          }),
-        ]).then(([nearbyEvents]) => {
-          cb(nearbyEvents);
-        });
-      },
-    ));
+  if (currentUser) {
+    const { uid } = currentUser;
+    return usersRef
+      .doc(uid)
+      .get()
+      .then(snapshot => Promise.all([eventsRef.where('datetime', '>', Date.now()).get(), snapshot.data()]).then(
+        ([querySnapshot, userObj]) => {
+          const eventsData = [];
+          querySnapshot.forEach((doc) => {
+            eventsData.push({ id: doc.id, info: doc.data() });
+          });
+          const { location, radius } = userObj;
+          return Promise.all([
+            eventsData.filter((eventObj) => {
+              if (isPointInCircle(eventObj.info.location, location, radius)) {
+                return eventObj;
+              }
+            }),
+          ]).then(([nearbyEvents]) => {
+            const sortedEvents = [...nearbyEvents].sort((a, b) => a.datetime - b.datetime);
+            cb(sortedEvents);
+          });
+        },
+      ));
+  }
 });
 
 const getGuestNames = async (guestIDs, cb) => {
   const guestNames = [];
   let count = 0;
-  guestIDs.forEach((guest, index) => {
+  guestIDs.forEach((guest) => {
     usersRef
       .doc(guest)
       .get()
       .then((querySnapshot) => {
         guestNames.push(querySnapshot.data().name);
-        count++;
+        count += 1;
         if (count === guestIDs.length) {
           cb(null, guestNames);
         }
@@ -97,10 +96,5 @@ const joinEvent = async (eventID, cb) => {
 };
 
 export {
-  addEvent,
-  getEventCoords,
-  getNearbyEvents,
-  eventsRef,
-  getGuestNames,
-  joinEvent,
+  addEvent, getEventCoords, getNearbyEvents, eventsRef, getGuestNames, joinEvent,
 };

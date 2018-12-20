@@ -63,7 +63,7 @@ class EventInfo extends Component {
         <View>
           <Text>Going:</Text>
           {event.guestNames.map((guest, index) => (
-            <Text key={event.info.guests[index]}>{guest}</Text>
+            <Text key={event.info.guests[index] || Math.random() * 100}>{guest}</Text>
           ))}
         </View>
 
