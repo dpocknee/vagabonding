@@ -1,5 +1,5 @@
 import { colorSettings } from './Colors.styles';
-import { generalFont, generalFontBold } from './generalStyling.styles';
+import { generalFontBold } from './generalStyling.styles';
 
 const drawerStyles = {
   drawer: {
