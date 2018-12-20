@@ -11,7 +11,7 @@ const logo = require('../assets/Connections.png');
 class Loading extends Component {
   componentDidMount() {
     return firebase.auth().onAuthStateChanged((user) => {
-      this.props.navigation.navigate(user ? 'mainFlow' : 'SignUp');
+      this.props.navigation.navigate(user ? 'mainFlow' : 'LogIn');
     });
   }
 
