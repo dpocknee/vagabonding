@@ -1,6 +1,7 @@
 import { colorSettings } from './Colors.styles';
 
-const { signUpBackground } = colorSettings;
+const { signUpBackground, darkText } = colorSettings;
+const generalFontBold = 'Thasadith-Bold';
 
 const signUpStyles = {
   container: {
@@ -26,6 +27,13 @@ const signUpStyles = {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'flex-end',
+  },
+  title: {
+    fontFamily: generalFontBold,
+    fontSize: 20,
+    color: darkText,
+    fontWeight: 'bold',
+    padding: 30,
   },
 };
 

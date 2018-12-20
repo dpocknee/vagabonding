@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo';
-import profileStyles from '../styles/Profile.styles';
 import { Button } from 'react-native-elements';
 import * as firebase from 'firebase';
+import profileStyles from '../styles/Profile.styles';
 import { getGuestNames, joinEvent } from '../Functionality/eventFunctions';
 
 class EventInfo extends Component {
@@ -80,20 +80,20 @@ class EventInfo extends Component {
               <Text key={event.info.guests[index] || Math.random() * 100}>{guest}</Text>
             ))}
           </View>
-        {!user && (
-          <Button
-            title="Join event"
-            onPress={() => {
-              joinEvent(event.id, (err, newName) => {
-                const array = [...event.guestNames, newName];
-                this.setState(prevState => ({
-                  event: { ...prevState.event, guestNames: array },
-                  user: true,
-                }));
-              });
-            }}
-          />
-        )}
+          {!user && (
+            <Button
+              title="Join event"
+              onPress={() => {
+                joinEvent(event.id, (err, newName) => {
+                  const array = [...event.guestNames, newName];
+                  this.setState(prevState => ({
+                    event: { ...prevState.event, guestNames: array },
+                    user: true,
+                  }));
+                });
+              }}
+            />
+          )}
         </LinearGradient>
       </View>
     );

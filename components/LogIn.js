@@ -5,6 +5,7 @@ import * as firebase from 'firebase';
 import ErrorComponent from './ErrorComponent';
 import loginStyles from '../styles/Login.styles';
 import { generalStyling } from '../styles/generalStyling.styles';
+import signUpStyles from '../styles/SignUp.styles';
 
 const { firestore } = require('../config');
 
@@ -43,6 +44,7 @@ class Login extends Component {
     errorMessage && <ErrorComponent errorMessage={errorMessage} />;
     return (
       <View style={loginStyles.container}>
+        <H1 style={signUpStyles.title}>Vagabonding</H1>
         <H1 styles={generalStyling.h1}>Login</H1>
         {this.state.errorMessage && <Text style={{ color: 'red' }}>{this.state.errorMessage}</Text>}
         <TextInput

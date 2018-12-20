@@ -93,7 +93,7 @@ class SignUp extends Component {
     return (
       <ScrollView style={signUpStyles.container}>
         <View style={signUpStyles.mainView}>
-          <H1 style={generalStyling.h1}>Whatever the title of this app is</H1>
+          <H1 style={signUpStyles.title}>Vagabonding</H1>
           <H2 style={generalStyling.h2}>Sign Up</H2>
           {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
           <TextInput
