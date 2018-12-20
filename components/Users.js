@@ -6,7 +6,7 @@ import { getTheme } from 'react-native-material-kit';
 import PropTypes from 'prop-types';
 import PTRView from 'react-native-pull-to-refresh';
 import LoadingComponent from './LoadingComponent';
-import { colorSettings } from '../styles/Colors.styles';
+import { colorSettings, primaryMid } from '../styles/Colors.styles';
 import cardStyles from '../styles/Users.styles';
 
 const theme = getTheme();
@@ -51,24 +51,29 @@ m away
       </ScrollView>
     </PTRView>
   ) : (
-    <PTRView onRefresh={_refresh} style={{ backgroundColor: colorSettings.usersBackground }}>
-      <View style={[{ flex: 1 }, { backgroundColor: colorSettings.usersBackground }]}>
-        <View
+    <PTRView onRefresh={_refresh} style={{ backgroundColor: colorSettings.usersNoNearbyUsers }}>
+      <View style={[{ flex: 1 }]}>
+        <Text
           style={[
-            theme.cardStyle,
-            { padding: 30 },
-            { backgroundColor: colorSettings.usersTitleText },
-            { borderColor: colorSettings.usersTitleBorder },
-            { borderRadius: 2 },
-            { paddingTop: 50 },
+            { textAlign: 'center' },
+            { color: colorSettings.mainText },
+            { fontSize: 25 },
+            { marginTop: '15%' },
           ]}
         >
-          <Text
-            style={[{ textAlign: 'center' }, { color: colorSettings.lightText }, { fontSize: 18 }]}
-          >
-            There are no nearby users
-          </Text>
-        </View>
+          There are no nearby users
+        </Text>
+        <Text
+          style={[
+            theme.cardContentStyle,
+            ...cardStyles.cardContentStyle,
+            { textAlign: 'center' },
+            { marginTop: 10 },
+          ]}
+        >
+          Pull to refresh
+          {' '}
+        </Text>
       </View>
     </PTRView>
   );
