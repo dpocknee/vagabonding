@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
+import { LinearGradient } from 'expo';
+import profileStyles from '../styles/Profile.styles';
 
 class EventInfo extends Component {
   state = {
@@ -26,26 +28,39 @@ class EventInfo extends Component {
   render() {
     const { event } = this.state;
     return (
-      <View>
-        <Text>{event.info.eventName}</Text>
-        <Text>
-Where:
-          {event.info.eventLocation}
-        </Text>
-        <Text>
-When:
-          {`${event.date} at ${event.time}`}
-        </Text>
-        <Text>
-What:
-          {event.info.eventDescription}
-        </Text>
-        <View>
-          <Text>Going:</Text>
-          {event.info.guests.map(guest => (
-            <Text key={guest}>{guest}</Text>
-          ))}
-        </View>
+      <View style={profileStyles.wholePage}>
+        <LinearGradient
+          colors={['rgba(225,225,225,225)', 'transparent']}
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            // height: 300
+          }}
+        >
+          <Text style={profileStyles.name}>{event.info.eventName}</Text>
+          <View style={profileStyles.info}>
+            <Text>
+              <Text style={profileStyles.catInfo}>Where:</Text>
+              {event.info.eventLocation}
+            </Text>
+            <Text>
+              <Text style={profileStyles.catInfo}>When:</Text>
+              {`${event.date} at ${event.time}`}
+            </Text>
+            <Text>
+              <Text style={profileStyles.catInfo}>What:</Text>
+              {event.info.eventDescription}
+            </Text>
+          </View>
+          <View style={profileStyles.info}>
+            <Text style={profileStyles.catInfo}>Going:</Text>
+            {event.info.guests.map(guest => (
+              <Text key={guest}>{guest}</Text>
+            ))}
+          </View>
+        </LinearGradient>
       </View>
     );
   }
