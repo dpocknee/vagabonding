@@ -31,7 +31,7 @@ class Inbox extends Component {
               currentUsername: currentUserInfo.username,
             },
             () => {
-              const { currentUserID } = this.state;
+              const { currentUserID, chats } = this.state;
               const allUserChats = chatsRef.where('usersArr', 'array-contains', `${currentUserID}`);
               allUserChats.onSnapshot((querySnapshot) => {
                 if (querySnapshot.empty === true) {
@@ -42,9 +42,10 @@ class Inbox extends Component {
                 querySnapshot.docChanges().forEach((change) => {
                   if (change.type === 'added') {
                     const chatObj = {};
-                    change.doc.data().usersArr[0] === currentUserID
-                      ? (chatObj.otherUser = change.doc.data().usersArr[1])
-                      : (chatObj.otherUser = change.doc.data().usersArr[0]);
+
+                    const addVar = change.doc.data().usersArr[0] === currentUserID ? 1 : 0;
+                    chatObj.otherUser = change.doc.data().usersArr[addVar];
+
                     chatObj.messages = change.doc.data().messages;
                     getChatPartnerNames(chatObj.otherUser).then((chatPartnerObj) => {
                       const compObj = {
@@ -60,9 +61,9 @@ class Inbox extends Component {
                   }
                   if (change.type === 'modified') {
                     const chatObj = {};
-                    change.doc.data().usersArr[0] === currentUserID
-                      ? (chatObj.otherUser = change.doc.data().usersArr[1])
-                      : (chatObj.otherUser = change.doc.data().usersArr[0]);
+                    const addVar = change.doc.data().usersArr[0] === currentUserID ? 1 : 0;
+                    chatObj.otherUser = change.doc.data().usersArr[addVar];
+
                     chatObj.messages = change.doc.data().messages;
                     getChatPartnerNames(chatObj.otherUser).then((chatPartnerObj) => {
                       const compObj = {
@@ -70,7 +71,7 @@ class Inbox extends Component {
                         otherUserUsername: chatPartnerObj.username,
                         otherUserName: chatPartnerObj.name,
                       };
-                      const currentChats = [...this.state.chats];
+                      const currentChats = [...chats];
                       const oldChats = currentChats.filter(
                         chatObject => chatObject.otherUser !== compObj.otherUser,
                       );
@@ -102,7 +103,13 @@ class Inbox extends Component {
     }
     if (chats.length === 0) {
       return (
-        <View style={{ backgroundColor: colorSettings.inboxBackground, flex: 1, justifyContent: 'center' }}>
+        <View
+          style={{
+            backgroundColor: colorSettings.inboxBackground,
+            flex: 1,
+            justifyContent: 'center',
+          }}
+        >
           <Text
             style={{
               fontSize: 19,
@@ -132,15 +139,11 @@ class Inbox extends Component {
             }
           >
             <>
-              <Text
-                style={[theme.cardActionStyle, ...cardStyles.cardActionStyle]}
-              >
+              <Text style={[theme.cardActionStyle, ...cardStyles.cardActionStyle]}>
                 {`Conversation with ${chat.otherUserName} (${chat.otherUserUsername})`}
               </Text>
 
-              <Text
-                style={[theme.cardContentStyle, ...cardStyles.cardContentStyle]}
-              >
+              <Text style={[theme.cardContentStyle, ...cardStyles.cardContentStyle]}>
                 {`${chat.messages.length} messages`}
               </Text>
             </>

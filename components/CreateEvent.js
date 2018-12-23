@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  View, TextInput, Text, KeyboardAvoidingView, Platform, ScrollView,
+  View, TextInput, Text, KeyboardAvoidingView, Platform,
 } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import * as firebase from 'firebase';
@@ -86,14 +86,19 @@ class CreateEvent extends Component {
                   placeholder="Event Name"
                   autoCapitalize="words"
                   style={createEventStyles.textInput}
-                  onChangeText={newEventName => this.setState({ eventName: newEventName })}
+                  onChangeText={newEventName => this.setState({
+                    eventName: newEventName,
+                  })
+                  }
                   value={eventName}
                 />
                 <TextInput
                   placeholder="Event Location"
                   autoCapitalize="words"
                   style={createEventStyles.textInput}
-                  onChangeText={newEventLocation => this.setState({ eventLocation: newEventLocation })
+                  onChangeText={newEventLocation => this.setState({
+                    eventLocation: newEventLocation,
+                  })
                   }
                   value={eventLocation}
                 />
@@ -110,7 +115,9 @@ class CreateEvent extends Component {
                   maxLength={200}
                   containerStyle={generalStyling.textareaContainer}
                   style={generalStyling.textarea}
-                  onChangeText={newDescription => this.setState({ eventDescription: newDescription })
+                  onChangeText={newDescription => this.setState({
+                    eventDescription: newDescription,
+                  })
                   }
                   value={eventDescription}
                 />
@@ -165,7 +172,6 @@ class CreateEvent extends Component {
           </KeyboardAvoidingView>
         </MenuWrapper>
       </View>
-      // Possible Issues with whether or not keyboardWrapper is inside menuwrapper and also how many closing view tags there are
     );
   }
 }

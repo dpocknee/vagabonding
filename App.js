@@ -82,6 +82,7 @@ const AppContainer = createAppContainer(appNavigation);
 // if navigation breaks may be to do with this component
 
 function cacheFonts() {
+  /* eslint global-require: 0 */
   return Font.loadAsync({
     'Thasadith-Regular': require('./assets/fonts/Thasadith/Thasadith-Regular.ttf'),
     'Thasadith-Bold': require('./assets/fonts/Thasadith/Thasadith-Bold.ttf'),
@@ -94,6 +95,7 @@ export default class App extends Component {
   };
 
   async _loadAssetsAsync() {
+    /* eslint class-methods-use-this: 0 */
     const fontAssets = cacheFonts();
     await Promise.all(fontAssets);
   }

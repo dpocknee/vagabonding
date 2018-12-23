@@ -46,6 +46,8 @@ const getNearbyEvents = async cb => firebase.auth().onAuthStateChanged((currentU
           });
           const { location, radius } = userObj;
           return Promise.all([
+            /* eslint consistent-return: 0 */
+            /* eslint array-callback-return: 0 */
             eventsData.filter((eventObj) => {
               if (isPointInCircle(eventObj.info.location, location, radius)) {
                 return eventObj;
@@ -53,11 +55,12 @@ const getNearbyEvents = async cb => firebase.auth().onAuthStateChanged((currentU
             }),
           ]).then(([nearbyEvents]) => {
             const sortedEvents = [...nearbyEvents].sort((a, b) => a.datetime - b.datetime);
-            cb(sortedEvents);
+            return cb(sortedEvents);
           });
         },
       ));
   }
+  return cb('error');
 });
 
 const getGuestNames = async (guestIDs, cb) => {
