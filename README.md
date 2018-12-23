@@ -1,6 +1,6 @@
 # NC-Project
 
-## Northcoders Final Project - Nomad Network
+## Northcoders Final Project - Vagabonding
 
 ### Note
 
@@ -8,7 +8,7 @@ This project is still in development and as such is still unstable. A stable ver
 
 ### Overview
 
-TBC is a mobile application for geolocation-based messaging. The app is designed for individuals who are looking for others in the nearby vicinity to share experiences with.
+Vagabonding is a mobile application for geolocation-based messaging. The app is designed for individuals who are looking for others in the nearby vicinity to share experiences with.
 
 A typical use scenario would involve a solo-traveller new to a city, opening up the app and messaging another solo-traveller in the same city and arranging to meet up the next day to explore the local museums together.
 
