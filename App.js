@@ -35,7 +35,6 @@ const loginFlow = createSwitchNavigator(
 );
 
 const mainFlow = createStackNavigator(
-  // Add main app components here - remember to include screen property
   {
     Map: {
       screen: MapScreen,
@@ -77,38 +76,29 @@ const appNavigation = createSwitchNavigator(
 );
 
 const AppContainer = createAppContainer(appNavigation);
-
-// Note: Entire navigation is in this component
-// if navigation breaks may be to do with this component
-
-function cacheFonts() {
-  return Font.loadAsync({
-    'Thasadith-Regular': require('./assets/fonts/Thasadith/Thasadith-Regular.ttf'),
-    'Thasadith-Bold': require('./assets/fonts/Thasadith/Thasadith-Bold.ttf'),
-  });
-}
-
 export default class App extends Component {
   state = {
     isReady: false,
   };
 
-  async _loadAssetsAsync() {
-    const fontAssets = cacheFonts();
-    await Promise.all(fontAssets);
-  }
+  cacheFonts = async () => {
+    /* eslint global-require: 0 */
+    await Font.loadAsync({
+      'Thasadith-Regular': require('./assets/fonts/Thasadith/Thasadith-Regular.ttf'),
+      'Thasadith-Bold': require('./assets/fonts/Thasadith/Thasadith-Bold.ttf'),
+    });
+  };
 
   render() {
     if (!this.state.isReady) {
       return (
         <AppLoading
-          startAsync={this._loadAssetsAsync}
+          startAsync={() => this.cacheFonts()}
           onFinish={() => this.setState({ isReady: true })}
-          // onError={console.warn}
+          onError={console.warn}
         />
       );
     }
     return <AppContainer />;
   }
 }
-// https://medium.com/@jan.hesters/building-a-react-native-app-with-complex-navigation-using-react-navigation-85a479308f52

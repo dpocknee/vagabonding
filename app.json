@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "Solo-Traveller",
-    "slug": "Solo-Traveller",
+    "name": "Vagabonding",
+    "description": "A mobile application for geo-location-based messaging, developed using React Native and Firebase. The app is designed for individuals who are looking for others in the nearby vicinity to share experiences with. A typical-use-scenario might involve a solo-traveller new to a city, opening up the app and messaging another user to arrange to meet up the following day to explore the local museums together.",
+    "slug": "vagabonding",
     "privacy": "public",
     "sdkVersion": "31.0.0",
     "platforms": ["ios", "android"],

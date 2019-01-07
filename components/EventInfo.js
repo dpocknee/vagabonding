@@ -3,28 +3,14 @@ import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo';
 import { Button } from 'react-native-elements';
 import * as firebase from 'firebase';
-import { Icon } from 'native-base';
 import profileStyles from '../styles/Profile.styles';
 import { getGuestNames, joinEvent } from '../Functionality/eventFunctions';
 import MenuWrapper from './MenuWrapper';
-import { titleStyles, iconStyles } from '../styles/Hamburger.styles';
-import { generalStyling } from '../styles/generalStyling.styles';
+import { titleStyles } from '../styles/Hamburger.styles';
 import createEventStyles from '../styles/CreateEvent.styles';
 
 class EventInfo extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    // headerLeft: (
-    //   <Button
-    //     iconLeft
-    //     transparent
-    //     onPress={() => {
-    //       navigation.getParam('buttonChange')();
-    //     }}
-    //     width={50}
-    //   >
-    //     <Icon type="FontAwesome" name="bars" style={iconStyles} />
-    //   </Button>
-    // ),
+  static navigationOptions = () => ({
     title: 'Event Info',
     ...titleStyles,
   });

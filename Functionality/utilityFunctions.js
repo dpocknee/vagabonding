@@ -17,9 +17,9 @@ const getUserLocation = async (user, cb) => {
       errorMessage,
     };
   }
-  await Location.getCurrentPositionAsync({}).then((location) => {
+  return Location.getCurrentPositionAsync({}).then((location) => {
     const { latitude, longitude } = location.coords;
-    firestore
+    return firestore
       .collection('users')
       .doc(user.uid)
       .update({
@@ -36,7 +36,7 @@ const getUserLocation = async (user, cb) => {
           },
           errorMessage: null,
         };
-        cb(null, newObj);
+        return cb(null, newObj);
       });
   });
 };
@@ -61,12 +61,13 @@ const filterUsersByDistance = async (user, cb) => {
   // if (!userDocs.length) {
   //   console.log('No users nearby');
   // } else {
-  let radius;
+  let currentUserRadius;
   let currentUserLocation;
   userDocs.forEach((doc) => {
     if (doc.includes(user.uid)) {
-      radius = doc[0].radius;
-      currentUserLocation = doc[0].location;
+      const { radius, location } = doc[0];
+      currentUserRadius = radius;
+      currentUserLocation = location;
     }
   });
   const nearbyUsersObj = userDocs.reduce((nearbyUsers, cur) => {
@@ -74,10 +75,11 @@ const filterUsersByDistance = async (user, cb) => {
       const distance = getDistance(currentUserLocation, cur[0].location, 100);
       const userObj = cur[0];
       if (
-        isPointInCircle(cur[0].location, currentUserLocation, radius)
+        isPointInCircle(cur[0].location, currentUserLocation, currentUserRadius)
         // This line checks to see if the current user sits within the other users radius as well
         // && isPointInCircle(currentUserLocation, cur[0].location, cur[0].radius)
       ) {
+        /* eslint no-param-reassign: 0 */
         nearbyUsers[cur[1]] = { ...userObj, distance };
       }
     }

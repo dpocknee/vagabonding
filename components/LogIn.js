@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import { H1, Button } from 'native-base';
 import * as firebase from 'firebase';
-import ErrorComponent from './ErrorComponent';
 import loginStyles from '../styles/Login.styles';
 import { generalStyling } from '../styles/generalStyling.styles';
 import signUpStyles from '../styles/SignUp.styles';
@@ -39,28 +38,29 @@ class Login extends Component {
   };
 
   render() {
-    const { errorMessage } = this.state;
+    const { errorMessage, email, password } = this.state;
+    const { navigation } = this.props;
     const comma = "'";
-    errorMessage && <ErrorComponent errorMessage={errorMessage} />;
+    // errorMessage = <ErrorComponent errorMessage={errorMessage} />;
     return (
       <View style={loginStyles.container}>
         <H1 style={signUpStyles.title}>Vagabonding</H1>
         <H1 styles={generalStyling.h1}>Login</H1>
-        {this.state.errorMessage && <Text style={{ color: 'red' }}>{this.state.errorMessage}</Text>}
+        {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
         <TextInput
           placeholder="email"
           autoCapitalize="none"
           style={generalStyling.textInput}
-          onChangeText={email => this.setState({ email })}
-          value={this.state.email}
+          onChangeText={emailText => this.setState({ email: emailText })}
+          value={email}
         />
         <TextInput
           placeholder="password"
           autoCapitalize="none"
           secureTextEntry
           style={generalStyling.textInput}
-          onChangeText={password => this.setState({ password })}
-          value={this.state.password}
+          onChangeText={passwordText => this.setState({ password: passwordText })}
+          value={password}
         />
         <View style={loginStyles.buttons}>
           <View>
@@ -88,7 +88,7 @@ class Login extends Component {
                 title="Don't have an account? Sign up"
                 style={generalStyling.longButton}
                 onPress={() => {
-                  this.props.navigation.navigate('SignUp');
+                  navigation.navigate('SignUp');
                 }}
               >
                 <Text style={generalStyling.buttonText}>Sign up</Text>

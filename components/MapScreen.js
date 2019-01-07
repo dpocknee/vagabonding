@@ -49,7 +49,6 @@ export default class MapScreen extends Component {
   });
 
   state = {
-    mapLoading: true,
     locationAndError: null,
     button: false,
     nearbyUsers: [],
