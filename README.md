@@ -6,6 +6,8 @@
 
 Vagabonding is a mobile app for geolocation-based messaging and event creation. The app is designed for individuals who are looking for others in the nearby vicinity to share experiences with. A typical use scenario would involve a solo-traveller new to a city, opening up the app and messaging another solo-traveller in the same city arranging to meet up the next day to explore the local museums together. Later that day they might want to meet with a group of people in a local pub. They could then use the app to create a public event for this which anyone in the vicinity would be able to see and attend.
 
+A video demonstration of the app can be seen here: [https://youtu.be/6NmdJUBiJKs](https://youtu.be/6NmdJUBiJKs).
+
 ## The Team
 
 This app was created over a two-week sprint in December 2018 as the final part of the [Northcoders](http://www.northcoders.com) _Developer Pathway_ course in Manchester. It was made by a team of six people using AGILE-style methodologies, stand-ups, kanban techniques and pair-programming as part of this process.
